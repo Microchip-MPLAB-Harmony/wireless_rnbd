@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Module name="replaceme" id="9f2f1ab7-bd38-4a34-826e-4f6698f824ed" version="1.0.0">
+<Module name="Wireless system service for SAMX devices" id="44a77894-441c-466f-8341-0d044f2567c0" version="0.0.1">
     <ConfigRoot path="config/module.py"/>
 </Module>

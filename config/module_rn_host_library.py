@@ -22,23 +22,18 @@
 # THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 ##############################################################################
 
-def loadModule():
-    print('Load Module: Harmony Wireless Service for SAMx Family')
-    
-    SAM_Device_family =  {'ATSAMD21J18A',
-                          'ATSAME54',
-                          'ATSAMR34J18B',
-                          'ATSAML21J18B',
-                          'PIC32CM5164LS00100'
-    
-    
-                          }
-    
-    processor = Variables.get('__PROCESSOR')
-    print('processor={}'.format(processor))
-    
-    if(processor in SAM_Device_family):
-        execfile(Module.getPath() + '/config/module_rn_host_library.py')
-        #execfile(Module.getPath() + '/config/module_rn_TRP_UART_example.py')
+print('Load Module: Harmony Wireless RN Host Library Driver')
+
+rnHostComponent  = Module.CreateGeneratorComponent('RNBD_Dependency', 'RNBD', '/Wireless/Drivers/BLE','driver/rn_host_library/rn_host_common.py', 'driver/rn_host_library/rn_host.py')
+rnHostComponent.setDisplayType('HOST<->RNBD INTERFACE\n\n\n')
+rnHostComponent.setInstanceHeaderText("Dependencies")
+rnHostComponent.setInstanceText("Dependency ${INDEX}")
+#
+#rnHostComponent.addCapability('USART', 'drv_USART',None, False)
+rnHostComponent.addDependency("RNBD_USART_Dependency", "UART",'SERCOM',False, True)
+#rnHostComponent.addDependency("Delay_Service_Dependency", "TMR",'Delay_Service',False, True) 
+#rnHostComponent.addDependency("Console_Service_Dependency", "RNBD_Interface",None,False, True)
+
+
 
 
