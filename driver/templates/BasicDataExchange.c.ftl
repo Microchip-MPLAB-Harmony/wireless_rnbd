@@ -109,17 +109,17 @@ bool RN487x_Example_Initialized(void)
     bool exampleIsInitialized = false;
     <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD"> 
     exampleIsInitialized = RNBD_SetAsyncMessageHandler(statusBuffer, sizeof(statusBuffer));
-	<#else>
-	exampleIsInitialized = RN487x_SetAsyncMessageHandler(statusBuffer, sizeof(statusBuffer));
-	</#if>
+    <#else>
+    exampleIsInitialized = RN487x_SetAsyncMessageHandler(statusBuffer, sizeof(statusBuffer));
+    </#if>
     
     if (exampleIsInitialized == true)
     {
-	<#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
+    <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
         RNBD_Example_Run();
-	<#else>
-	    RN487x_Example_Run();
-	</#if>
+    <#else>
+        RN487x_Example_Run();
+    </#if>
     }
     return (false);     // ^ Held if Successful; Return failure if reaching this.
 }
@@ -132,11 +132,11 @@ static void RN487x_Example_Run(void)
 {
     while(1)
     {
-	<#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
+    <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
         if (true == RNBD_Example_BasicDataExchange())
     <#else>
-	    if (true == RN487x_Example_BasicDataExchange())
-	</#if>
+        if (true == RN487x_Example_BasicDataExchange())
+    </#if>
         {
             // Connected
         }
@@ -168,24 +168,24 @@ static bool RN487x_Example_BasicDataExchange(void)
    {
    <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
        while (RNBD_DataReady())
-	<#else>
-	   while (RN487x_DataReady())
-	</#if>
+    <#else>
+       while (RN487x_DataReady())
+    </#if>
        {
-	    <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
+        <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
            readData = RNBD_Read();
-		<#else>
-		   readData = RN487x_Read();
-		</#if>   
+        <#else>
+           readData = RN487x_Read();
+        </#if>   
            // Use the readData as desired
        }
        if (periodicCounter == DEMO_PERIODIC_TRANSMIT_COUNT)
        {
-	    <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
+        <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
            RNBD.Write('.');
-		<#else>
-		   RN487x.Write('.');
-		</#if>
+        <#else>
+           RN487x.Write('.');
+        </#if>
            periodicCounter = 0;
        }
        else
@@ -195,18 +195,18 @@ static bool RN487x_Example_BasicDataExchange(void)
    }
    else
     {
-	<#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
+    <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
         while(RNBD_DataReady())
-	<#else>
-	    while(RN487x_DataReady())
-	</#if>
+    <#else>
+        while(RN487x_DataReady())
+    </#if>
         {
-		<#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
+        <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
             // Clear data; Allow ASYNC processor decode
             readData = RNBD_Read();
-	    <#else>
-		    readData = RN487x_Read();
-		</#if>
+        <#else>
+            readData = RN487x_Read();
+        </#if>
         }
     }
 

@@ -1,3 +1,27 @@
+# coding: utf-8
+##############################################################################
+# Copyright (C) 2019-2023 Microchip Technology Inc. and its subsidiaries.
+#
+# Subject to your compliance with these terms, you may use Microchip software
+# and any derivatives exclusively with Microchip products. It is your
+# responsibility to comply with third party license terms applicable to your
+# use of third party software (including open source software) that may
+# accompany Microchip software.
+#
+# THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+# EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+# WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+# PARTICULAR PURPOSE.
+#
+# IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+# INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+# WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+# BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+# FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+# ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+# THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+##############################################################################
+
 Application_Menu_options = ["TRANSPARENT UART","BASIC DATA EXCHANGE","NONE"]
 Module_Type_options      = ["RNBD","RN487x"]
 Security_Options         = ["NON SECURE","SECURE"]
@@ -69,15 +93,15 @@ RNBD_Pin_Configuration = {'BT_RST':{'Pin':'',
                         }
 
 global rst_pin_config_msg
-rst_pin_config_msg = "**Set the pin functionlity as *GPIO*, Pin name as *BT_RST*, Direction as *Out* inside Pin Configuration**"
+rst_pin_config_msg = "**Set the pin functionality as *GPIO*, Pin name as *BT_RST*, Direction as *Out* inside Pin Configuration**"
 global status_pin1_config_msg
-status_pin1_config_msg = "**Set the pin functionlity as *GPIO*, Pin name as *BT_STATUS1**"
+status_pin1_config_msg = "**Set the pin functionality as *GPIO*, Pin name as *BT_STATUS1**"
 global status_pin2_config_msg
-status_pin2_config_msg = "**Set the pin functionlity as *GPIO*, Pin name as *BT_STATUS2**"
+status_pin2_config_msg = "**Set the pin functionality as *GPIO*, Pin name as *BT_STATUS2**"
 global rx_ind_Pin_config_msg
-rx_ind_Pin_config_msg = "**Set the pin functionlity as *GPIO*, Pin name as *BT_RX_IND*, Direction as *Out* inside Pin Configuration**"
+rx_ind_Pin_config_msg = "**Set the pin functionality as *GPIO*, Pin name as *BT_RX_IND*, Direction as *Out* inside Pin Configuration**"
 global sys_mode_Pin_config_msg
-sys_mode_Pin_config_msg = "**Set the pin functionlity as *GPIO*, Pin name as *BT_MODE*, Direction as *Out* inside Pin Configuration**"
+sys_mode_Pin_config_msg = "**Set the pin functionality as *GPIO*, Pin name as *BT_MODE*, Direction as *Out* inside Pin Configuration**"
 
 
 
@@ -180,10 +204,6 @@ def rnHostTrpUartExpAppSourceCallback(rnExampleTrpUartAppSourceFile,event):
         if(event["value"] == "TRANSPARENT UART"):
             rnExampleTrpUartAppSourceFile.setEnabled(True)
             EnableTrpUartAppDependencies()
-            #components = Database.getActiveComponentIDs()
-            #if 'sys_console' not in components:
-            #    #res = Database.activateComponents(['sys_console'])
-            #    Log.writeErrorMessage("User_Error:sys_console is required for Transparent UART Example")
         else:
             rnExampleTrpUartAppSourceFile.setEnabled(False)
             DisableTrpUartAppDependencies()
@@ -213,10 +233,6 @@ def rnHostTrpUartExpAppHeaderCallback(rnExampleTrpUartAppHeaderFile,event):
     elif event["id"] == "RN_HOST_EXAMPLE_APPLICATION_CHOICE":
         if(event["value"] == "TRANSPARENT UART"):
             rnExampleTrpUartAppHeaderFile.setEnabled(True)
-            #components = Database.getActiveComponentIDs()
-            #if 'sys_console' not in components:
-            #    #res = Database.activateComponents(['sys_console'])
-            #    Log.writeErrorMessage("User_Error:sys_console is required for Transparent UART Example")
         else:
             rnExampleTrpUartAppHeaderFile.setEnabled(False)
             
@@ -282,7 +298,7 @@ def rnHostBasicDataExcExpAppHeaderCallback(rnExampleBscDataExcAppHeaderFile,even
             non_secure_entry_File_check()
         
 ##########################################################################################
-#                           Interface File Gneration Handling Callbacks
+#                           Interface File Generation Handling Callbacks
 ##########################################################################################
 def rn487xBLEInterfaceSourceCallback(rn487xBLEInterfaceSourceFile,event):
     if(event["value"] == "RN487x"):
@@ -357,7 +373,6 @@ def Sercom_Instances_Get():
 import re
 
 def sort_alphanumeric(l):
-    import re
     convert = lambda text: int(text) if text.isdigit() else text.lower()
     alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
     return sorted(l, key = alphanum_key)
@@ -1351,7 +1366,7 @@ def instantiateComponent(rnHostLib):
     rnHostlibAppMenu.setDefaultValue("NONE")
 
     ########################################################################
-	
+    
     rn487xBLEInterfaceSourceFile = rnHostLib.createFileSymbol("RN487X_INTERFACE_C",None)
     rn487xBLEInterfaceSourceFile.setSourcePath("driver/templates/rn487x_interface.c.ftl")
     rn487xBLEInterfaceSourceFile.setOutputName("rn487x_interface.c")
@@ -1362,7 +1377,7 @@ def instantiateComponent(rnHostLib):
     rn487xBLEInterfaceSourceFile.setMarkup(True)
     rn487xBLEInterfaceSourceFile.setEnabled(False)
     rn487xBLEInterfaceSourceFile.setDependencies(rn487xBLEInterfaceSourceCallback,["RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE"])
-	
+    
   #  
     rn487xBLEInterfaceHeaderFile = rnHostLib.createFileSymbol("RN487X_INTERFACE_H",None)
     rn487xBLEInterfaceHeaderFile.setSourcePath("driver/templates/rn487x_interface.h.ftl")
@@ -1374,8 +1389,8 @@ def instantiateComponent(rnHostLib):
     rn487xBLEInterfaceHeaderFile.setMarkup(True)
     rn487xBLEInterfaceHeaderFile.setEnabled(False)
     rn487xBLEInterfaceHeaderFile.setDependencies(rn487xBLEInterfaceHeaderCallback,["RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE"])
-	
-	#
+    
+    #
     rn487xBLEFeatureSourceFile = rnHostLib.createFileSymbol("RN487X_C",None)
     rn487xBLEFeatureSourceFile.setSourcePath("driver/templates/rn487x.c.ftl")
     rn487xBLEFeatureSourceFile.setOutputName("rn487x.c")
@@ -1386,8 +1401,8 @@ def instantiateComponent(rnHostLib):
     rn487xBLEFeatureSourceFile.setMarkup(True)
     rn487xBLEFeatureSourceFile.setEnabled(False)
     rn487xBLEFeatureSourceFile.setDependencies(rn487xBLEFeatureSourceCallback,["RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE"])
-	
-	#
+    
+    #
     rn487xBLEFeatureHeaderFile = rnHostLib.createFileSymbol("RN487X_H",None)
     rn487xBLEFeatureHeaderFile.setSourcePath("driver/templates/rn487x.h.ftl")
     rn487xBLEFeatureHeaderFile.setOutputName("rn487x.h")
@@ -1398,8 +1413,8 @@ def instantiateComponent(rnHostLib):
     rn487xBLEFeatureHeaderFile.setMarkup(True)
     rn487xBLEFeatureHeaderFile.setEnabled(False)
     rn487xBLEFeatureHeaderFile.setDependencies(rn487xBLEFeatureHeaderCallback,["RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE"])
-	
-	##
+    
+    ##
     #Add RNBD_BLE Interface files
     rnbdBLEInterfaceSourceFile = rnHostLib.createFileSymbol("RNBD_INTERFACE_C",None)
     rnbdBLEInterfaceSourceFile.setSourcePath("driver/templates/rnbd_interface.c.ftl")
@@ -1411,7 +1426,7 @@ def instantiateComponent(rnHostLib):
     rnbdBLEInterfaceSourceFile.setMarkup(True)
     rnbdBLEInterfaceSourceFile.setEnabled(True)
     rnbdBLEInterfaceSourceFile.setDependencies(rnbdBLEInterfaceSourceCallback,["RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE"])
-	
+    
   # # 
     rnbdBLEInterfaceHeaderFile = rnHostLib.createFileSymbol("RNBD_INTERFACE_H",None)
     rnbdBLEInterfaceHeaderFile.setSourcePath("driver/templates/rnbd_interface.h.ftl")
@@ -1423,8 +1438,8 @@ def instantiateComponent(rnHostLib):
     rnbdBLEInterfaceHeaderFile.setMarkup(True)
     rnbdBLEInterfaceHeaderFile.setEnabled(True)
     rnbdBLEInterfaceHeaderFile.setDependencies(rnbdBLEInterfaceHeaderCallback,["RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE"])
-	
-	##
+    
+    ##
     rnbdBLEFeatureSourceFile = rnHostLib.createFileSymbol("RNBD_C",None)
     rnbdBLEFeatureSourceFile.setSourcePath("driver/templates/rnbd.c.ftl")
     rnbdBLEFeatureSourceFile.setOutputName("rnbd.c")

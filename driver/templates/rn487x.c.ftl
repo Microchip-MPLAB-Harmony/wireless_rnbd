@@ -24,9 +24,6 @@
     SOFTWARE.
 */
 
-#ifndef RN487x_C
-#define RN487x_C
-
 #include "rn487x.h"
 #include "rn487x_interface.h"
 #include "definitions.h" 
@@ -113,9 +110,9 @@ bool RN487x_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen)
     for (index = 0; index < msgLen; index++)
     {
         resp = RN487x.Read();
-		<#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
+        <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
         UART_CDC_write(resp);
-		</#if>
+        </#if>
         if (resp != expectedMsg[index])
         {
             return false;
@@ -133,11 +130,11 @@ bool RN487x_ReadDefaultResponse(void)
     resp[0] = RN487x.Read();
     resp[1] = RN487x.Read();
     resp[2] = RN487x.Read();
-	<#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
+    <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
     UART_CDC_write(resp[0]);
     UART_CDC_write(resp[1]);
     UART_CDC_write(resp[2]);
-	</#if>
+    </#if>
     switch (resp[0])
     {
         case 'A':
@@ -581,5 +578,3 @@ static bool RN487x_FilterData(void)
     }
     return dataReady;
 }
-
-#endif  /* RN487X_C */

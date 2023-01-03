@@ -120,73 +120,73 @@ uint16_t __attribute__((cmse_nonsecure_entry)) CDC_SERCOM_Write(uint8_t pWrBuffe
 /* Non-secure callable (entry) RNBD functions*/
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_Init(void)
 {
-	return ${RNBD_MODULE_SELECTION}_Init();
+    return ${RNBD_MODULE_SELECTION}_Init();
 }
 
 void __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SendCmd(const uint8_t *cmd, uint8_t cmdLen)
 {
-	${RNBD_MODULE_SELECTION}_SendCmd(cmd,cmdLen);
+    ${RNBD_MODULE_SELECTION}_SendCmd(cmd,cmdLen);
 }
 
 uint8_t __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_GetCmd(const char *getCmd, uint8_t getCmdLen, char *getCmdResp)
 {
-	return ${RNBD_MODULE_SELECTION}_GetCmd(getCmd,getCmdLen, getCmdResp);
+    return ${RNBD_MODULE_SELECTION}_GetCmd(getCmd,getCmdLen, getCmdResp);
 
 }
 
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen)
 {
-	return ${RNBD_MODULE_SELECTION}_ReadMsg(expectedMsg, msgLen);
+    return ${RNBD_MODULE_SELECTION}_ReadMsg(expectedMsg, msgLen);
 }
 
 bool __attribute__((cmse_nonsecure_entry))${RNBD_MODULE_SELECTION}_Module_ReadDefaultResponse(void)
 {
-	return ${RNBD_MODULE_SELECTION}_ReadDefaultResponse();
+    return ${RNBD_MODULE_SELECTION}_ReadDefaultResponse();
 }
 
 void __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_WaitForMsg(const char *expectedMsg, uint8_t msgLen)
 {
-	${RNBD_MODULE_SELECTION}_WaitForMsg(expectedMsg,msgLen);
+    ${RNBD_MODULE_SELECTION}_WaitForMsg(expectedMsg,msgLen);
 }
 
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_EnterCmdMode(void)
 {
-	return ${RNBD_MODULE_SELECTION}_EnterCmdMode();
+    return ${RNBD_MODULE_SELECTION}_EnterCmdMode();
 }
 
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_EnterDataMode(void)
 {
-	return ${RNBD_MODULE_SELECTION}_EnterDataMode();
+    return ${RNBD_MODULE_SELECTION}_EnterDataMode();
 }
 
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SetName(const char *name, uint8_t nameLen)
 {
-	return ${RNBD_MODULE_SELECTION}_SetName(name, nameLen);
+    return ${RNBD_MODULE_SELECTION}_SetName(name, nameLen);
 }
 
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SetBaudRate(uint8_t baudRate)
 {
-	return ${RNBD_MODULE_SELECTION}_SetBaudRate(baudRate);
+    return ${RNBD_MODULE_SELECTION}_SetBaudRate(baudRate);
 }
 
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SetServiceBitmap(uint8_t serviceBitmap)
 {
-	return ${RNBD_MODULE_SELECTION}_SetServiceBitmap(serviceBitmap);
+    return ${RNBD_MODULE_SELECTION}_SetServiceBitmap(serviceBitmap);
 }
 
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SetFeaturesBitmap(uint16_t featuresBitmap)
 {
-	return ${RNBD_MODULE_SELECTION}_SetFeaturesBitmap(featuresBitmap);
+    return ${RNBD_MODULE_SELECTION}_SetFeaturesBitmap(featuresBitmap);
 }
 
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SetIOCapability(uint8_t ioCapability)
 {
-	return ${RNBD_MODULE_SELECTION}_SetIOCapability(ioCapability);
+    return ${RNBD_MODULE_SELECTION}_SetIOCapability(ioCapability);
 }
 
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SetPinCode(const char *pinCode, uint8_t pinCodeLen)
 {
-	return ${RNBD_MODULE_SELECTION}_SetPinCode(pinCode,pinCodeLen);
+    return ${RNBD_MODULE_SELECTION}_SetPinCode(pinCode,pinCodeLen);
 }
 
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SetStatusMsgDelimiter(char preDelimiter, char postDelimiter)
@@ -201,42 +201,42 @@ bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SetOu
 
 ${RNBD_MODULE_SELECTION}_gpio_stateBitMap_t __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_GetInputsValues(${RNBD_MODULE_SELECTION}_gpio_ioBitMap_t getGPIOs)
 {
-	return ${RNBD_MODULE_SELECTION}_GetInputsValues(getGPIOs);
+    return ${RNBD_MODULE_SELECTION}_GetInputsValues(getGPIOs);
 }
 
 uint8_t * __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_GetRSSIValue(void)
 {
-	return ${RNBD_MODULE_SELECTION}_GetRSSIValue();
+    return ${RNBD_MODULE_SELECTION}_GetRSSIValue();
 }
 
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_RebootCmd(void)
 {
-	return ${RNBD_MODULE_SELECTION}_RebootCmd();
+    return ${RNBD_MODULE_SELECTION}_RebootCmd();
 }
 
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_FactoryReset(${RNBD_MODULE_SELECTION}_FACTORY_RESET_MODE_t resetMode)
 {
-	return ${RNBD_MODULE_SELECTION}_FactoryReset(resetMode);
+    return ${RNBD_MODULE_SELECTION}_FactoryReset(resetMode);
 }
 
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_Disconnect(void)
 {
-	return ${RNBD_MODULE_SELECTION}_Disconnect();
+    return ${RNBD_MODULE_SELECTION}_Disconnect();
 }
 
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SetAsyncMessageHandler(char* pBuffer, uint8_t len)
 {
-	return  ${RNBD_MODULE_SELECTION}_SetAsyncMessageHandler(pBuffer,len);
+    return  ${RNBD_MODULE_SELECTION}_SetAsyncMessageHandler(pBuffer,len);
 }
 
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_DataReady(void)
 {
-	return ${RNBD_MODULE_SELECTION}_DataReady();
+    return ${RNBD_MODULE_SELECTION}_DataReady();
 }
 
 uint8_t __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_Read(void)
 {
-	return ${RNBD_MODULE_SELECTION}_Read();
+    return ${RNBD_MODULE_SELECTION}_Read();
 }
 </#if>
 

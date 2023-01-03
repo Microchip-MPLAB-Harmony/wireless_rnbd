@@ -24,9 +24,6 @@
     SOFTWARE.
 */
 
-#ifndef RNBD_C
-#define RNBD_C
-
 #include "rnbd.h"
 #include "rnbd_interface.h"
 #include "definitions.h" 
@@ -113,9 +110,9 @@ bool RNBD_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen)
     for (index = 0; index < msgLen; index++)
     {
         resp = RNBD.Read();
-		<#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
+        <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
         UART_CDC_write(resp);
-		</#if>
+        </#if>
         if (resp != expectedMsg[index])
         {
             return false;
@@ -133,11 +130,11 @@ bool RNBD_ReadDefaultResponse(void)
     resp[0] = RNBD.Read();
     resp[1] = RNBD.Read();
     resp[2] = RNBD.Read();
-	<#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
+    <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
     UART_CDC_write(resp[0]);
     UART_CDC_write(resp[1]);
     UART_CDC_write(resp[2]);
-	</#if>
+    </#if>
     switch (resp[0])
     {
         case 'A':
@@ -581,5 +578,3 @@ static bool RNBD_FilterData(void)
     }
     return dataReady;
 }
-
-#endif /*RNBD_C*/

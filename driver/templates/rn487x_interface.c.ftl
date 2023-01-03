@@ -24,9 +24,6 @@
     OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
     SOFTWARE.
 */
-#ifndef RN487X_INTERFACE_C
-#define RN487X_INTERFACE_C
-
 #include <string.h>
 #include<stdio.h>
 #include "rn487x_interface.h"
@@ -294,17 +291,17 @@ uint8_t UART_CDC_Read(void)
 {
 <#if TRUST_ZONE_ENABLED = true>
     <#if SERCOM_CONSOLE_NON_SECURE?? && SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = true>
-	CDC_SERCOM_Read(cdcreadbuffer,1);
-	</#if>
-	<#if  (SERCOM_CONSOLE_NON_SECURE?? && CONSOLE_SERCOM_INST??)>
-	<#if (SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_CONSOLE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-	${CONSOLE_SERCOM_INST}_USART_Read(cdcreadbuffer,1);
-	</#if>
-	</#if>
+    CDC_SERCOM_Read(cdcreadbuffer,1);
+    </#if>
+    <#if  (SERCOM_CONSOLE_NON_SECURE?? && CONSOLE_SERCOM_INST??)>
+    <#if (SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_CONSOLE_NON_SECURE = true && RNBD_NON_SECURE = true)>
+    ${CONSOLE_SERCOM_INST}_USART_Read(cdcreadbuffer,1);
+    </#if>
+    </#if>
 <#else>
-	<#if CONSOLE_SERCOM_INST??>
-	${CONSOLE_SERCOM_INST}_USART_Read(cdcreadbuffer,1);
-	</#if>
+    <#if CONSOLE_SERCOM_INST??>
+    ${CONSOLE_SERCOM_INST}_USART_Read(cdcreadbuffer,1);
+    </#if>
 </#if>
     return *(uint8_t*)cdcreadbuffer;
 }
@@ -312,39 +309,39 @@ uint8_t UART_CDC_Read(void)
 <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
 void UART_CDC_write(uint8_t buffer)
 {
-	<#if TRUST_ZONE_ENABLED = true>
+    <#if TRUST_ZONE_ENABLED = true>
     <#if SERCOM_CONSOLE_NON_SECURE?? && SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = true>
-	CDC_SERCOM_Write(buffer,1);
-	</#if>
-	<#if (SERCOM_CONSOLE_NON_SECURE?? && CONSOLE_SERCOM_INST??)>
-	<#if (SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_CONSOLE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-	${CONSOLE_SERCOM_INST}_USART_Write(&buffer, 1);
-	</#if>
-	</#if>
-	<#else>
-	<#if CONSOLE_SERCOM_INST??>
-	${CONSOLE_SERCOM_INST}_USART_Write(&buffer, 1);
-	</#if>
-	</#if>
+    CDC_SERCOM_Write(buffer,1);
+    </#if>
+    <#if (SERCOM_CONSOLE_NON_SECURE?? && CONSOLE_SERCOM_INST??)>
+    <#if (SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_CONSOLE_NON_SECURE = true && RNBD_NON_SECURE = true)>
+    ${CONSOLE_SERCOM_INST}_USART_Write(&buffer, 1);
+    </#if>
+    </#if>
+    <#else>
+    <#if CONSOLE_SERCOM_INST??>
+    ${CONSOLE_SERCOM_INST}_USART_Write(&buffer, 1);
+    </#if>
+    </#if>
 }
 </#if>
 <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
 size_t UART_CDC_DataReady(void)
 {
-	<#if TRUST_ZONE_ENABLED = true>
+    <#if TRUST_ZONE_ENABLED = true>
     <#if SERCOM_CONSOLE_NON_SECURE?? && SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = true>
-	return CDC_SERCOM_ReadCountGet();
-	</#if>
-	<#if  (SERCOM_CONSOLE_NON_SECURE?? && CONSOLE_SERCOM_INST??)>
-	<#if (SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_CONSOLE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-	return ${CONSOLE_SERCOM_INST}_USART_ReadCountGet();
-	</#if>
-	</#if>
-	<#else>
-	<#if CONSOLE_SERCOM_INST??>
-	return ${CONSOLE_SERCOM_INST}_USART_ReadCountGet();
-	</#if>
-	</#if>
+    return CDC_SERCOM_ReadCountGet();
+    </#if>
+    <#if  (SERCOM_CONSOLE_NON_SECURE?? && CONSOLE_SERCOM_INST??)>
+    <#if (SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_CONSOLE_NON_SECURE = true && RNBD_NON_SECURE = true)>
+    return ${CONSOLE_SERCOM_INST}_USART_ReadCountGet();
+    </#if>
+    </#if>
+    <#else>
+    <#if CONSOLE_SERCOM_INST??>
+    return ${CONSOLE_SERCOM_INST}_USART_ReadCountGet();
+    </#if>
+    </#if>
     
 }
 </#if>
@@ -352,17 +349,17 @@ uint8_t UART_BLE_Read(void)
 {
 <#if TRUST_ZONE_ENABLED = true>
     <#if SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = true>
-	BLE_SERCOM_Read(readbuffer,1);
-	</#if>
-	<#if (SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INST??)>
-	<#if (SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_INTERFACE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-	${SERCOM_INST}_USART_Read(readbuffer,1);
-	</#if>
-	</#if>
+    BLE_SERCOM_Read(readbuffer,1);
+    </#if>
+    <#if (SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INST??)>
+    <#if (SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_INTERFACE_NON_SECURE = true && RNBD_NON_SECURE = true)>
+    ${SERCOM_INST}_USART_Read(readbuffer,1);
+</#if>
+    </#if>
 <#else>
-	<#if SERCOM_INST??>
-	${SERCOM_INST}_USART_Read(readbuffer,1);
-	</#if>
+    <#if SERCOM_INST??>
+    ${SERCOM_INST}_USART_Read(readbuffer,1);
+    </#if>
 </#if>
     return *(uint8_t*)readbuffer;
 }
@@ -371,17 +368,17 @@ void UART_BLE_write(uint8_t buffer)
 {
 <#if TRUST_ZONE_ENABLED = true>
    <#if SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = true>
-	 BLE_SERCOM_Write(buffer,1);
-	</#if>
-	<#if (SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INST??)>
-	<#if (SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_INTERFACE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-	${SERCOM_INST}_USART_Write(&buffer, 1);
-	</#if>
-	</#if>
+     BLE_SERCOM_Write(buffer,1);
+    </#if>
+    <#if (SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INST??)>
+    <#if (SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_INTERFACE_NON_SECURE = true && RNBD_NON_SECURE = true)>
+    ${SERCOM_INST}_USART_Write(&buffer, 1);
+    </#if>
+    </#if>
 <#else>
-	<#if SERCOM_INST??>	
-	${SERCOM_INST}_USART_Write(&buffer, 1);
-	</#if>
+    <#if SERCOM_INST??>	
+    ${SERCOM_INST}_USART_Write(&buffer, 1);
+    </#if>
 </#if>
 }
 
@@ -389,17 +386,17 @@ size_t UART_BLE_DataReady(void)
 {
 <#if TRUST_ZONE_ENABLED = true>
     <#if SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = true>
-	return BLE_SERCOM_ReadCountGet();
-	</#if>
-	<#if (SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INST??)>
-	<#if (SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_INTERFACE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-	return ${SERCOM_INST}_USART_ReadCountGet();
-	</#if>
-	</#if>
+    return BLE_SERCOM_ReadCountGet();
+    </#if>
+    <#if (SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INST??)>
+    <#if (SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_INTERFACE_NON_SECURE = true && RNBD_NON_SECURE = true)>
+    return ${SERCOM_INST}_USART_ReadCountGet();
+    </#if>
+    </#if>
 <#else>
-	<#if SERCOM_INST??>
-	return ${SERCOM_INST}_USART_ReadCountGet();
-	</#if>
+    <#if SERCOM_INST??>
+    return ${SERCOM_INST}_USART_ReadCountGet();
+    </#if>
 </#if>
 }
 
@@ -407,18 +404,18 @@ bool UART_BLE_TransmitDone(void)
 {
 <#if TRUST_ZONE_ENABLED = true>
     <#if SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = true>
-	 return BLE_SERCOM_TransmitComplete();
-	</#if>
-	<#if (SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INST??)>
-	<#if (SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_INTERFACE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-	return ${SERCOM_INST}_USART_WriteCountGet()? false:true;
-	</#if>
-	</#if>
-	<#else>
-	<#if SERCOM_INST??>
-	return ${SERCOM_INST}_USART_WriteCountGet()? false:true;
-	</#if>
-	</#if>
+     return BLE_SERCOM_TransmitComplete();
+    </#if>
+    <#if (SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INST??)>
+    <#if (SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_INTERFACE_NON_SECURE = true && RNBD_NON_SECURE = true)>
+    return ${SERCOM_INST}_USART_WriteCountGet()? false:true;
+    </#if>
+    </#if>
+    <#else>
+    <#if SERCOM_INST??>
+    return ${SERCOM_INST}_USART_WriteCountGet()? false:true;
+    </#if>
+    </#if>
 }
 
 static inline void RN487x_Delay(uint32_t delayCount)
@@ -450,7 +447,7 @@ static void RN487x_Reset(bool value)
 static void RN487x_IndicateRx(bool value)
 {
     <#if BT_RX_IND_PIN_CHECK_ENABLE>
-	if (true == value)
+    if (true == value)
     {
         BT_RX_IND_Clear();
     }
@@ -466,7 +463,7 @@ static void RN487x_IndicateRx(bool value)
 static void RN487x_SetSystemMode(RN487x_SYSTEM_MODES_t mode)
 {
 <#if BT_SYS_MODE_PIN_CHECK_ENABLE>
-	if (APPLICATION_MODE == mode)
+    if (APPLICATION_MODE == mode)
     {
         BT_MODE_Set();
     }
@@ -541,25 +538,25 @@ static void RN487x_MessageHandler(char* message)
 
 <#if BT_STATUS_PIN_CHECK_ENABLE>
 
-	int BT_Status_Ind1 = BT_STATUS1_Get();
+    int BT_Status_Ind1 = BT_STATUS1_Get();
     int BT_Status_Ind2 = BT_STATUS2_Get();
-	
+    
     if (!BT_Status_Ind1 && !BT_Status_Ind2)
     {
-	<#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
+    <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
         messageType = DISCONNECT_MSG;
-	</#if>
+    </#if>
         connected = false;
-		OTAComplete = false;
+     OTAComplete = false;
     }
     else if (BT_Status_Ind1 && BT_Status_Ind2)
     {
-	<#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
+    <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
         messageType = STREAM_OPEN_MSG;
-	</#if>
+    </#if>
         connected = true;
     }
-	else if (strstr(message, "OTA_REQ"))
+    else if (strstr(message, "OTA_REQ"))
     {
         OTAComplete = true;
         RN487x.Write('\r');
@@ -577,36 +574,36 @@ static void RN487x_MessageHandler(char* message)
     }
     else
     {
-	<#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
+    <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
         messageType = GENERAL_MSG;
-	<#else>
-	 // Left Intentionally Blank: For General Messages
-	</#if>
+    <#else>
+     // Left Intentionally Blank: For General Messages
+    </#if>
     }
-	<#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
+    <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
     RN487x_PrintMessage(message);
     RN487x_PrintMessageEnd();
     RN487x_PrintIndicatorCharacters(messageType);
-	</#if>
+    </#if>
 </#if>	
 
 <#if !BT_STATUS_PIN_CHECK_ENABLE>	
     if (strstr(message, "DISCONNECT"))
     {
-	<#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
+    <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
         messageType = DISCONNECT_MSG;
-	</#if>
+    </#if>
         connected = false;
-		OTAComplete = false;
+        OTAComplete = false;
     }
     else if (strstr(message, "STREAM_OPEN"))
     {
-	<#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
+    <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
         messageType = STREAM_OPEN_MSG;
-	</#if>
+    </#if>
         connected = true;
     }
-	else if (strstr(message, "OTA_REQ"))
+    else if (strstr(message, "OTA_REQ"))
     {
         OTAComplete = true;
         RN487x.Write('\r');
@@ -624,20 +621,18 @@ static void RN487x_MessageHandler(char* message)
     }
     else
     {
-	<#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
+    <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
         messageType = GENERAL_MSG;
-	<#else>
-	 // Left Intentionally Blank: For General Messages
-	</#if>
+    <#else>
+     // Left Intentionally Blank: For General Messages
+    </#if>
     }
-	<#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
+    <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
     RN487x_PrintMessage(message);
     RN487x_PrintMessageEnd();
     RN487x_PrintIndicatorCharacters(messageType);
-	</#if>	
-	
+    </#if>	
+    
 </#if>	
 }
 
-
-#endif

@@ -1,6 +1,6 @@
 # coding: utf-8
 ##############################################################################
-# Copyright (C) 2019-2020 Microchip Technology Inc. and its subsidiaries.
+# Copyright (C) 2019-2023 Microchip Technology Inc. and its subsidiaries.
 #
 # Subject to your compliance with these terms, you may use Microchip software
 # and any derivatives exclusively with Microchip products. It is your
@@ -28,12 +28,5 @@ rnHostComponent  = Module.CreateGeneratorComponent('RNBD_Dependency', 'RNBD', '/
 rnHostComponent.setDisplayType('HOST<->RNBD INTERFACE\n\n\n')
 rnHostComponent.setInstanceHeaderText("Dependencies")
 rnHostComponent.setInstanceText("Dependency ${INDEX}")
-#
-#rnHostComponent.addCapability('USART', 'drv_USART',None, False)
+
 rnHostComponent.addDependency("RNBD_USART_Dependency", "UART",'SERCOM',False, True)
-#rnHostComponent.addDependency("Delay_Service_Dependency", "TMR",'Delay_Service',False, True) 
-#rnHostComponent.addDependency("Console_Service_Dependency", "RNBD_Interface",None,False, True)
-
-
-
-

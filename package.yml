@@ -1,13 +1,30 @@
 package:
   format-version: "1.0.0"
-  name: "replaceme"
+  name: "wireless_system_service_samx_rnbd451_lib"
   type: "api"
   status: "beta"
   required: false
   version: "1.0.0"
 
   dependencies:
+    - name: "crypto"
+      type: "package"
+      version: "3.10.0"
+    - name: "core"
+      type: "package"
+      version: "3.10.0"
     - name: "csp"
       type: "package"
-      version: "3.14.0"
-
+      version: "3.10.0"
+    - name: "bsp"
+      type: "package"
+      version: "3.10.0"
+    - name: "CMSIS-FreeRTOS"
+      type: "package"
+      version: "10.3.1"
+    - name: "dev_packs"
+      type: "package"
+      version: "3.9.0"
+    - name: "net"
+      type: "package"
+      version: "3.10.0"

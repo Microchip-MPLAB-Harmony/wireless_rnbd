@@ -60,9 +60,9 @@ static char statusBuffer[MAX_BUFFER_SIZE];
 
 /**
  * \ingroup RN_Example
- * \brief Example Implmentation of Transparent UART
+ * \brief Example Implementation of Transparent UART
  *        This can be connected to a Smart BLE 'Terminal' 
- *        application for simple data exchange demostration.
+ *        application for simple data exchange demonstration.
  *<#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RN487x">
  * For more details, refer RN487X user guide.
  <#else>
@@ -107,19 +107,19 @@ bool RN487x_Example_Initialized(void)
 {
     bool exampleIsInitialized = false;
     
-	<#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
+    <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
     exampleIsInitialized = RNBD_SetAsyncMessageHandler(statusBuffer, sizeof(statusBuffer));
-	<#else>
-	exampleIsInitialized = RN487x_SetAsyncMessageHandler(statusBuffer, sizeof(statusBuffer));
-	</#if>
+    <#else>
+    exampleIsInitialized = RN487x_SetAsyncMessageHandler(statusBuffer, sizeof(statusBuffer));
+    </#if>
     
     if (exampleIsInitialized == true)
     {
-	   <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
+       <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
         RNBD_Example_Run();
-		<#else>
-		RN487x_Example_Run();
-		</#if>
+        <#else>
+        RN487x_Example_Run();
+        </#if>
     }
     return (false);     // ^ Held if Successful; Return failure if reaching this.
 }
@@ -132,11 +132,11 @@ static void RN487x_Example_Run(void)
     
     while(1)
     {
-	    <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
+        <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
         if (true == RNBD_Example_TransparentUart())
-		<#else>
-		if (true == RN487x_Example_TransparentUart())
-		</#if>
+        <#else>
+        if (true == RN487x_Example_TransparentUart())
+        </#if>
         {
             // Connected
         }
@@ -153,7 +153,7 @@ static bool RN487x_Example_TransparentUart(void)
 </#if>
 {
     bool isConnected,isOTAComplete;
-	<#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
+    <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
    isConnected = RNBD_IsConnected();
    isOTAComplete = RNBD_IsOTAComplete();
    <#else>
@@ -165,24 +165,24 @@ static bool RN487x_Example_TransparentUart(void)
    {
     <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
        while (RNBD_DataReady())
-	<#else>
-	    while (RN487x_DataReady())
-	</#if>
+    <#else>
+        while (RN487x_DataReady())
+    </#if>
        {
-	   <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
+       <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
            UART_CDC_write(RNBD_Read());
-	   <#else>
-	       UART_CDC_write(RN487x_Read());
-	   </#if>
+       <#else>
+           UART_CDC_write(RN487x_Read());
+       </#if>
        }
        
        while (UART_CDC_DataReady())
        {
-	       <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
+           <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
            RNBD.Write(UART_CDC_Read());
-		   <#else>
-		   RN487x.Write(UART_CDC_Read());
-		   </#if>
+           <#else>
+           RN487x.Write(UART_CDC_Read());
+           </#if>
        }
        
    }
@@ -190,26 +190,26 @@ static bool RN487x_Example_TransparentUart(void)
     {
         
         <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
-		while (RNBD_DataReady())
-		<#else>
-		while (RN487x_DataReady())
-		</#if>
+        while (RNBD_DataReady())
+        <#else>
+        while (RN487x_DataReady())
+        </#if>
        {
-	       <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
+           <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
            UART_CDC_write(RNBD_Read());
-		   <#else>
-		   UART_CDC_write(RN487x_Read());
-		   </#if>
+           <#else>
+           UART_CDC_write(RN487x_Read());
+           </#if>
        }
         
        
         while (UART_CDC_DataReady())
         {
-		    <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
+            <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
             RNBD.Write(UART_CDC_Read());
-			<#else>
-			RN487x.Write(UART_CDC_Read());
-			</#if>
+            <#else>
+            RN487x.Write(UART_CDC_Read());
+            </#if>
         }
        
  
