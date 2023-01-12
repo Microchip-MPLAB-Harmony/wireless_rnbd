@@ -21,25 +21,21 @@
 # ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 # THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 ##############################################################################
+supportedDevices = ["PIC32MZ","SAMD21","SAML21","PIC32CM","SAME54"]
 
+notSupportedVariants = []
 def loadModule():
     print('Load Module: Harmony Wireless Service for SAMx Family')
     
-    SAM_Device_family =  {'ATSAME54',
-                          'ATSAMR34J18B',
-                          'PIC32CM5164LS00100'
-                          }
-    if Database.getSymbolValue("core", "PRODUCT_FAMILY") == "SAMD":
-       execfile(Module.getPath() + '/config/module_rn_host_library.py')
 
-    if Database.getSymbolValue("core", "PRODUCT_FAMILY") == "SAML":
-       execfile(Module.getPath() + '/config/module_rn_host_library.py')
+    deviceNode = ATDF.getNode("/avr-tools-device-file/devices")
+    deviceChild = deviceNode.getChildren()
+    deviceName = deviceChild[0].getAttribute("family")
+    for x in supportedDevices:
     
-    processor = Variables.get('__PROCESSOR')
-    print('processor={}'.format(processor))
+        if x in Variables.get("__PROCESSOR"):
+            if Variables.get("__PROCESSOR") not in notSupportedVariants:
     
-    if(processor in SAM_Device_family):
         execfile(Module.getPath() + '/config/module_rn_host_library.py')
-        #execfile(Module.getPath() + '/config/module_rn_TRP_UART_example.py')
 
 
