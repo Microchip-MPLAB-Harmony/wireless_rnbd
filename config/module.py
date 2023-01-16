@@ -21,21 +21,16 @@
 # ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 # THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 ##############################################################################
-supportedDevices = ["PIC32MZ","SAMD21","SAML21","PIC32CM","SAME54"]
+supportedDevicefamily = ["PIC32MZ","SAMD","SAML","PIC32CM","PIC32CMMC","PIC32MK","PIC32MX","PIC32MM1324","PIC32MZDA","PIC32MZEF","PIC32MZW","SAME"]
 
-notSupportedVariants = []
 def loadModule():
     print('Load Module: Harmony Wireless Service for SAMx Family')
     
-
     deviceNode = ATDF.getNode("/avr-tools-device-file/devices")
     deviceChild = deviceNode.getChildren()
     deviceName = deviceChild[0].getAttribute("family")
-    for x in supportedDevices:
-    
-        if x in Variables.get("__PROCESSOR"):
-            if Variables.get("__PROCESSOR") not in notSupportedVariants:
-    
-        execfile(Module.getPath() + '/config/module_rn_host_library.py')
+    for x in supportedDevicefamily:
+        if (deviceName in supportedDevicefamily):
+            execfile(Module.getPath() + '/config/module_rn_host_library.py')
 
 
