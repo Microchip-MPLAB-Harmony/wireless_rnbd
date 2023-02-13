@@ -181,7 +181,7 @@ bool RN487x_Init(void);
   * \param cmdLen RN487x command length
   * \return Nothing
   */
-void RN487x_SendCmd(const uint8_t *cmd, uint8_t cmdLen);
+void RN487x_SendCmd(const char *cmd, uint8_t cmdLen);
 
 /**
  * \ingroup RN487x
@@ -213,7 +213,7 @@ uint8_t RN487x_GetCmd(const char *getCmd, uint8_t getCmdLen, char *getCmdResp);
   * \retval true - Expected Message Received
   * \retval false - Otherwise
   */
-bool RN487x_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen);
+bool RN487x_ReadMsg(const char *expectedMsg, uint8_t msgLen);
 
  /**
   * \ingroup RN487x
@@ -226,20 +226,6 @@ bool RN487x_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen);
   * \retval false - Otherwise
   */
 bool RN487x_ReadDefaultResponse(void);
-
- /**
-  * \ingroup RN487x
-  * \brief Waits for specific message from RN487x.
-  * 
-  * This API takes input from application on the expected response/status 
-  * message. It waits until it receives expected message from RN487x.
-  * This helps to read the RN487x status messages.
-  * 
-  * \param expectedMsg Expected response/status message from RN487x
-  * \param msgLen Expected response/status message length
-  * \return Nothing
-  */
-void RN487x_WaitForMsg(const char *expectedMsg, uint8_t msgLen);
 
  /**
   * \ingroup RN487x
@@ -265,6 +251,7 @@ bool RN487x_EnterCmdMode(void);
   */
 bool RN487x_EnterDataMode(void);
 
+
  /**
   * \ingroup RN487x
   * \brief Sets device name.
@@ -278,146 +265,21 @@ bool RN487x_EnterDataMode(void);
   * \retval true - Sets device name
   * \retval false - Failure
   */
-bool RN487x_SetName(const char *name, uint8_t nameLen);
+//bool RN487x_SetName(const char *name, uint8_t nameLen);
 
  /**
   * \ingroup RN487x
-  * \brief Sets Modules communication Baud Rate.
+  * \brief Waits for specific message from RN487x.
   * 
-  * This routine sets the RN487x device Baud Rate. 
-  * For more details, refer SN RN487x should be in command mode.
+  * This API takes input from application on the expected response/status 
+  * message. It waits until it receives expected message from RN487x.
+  * This helps to read the RN487x status messages.
   * 
-  * \param name - (2) character hex value coordinate to Command options 2.4.5
-  * \return bool Status Result
-  * \retval true - Sets device name
-  * \retval false - Failure
+  * \param expectedMsg Expected response/status message from RN487x
+  * \param msgLen Expected response/status message length
+  * \return Nothing
   */
-bool RN487x_SetBaudRate(uint8_t baudRate);
-
- /**
-  * \ingroup RN487x
-  * \Sets the default supported services in RN487x.
-  * 
-  * This routine sets the supported services bitmap in RN487x. 
-  * The service flag values can be found in RN487X_DEFAULT_SERVICE_BITMAP_t. 
-  * For more details, refer SS command in RN4870-71 user guide.
-  * 
-  * \preconditions RN487x should be in command mode.
-  * \param serviceBitmap - Supported services bitmap in RN487x 
-  * \param name - nameLen - Device name length
-  * \return bool Status Result
-  * \retval true - Sets service bitmap
-  * \retval false - Failure
-  */
-bool RN487x_SetServiceBitmap(uint8_t serviceBitmap);
-
- /**
-  * \ingroup RN487x
-  * \Sets the supported features of RN487x.
-  * 
-  * This routine sets the supported features bitmap of RN487X. 
-  * The features list can be found in RND_FEATURES_BITMAP_t. 
-  * For more details, refer SR command in RN487x user guide.
-  * 
-  * \preconditions RN487x should be in command mode.
-  * \param featuresBitmap - Supported features bitmap in RN487X 
-  * \return bool Status Result
-  * \retval true - Sets features bitmap
-  * \retval false - Failure
-  */
-bool RN487x_SetFeaturesBitmap(uint16_t featuresBitmap);
-
- /**
-  * \ingroup RN487x
-  * \Sets the IO capability of RN487x and the system.
-  * 
-  * This routine sets the IO capability of RN487X and the system. This will be 
-  * used to determine BLE authentication method. The possible IO capabilities 
-  * can be found in RND_SET_IO_CAPABILITY_t. For more details, refer SA 
-  * command in RN487x user guide.
-  * 
-  * \preconditions RN487x should be in command mode.
-  * \param ioCapability - IO capability of RN487x 
-  * \return bool Status Result
-  * \retval true - Sets IO capability
-  * \retval false - Failure
-  */
-bool RN487x_SetIOCapability(uint8_t ioCapability);
-
- /**
-  * \ingroup RN487x
-  * \Sets the security pin code on RN487x.
-  * 
-  * This routine sets the security pin code on RN487X. It can be 4 bytes or 6 bytes 
-  * in length. For more details, refer SP and SA command in RN4870-71 user guide.
-  * can be found in RND_SET_IO_CAPABILITY_t. For more details, refer SA 
-  * command in RN487x user guide.
-  * 
-  * \preconditions RN487x should be in command mode.
-  * \param pinCode - Security pin code
-  * \param pinCodeLen - Security pin code length (4 or 6) 
-  * \return bool Status Result
-  * \retval true - Sets security pin code
-  * \retval false - Failure
-  */
-bool RN487x_SetPinCode(const char *pinCode, uint8_t pinCodeLen);
-
- /**
-  * \ingroup RN487x
-  * \Sets status message delimiter on RN487x.
-  * 
-  * This routine sets the status message pre and post delimiters on RN487x.
-  * Though the pre and post delimiters can be upto four ASCII characters, 
-  * this API supports only single character pre and post delimiter.
-  * For more details, refer S% command in RN_BLE user guide.
-  * 
-  * \preconditions RN487x should be in command mode.
-  * \param preDelimiter - Character to be use for Pre-delimiter
-  * \param postDelimiter - Character to be use for Post-delimiter
-  * \return bool Status Result
-  * \retval true - Delimiters are Set to new characters
-  * \retval false - Failure
-  */
-bool RN487x_SetStatusMsgDelimiter(char preDelimiter, char postDelimiter);
-
- /**
-  * \ingroup RN487x
-  * \brief Configures RN487x GPIO pins as output, and sets state
-  * 
-  * This API configures the GPIO pins of the RN487x module as Outputs
-  * This API configures the High/Low state of pins set as outputs
-  * \param bitMap RN487x GPIO Output I/O & Low/High State
-  * \return Set Output Status
-  * \retval true - Success
-  * \retval false - Failure
-  */
-bool RN487x_SetOutputs(RN487x_gpio_bitmap_t bitMap);
-
- /**
-  * \ingroup RN487x
-  * \brief Get RN487x GPIO pins input state status (high/low)
-  * 
-  * This API request the GPIO pins state from the RN487x module Inputs
-  * This API reads specified GPIO pins current (high/low) state
-  * 
-  * \param getGPIOs RN487x pins to read state status from
-  * \return GPIO State values
-  * \retval RND_gpio_stateBitMap_t - 8bit value coordinated to possible pin options
-  */
-RN487x_gpio_stateBitMap_t RN487x_GetInputsValues(RN487x_gpio_ioBitMap_t getGPIOs);
-
- /**
-  * \ingroup RN487x
-  * \brief Gets Latest RSSI value.
-  * 
-  * This API gets the Latest RSSI value from RN487x. 
-  * For more details, refer M command in RN_BLE user guide.
-  * 
-  * \return RSSI command response
-  * \retval <RSSI>
-  * \retval ERR - Not Connected to RN487x
-  */
-uint8_t * RN487x_GetRSSIValue(void);
+//void RN487x_WaitForMsg(const char *expectedMsg, uint8_t msgLen);
 
  /**
   * \ingroup RN487x
@@ -493,5 +355,146 @@ bool RN487x_DataReady(void);
   * \return Data Read
   */
 uint8_t RN487x_Read(void);
+
+ /**
+  * \ingroup RN487x
+  * \brief Sets Modules communication Baud Rate.
+  * 
+  * This routine sets the RN487x device Baud Rate. 
+  * For more details, refer SN RN487x should be in command mode.
+  * 
+  * \param name - (2) character hex value coordinate to Command options 2.4.5
+  * \return bool Status Result
+  * \retval true - Sets device name
+  * \retval false - Failure
+  */
+//bool RN487x_SetBaudRate(uint8_t baudRate);
+
+ /**
+  * \ingroup RN487x
+  * \Sets the default supported services in RN487x.
+  * 
+  * This routine sets the supported services bitmap in RN487x. 
+  * The service flag values can be found in RN487X_DEFAULT_SERVICE_BITMAP_t. 
+  * For more details, refer SS command in RN4870-71 user guide.
+  * 
+  * \preconditions RN487x should be in command mode.
+  * \param serviceBitmap - Supported services bitmap in RN487x 
+  * \param name - nameLen - Device name length
+  * \return bool Status Result
+  * \retval true - Sets service bitmap
+  * \retval false - Failure
+  */
+//bool RN487x_SetServiceBitmap(uint8_t serviceBitmap);
+
+ /**
+  * \ingroup RN487x
+  * \Sets the supported features of RN487x.
+  * 
+  * This routine sets the supported features bitmap of RN487X. 
+  * The features list can be found in RND_FEATURES_BITMAP_t. 
+  * For more details, refer SR command in RN487x user guide.
+  * 
+  * \preconditions RN487x should be in command mode.
+  * \param featuresBitmap - Supported features bitmap in RN487X 
+  * \return bool Status Result
+  * \retval true - Sets features bitmap
+  * \retval false - Failure
+  */
+//bool RN487x_SetFeaturesBitmap(uint16_t featuresBitmap);
+
+ /**
+  * \ingroup RN487x
+  * \Sets the IO capability of RN487x and the system.
+  * 
+  * This routine sets the IO capability of RN487X and the system. This will be 
+  * used to determine BLE authentication method. The possible IO capabilities 
+  * can be found in RND_SET_IO_CAPABILITY_t. For more details, refer SA 
+  * command in RN487x user guide.
+  * 
+  * \preconditions RN487x should be in command mode.
+  * \param ioCapability - IO capability of RN487x 
+  * \return bool Status Result
+  * \retval true - Sets IO capability
+  * \retval false - Failure
+  */
+//bool RN487x_SetIOCapability(uint8_t ioCapability);
+
+ /**
+  * \ingroup RN487x
+  * \Sets the security pin code on RN487x.
+  * 
+  * This routine sets the security pin code on RN487X. It can be 4 bytes or 6 bytes 
+  * in length. For more details, refer SP and SA command in RN4870-71 user guide.
+  * can be found in RND_SET_IO_CAPABILITY_t. For more details, refer SA 
+  * command in RN487x user guide.
+  * 
+  * \preconditions RN487x should be in command mode.
+  * \param pinCode - Security pin code
+  * \param pinCodeLen - Security pin code length (4 or 6) 
+  * \return bool Status Result
+  * \retval true - Sets security pin code
+  * \retval false - Failure
+  */
+//bool RN487x_SetPinCode(const char *pinCode, uint8_t pinCodeLen);
+
+ /**
+  * \ingroup RN487x
+  * \Sets status message delimiter on RN487x.
+  * 
+  * This routine sets the status message pre and post delimiters on RN487x.
+  * Though the pre and post delimiters can be upto four ASCII characters, 
+  * this API supports only single character pre and post delimiter.
+  * For more details, refer S% command in RN_BLE user guide.
+  * 
+  * \preconditions RN487x should be in command mode.
+  * \param preDelimiter - Character to be use for Pre-delimiter
+  * \param postDelimiter - Character to be use for Post-delimiter
+  * \return bool Status Result
+  * \retval true - Delimiters are Set to new characters
+  * \retval false - Failure
+  */
+//bool RN487x_SetStatusMsgDelimiter(char preDelimiter, char postDelimiter);
+
+ /**
+  * \ingroup RN487x
+  * \brief Configures RN487x GPIO pins as output, and sets state
+  * 
+  * This API configures the GPIO pins of the RN487x module as Outputs
+  * This API configures the High/Low state of pins set as outputs
+  * \param bitMap RN487x GPIO Output I/O & Low/High State
+  * \return Set Output Status
+  * \retval true - Success
+  * \retval false - Failure
+  */
+//bool RN487x_SetOutputs(RN487x_gpio_bitmap_t bitMap);
+
+ /**
+  * \ingroup RN487x
+  * \brief Get RN487x GPIO pins input state status (high/low)
+  * 
+  * This API request the GPIO pins state from the RN487x module Inputs
+  * This API reads specified GPIO pins current (high/low) state
+  * 
+  * \param getGPIOs RN487x pins to read state status from
+  * \return GPIO State values
+  * \retval RND_gpio_stateBitMap_t - 8bit value coordinated to possible pin options
+  */
+//RN487x_gpio_stateBitMap_t RN487x_GetInputsValues(RN487x_gpio_ioBitMap_t getGPIOs);
+
+ /**
+  * \ingroup RN487x
+  * \brief Gets Latest RSSI value.
+  * 
+  * This API gets the Latest RSSI value from RN487x. 
+  * For more details, refer M command in RN_BLE user guide.
+  * 
+  * \return RSSI command response
+  * \retval <RSSI>
+  * \retval ERR - Not Connected to RN487x
+  */
+//uint8_t * RN487x_GetRSSIValue(void);
+
+
 
 #endif	/* RN487X_H */

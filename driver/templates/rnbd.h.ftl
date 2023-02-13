@@ -182,7 +182,7 @@ bool RNBD_Init(void);
   * \param cmdLen RNBD command length
   * \return Nothing
   */
-void RNBD_SendCmd(const uint8_t *cmd, uint8_t cmdLen);
+void RNBD_SendCmd(const char *cmd, uint8_t cmdLen);
 
 /**
  * \ingroup RNBD
@@ -214,7 +214,7 @@ uint8_t RNBD_GetCmd(const char *getCmd, uint8_t getCmdLen, char *getCmdResp);
   * \retval true - Expected Message Received
   * \retval false - Otherwise
   */
-bool RNBD_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen);
+bool RNBD_ReadMsg(const char *expectedMsg, uint8_t msgLen);
 
  /**
   * \ingroup RNBD
@@ -227,20 +227,6 @@ bool RNBD_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen);
   * \retval false - Otherwise
   */
 bool RNBD_ReadDefaultResponse(void);
-
- /**
-  * \ingroup RNBD
-  * \brief Waits for specific message from RNBD.
-  * 
-  * This API takes input from application on the expected response/status 
-  * message. It waits until it receives expected message from RNBD.
-  * This helps to read the RNBD status messages.
-  * 
-  * \param expectedMsg Expected response/status message from RNBD
-  * \param msgLen Expected response/status message length
-  * \return Nothing
-  */
-void RNBD_WaitForMsg(const char *expectedMsg, uint8_t msgLen);
 
  /**
   * \ingroup RNBD
@@ -265,160 +251,6 @@ bool RNBD_EnterCmdMode(void);
   * \retval false - Failure
   */
 bool RNBD_EnterDataMode(void);
-
- /**
-  * \ingroup RNBD
-  * \brief Sets device name.
-  * 
-  * This routine sets the RNBD device name. For more details, refer SN
-  * RNBD should be in command mode.
-  * 
-  * \param name - Device name [20 alphanumeric characters max]
-  * \param name - nameLen - Device name length
-  * \return bool Status Result
-  * \retval true - Sets device name
-  * \retval false - Failure
-  */
-bool RNBD_SetName(const char *name, uint8_t nameLen);
-
- /**
-  * \ingroup RNBD
-  * \brief Sets Modules communication Baud Rate.
-  * 
-  * This routine sets the RNBD device Baud Rate. 
-  * For more details, refer SN RNBD should be in command mode.
-  * 
-  * \param name - (2) character hex value coordinate to Command options 2.4.5
-  * \return bool Status Result
-  * \retval true - Sets device name
-  * \retval false - Failure
-  */
-bool RNBD_SetBaudRate(uint8_t baudRate);
-
- /**
-  * \ingroup RNBD
-  * \Sets the default supported services in RNBD.
-  * 
-  * This routine sets the supported services bitmap in RNBD. 
-  * The service flag values can be found in RNBD_DEFAULT_SERVICE_BITMAP_t. 
-  * For more details, refer SS command in RNBD user guide.
-  * 
-  * \preconditions RNBD should be in command mode.
-  * \param serviceBitmap - Supported services bitmap in RNBD 
-  * \param name - nameLen - Device name length
-  * \return bool Status Result
-  * \retval true - Sets service bitmap
-  * \retval false - Failure
-  */
-bool RNBD_SetServiceBitmap(uint8_t serviceBitmap);
-
- /**
-  * \ingroup RNBD
-  * \Sets the supported features of RNBD.
-  * 
-  * This routine sets the supported features bitmap of RNBD. 
-  * The features list can be found in RNBD_FEATURES_BITMAP_t. 
-  * For more details, refer SR command in RNBD user guide.
-  * 
-  * \preconditions RNBD should be in command mode.
-  * \param featuresBitmap - Supported features bitmap in RNBD 
-  * \return bool Status Result
-  * \retval true - Sets features bitmap
-  * \retval false - Failure
-  */
-bool RNBD_SetFeaturesBitmap(uint16_t featuresBitmap);
-
- /**
-  * \ingroup RNBD
-  * \Sets the IO capability of RNBD and the system.
-  * 
-  * This routine sets the IO capability of RNBD and the system. This will be 
-  * used to determine BLE authentication method. The possible IO capabilities 
-  * can be found in RND_SET_IO_CAPABILITY_t. For more details, refer SA 
-  * command in RNBD user guide.
-  * 
-  * \preconditions RNBD should be in command mode.
-  * \param ioCapability - IO capability of RNBD 
-  * \return bool Status Result
-  * \retval true - Sets IO capability
-  * \retval false - Failure
-  */
-bool RNBD_SetIOCapability(uint8_t ioCapability);
-
- /**
-  * \ingroup RNBD
-  * \Sets the security pin code on RNBD.
-  * 
-  * This routine sets the security pin code on RNBD. It can be 4 bytes or 6 bytes 
-  * in length. For more details, refer SP and SA command in RNBD user guide.
-  * can be found in RND_SET_IO_CAPABILITY_t. For more details, refer SA 
-  * command in RNBD user guide.
-  * 
-  * \preconditions RNBD should be in command mode.
-  * \param pinCode - Security pin code
-  * \param pinCodeLen - Security pin code length (4 or 6) 
-  * \return bool Status Result
-  * \retval true - Sets security pin code
-  * \retval false - Failure
-  */
-bool RNBD_SetPinCode(const char *pinCode, uint8_t pinCodeLen);
-
- /**
-  * \ingroup RNBD
-  * \Sets status message delimiter on RNBD.
-  * 
-  * This routine sets the status message pre and post delimiters on RNBD.
-  * Though the pre and post delimiters can be upto four ASCII characters, 
-  * this API supports only single character pre and post delimiter.
-  * For more details, refer S% command in RN_BLE user guide.
-  * 
-  * \preconditions RNBD should be in command mode.
-  * \param preDelimiter - Character to be use for Pre-delimiter
-  * \param postDelimiter - Character to be use for Post-delimiter
-  * \return bool Status Result
-  * \retval true - Delimiters are Set to new characters
-  * \retval false - Failure
-  */
-bool RNBD_SetStatusMsgDelimiter(char preDelimiter, char postDelimiter);
-
- /**
-  * \ingroup RNBD
-  * \brief Configures RNBD GPIO pins as output, and sets state
-  * 
-  * This API configures the GPIO pins of the RNBD module as Outputs
-  * This API configures the High/Low state of pins set as outputs
-  * \param bitMap RNBD GPIO Output I/O & Low/High State
-  * \return Set Output Status
-  * \retval true - Success
-  * \retval false - Failure
-  */
-bool RNBD_SetOutputs(RNBD_gpio_bitmap_t bitMap);
-
- /**
-  * \ingroup RNBD
-  * \brief Get RNBD GPIO pins input state status (high/low)
-  * 
-  * This API request the GPIO pins state from the RNBD module Inputs
-  * This API reads specified GPIO pins current (high/low) state
-  * 
-  * \param getGPIOs RNBD pins to read state status from
-  * \return GPIO State values
-  * \retval RND_gpio_stateBitMap_t - 8bit value coordinated to possible pin options
-  */
-RNBD_gpio_stateBitMap_t RNBD_GetInputsValues(RNBD_gpio_ioBitMap_t getGPIOs);
-
- /**
-  * \ingroup RNBD
-  * \brief Gets Latest RSSI value.
-  * 
-  * This API gets the Latest RSSI value from RNBD. 
-  * For more details, refer M command in RN_BLE user guide.
-  * 
-  * \return RSSI command response
-  * \retval <RSSI>
-  * \retval ERR - Not Connected to RNBD
-  */
-uint8_t * RNBD_GetRSSIValue(void);
 
  /**
   * \ingroup RNBD
@@ -494,5 +326,173 @@ bool RNBD_DataReady(void);
   * \return Data Read
   */
 uint8_t RNBD_Read(void);
+
+/**
+  * \ingroup RNBD
+  * \brief Waits for specific message from RNBD.
+  * 
+  * This API takes input from application on the expected response/status 
+  * message. It waits until it receives expected message from RNBD.
+  * This helps to read the RNBD status messages.
+  * 
+  * \param expectedMsg Expected response/status message from RNBD
+  * \param msgLen Expected response/status message length
+  * \return Nothing
+  */
+//void RNBD_WaitForMsg(const char *expectedMsg, uint8_t msgLen);
+
+ /**
+  * \ingroup RNBD
+  * \brief Sets device name.
+  * 
+  * This routine sets the RNBD device name. For more details, refer SN
+  * RNBD should be in command mode.
+  * 
+  * \param name - Device name [20 alphanumeric characters max]
+  * \param name - nameLen - Device name length
+  * \return bool Status Result
+  * \retval true - Sets device name
+  * \retval false - Failure
+  */
+//bool RNBD_SetName(const char *name, uint8_t nameLen);
+
+ /**
+  * \ingroup RNBD
+  * \brief Sets Modules communication Baud Rate.
+  * 
+  * This routine sets the RNBD device Baud Rate. 
+  * For more details, refer SN RNBD should be in command mode.
+  * 
+  * \param name - (2) character hex value coordinate to Command options 2.4.5
+  * \return bool Status Result
+  * \retval true - Sets device name
+  * \retval false - Failure
+  */
+//bool RNBD_SetBaudRate(uint8_t baudRate);
+
+ /**
+  * \ingroup RNBD
+  * \Sets the default supported services in RNBD.
+  * 
+  * This routine sets the supported services bitmap in RNBD. 
+  * The service flag values can be found in RNBD_DEFAULT_SERVICE_BITMAP_t. 
+  * For more details, refer SS command in RNBD user guide.
+  * 
+  * \preconditions RNBD should be in command mode.
+  * \param serviceBitmap - Supported services bitmap in RNBD 
+  * \param name - nameLen - Device name length
+  * \return bool Status Result
+  * \retval true - Sets service bitmap
+  * \retval false - Failure
+  */
+//bool RNBD_SetServiceBitmap(uint8_t serviceBitmap);
+
+ /**
+  * \ingroup RNBD
+  * \Sets the supported features of RNBD.
+  * 
+  * This routine sets the supported features bitmap of RNBD. 
+  * The features list can be found in RNBD_FEATURES_BITMAP_t. 
+  * For more details, refer SR command in RNBD user guide.
+  * 
+  * \preconditions RNBD should be in command mode.
+  * \param featuresBitmap - Supported features bitmap in RNBD 
+  * \return bool Status Result
+  * \retval true - Sets features bitmap
+  * \retval false - Failure
+  */
+//bool RNBD_SetFeaturesBitmap(uint16_t featuresBitmap);
+
+ /**
+  * \ingroup RNBD
+  * \Sets the IO capability of RNBD and the system.
+  * 
+  * This routine sets the IO capability of RNBD and the system. This will be 
+  * used to determine BLE authentication method. The possible IO capabilities 
+  * can be found in RND_SET_IO_CAPABILITY_t. For more details, refer SA 
+  * command in RNBD user guide.
+  * 
+  * \preconditions RNBD should be in command mode.
+  * \param ioCapability - IO capability of RNBD 
+  * \return bool Status Result
+  * \retval true - Sets IO capability
+  * \retval false - Failure
+  */
+//bool RNBD_SetIOCapability(uint8_t ioCapability);
+
+ /**
+  * \ingroup RNBD
+  * \Sets the security pin code on RNBD.
+  * 
+  * This routine sets the security pin code on RNBD. It can be 4 bytes or 6 bytes 
+  * in length. For more details, refer SP and SA command in RNBD user guide.
+  * can be found in RND_SET_IO_CAPABILITY_t. For more details, refer SA 
+  * command in RNBD user guide.
+  * 
+  * \preconditions RNBD should be in command mode.
+  * \param pinCode - Security pin code
+  * \param pinCodeLen - Security pin code length (4 or 6) 
+  * \return bool Status Result
+  * \retval true - Sets security pin code
+  * \retval false - Failure
+  */
+//bool RNBD_SetPinCode(const char *pinCode, uint8_t pinCodeLen);
+
+ /**
+  * \ingroup RNBD
+  * \Sets status message delimiter on RNBD.
+  * 
+  * This routine sets the status message pre and post delimiters on RNBD.
+  * Though the pre and post delimiters can be upto four ASCII characters, 
+  * this API supports only single character pre and post delimiter.
+  * For more details, refer S% command in RN_BLE user guide.
+  * 
+  * \preconditions RNBD should be in command mode.
+  * \param preDelimiter - Character to be use for Pre-delimiter
+  * \param postDelimiter - Character to be use for Post-delimiter
+  * \return bool Status Result
+  * \retval true - Delimiters are Set to new characters
+  * \retval false - Failure
+  */
+//bool RNBD_SetStatusMsgDelimiter(char preDelimiter, char postDelimiter);
+
+ /**
+  * \ingroup RNBD
+  * \brief Configures RNBD GPIO pins as output, and sets state
+  * 
+  * This API configures the GPIO pins of the RNBD module as Outputs
+  * This API configures the High/Low state of pins set as outputs
+  * \param bitMap RNBD GPIO Output I/O & Low/High State
+  * \return Set Output Status
+  * \retval true - Success
+  * \retval false - Failure
+  */
+//bool RNBD_SetOutputs(RNBD_gpio_bitmap_t bitMap);
+
+ /**
+  * \ingroup RNBD
+  * \brief Get RNBD GPIO pins input state status (high/low)
+  * 
+  * This API request the GPIO pins state from the RNBD module Inputs
+  * This API reads specified GPIO pins current (high/low) state
+  * 
+  * \param getGPIOs RNBD pins to read state status from
+  * \return GPIO State values
+  * \retval RND_gpio_stateBitMap_t - 8bit value coordinated to possible pin options
+  */
+//RNBD_gpio_stateBitMap_t RNBD_GetInputsValues(RNBD_gpio_ioBitMap_t getGPIOs);
+
+ /**
+  * \ingroup RNBD
+  * \brief Gets Latest RSSI value.
+  * 
+  * This API gets the Latest RSSI value from RNBD. 
+  * For more details, refer M command in RN_BLE user guide.
+  * 
+  * \return RSSI command response
+  * \retval <RSSI>
+  * \retval ERR - Not Connected to RNBD
+  */
+//uint8_t * RNBD_GetRSSIValue(void);
 
 #endif	/* RNBD_H */

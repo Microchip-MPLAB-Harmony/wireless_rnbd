@@ -1,6 +1,6 @@
 package:
   format-version: "1.0.0"
-  name: "wireless_system_service_samx_rnbd451_lib"
+  name: "wireless_rnbd"
   type: "api"
   status: "beta"
   required: false

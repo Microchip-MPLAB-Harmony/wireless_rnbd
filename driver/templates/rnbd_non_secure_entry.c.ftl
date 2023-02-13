@@ -17,7 +17,7 @@
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -91,7 +91,7 @@ uint16_t __attribute__((cmse_nonsecure_entry)) BLE_SERCOM_Write(uint8_t pWrBuffe
 #error "RNBD Sercom dependency 1 cannot be Non secure while RNBD is secure"
 </#if>
 
-<#if SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = true && CONSOLE_SERCOM_INST??>
+<#if SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = true && CONSOLE_SERCOM_INST?? && RNBD_EXAMPLE_SELECTION == "TRANSPARENT UART">
 /*Non Secure Entry for RNBD Console Sercom(Dependency1) API's for Trasnparent UART Example*/
 
 uint16_t __attribute__((cmse_nonsecure_entry)) CDC_SERCOM_Read(uint8_t* pRdBuffer, const uint16_t size)
@@ -123,7 +123,7 @@ bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_Init(
     return ${RNBD_MODULE_SELECTION}_Init();
 }
 
-void __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SendCmd(const uint8_t *cmd, uint8_t cmdLen)
+void __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SendCmd(const char *cmd, uint8_t cmdLen)
 {
     ${RNBD_MODULE_SELECTION}_SendCmd(cmd,cmdLen);
 }
@@ -134,7 +134,7 @@ uint8_t __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_Ge
 
 }
 
-bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen)
+bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_ReadMsg(const char *expectedMsg, uint8_t msgLen)
 {
     return ${RNBD_MODULE_SELECTION}_ReadMsg(expectedMsg, msgLen);
 }
@@ -143,11 +143,12 @@ bool __attribute__((cmse_nonsecure_entry))${RNBD_MODULE_SELECTION}_Module_ReadDe
 {
     return ${RNBD_MODULE_SELECTION}_ReadDefaultResponse();
 }
-
+/*
 void __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_WaitForMsg(const char *expectedMsg, uint8_t msgLen)
 {
     ${RNBD_MODULE_SELECTION}_WaitForMsg(expectedMsg,msgLen);
 }
+*/
 
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_EnterCmdMode(void)
 {
@@ -158,7 +159,7 @@ bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_Enter
 {
     return ${RNBD_MODULE_SELECTION}_EnterDataMode();
 }
-
+/*
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SetName(const char *name, uint8_t nameLen)
 {
     return ${RNBD_MODULE_SELECTION}_SetName(name, nameLen);
@@ -208,6 +209,7 @@ uint8_t * __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_
 {
     return ${RNBD_MODULE_SELECTION}_GetRSSIValue();
 }
+*/
 
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_RebootCmd(void)
 {

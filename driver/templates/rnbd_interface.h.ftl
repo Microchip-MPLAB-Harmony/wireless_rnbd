@@ -48,20 +48,20 @@ typedef enum
 typedef struct
 {
     // RNBD UART interface control
-    void (*Write)(uint8_t);
+    void (*Write)(uint8_t txData);
     uint8_t (*Read)(void);
     bool (*TransmitDone)(void);
     bool (*DataReady)(void);
     // RNBD RX_IND pin control
-    void (*IndicateRx)(bool);
+    void (*IndicateRx)(bool value);
     // RNBD Reset pin control
-    void (*ResetModule)(bool);
+    void (*ResetModule)(bool value);
     // RNBD Mode pin set
-    void (*SetSystemMode)(RNBD_SYSTEM_MODES_t);
+    void (*SetSystemMode)(RNBD_SYSTEM_MODES_t mode);
     // Delay API
-    void (*DelayMs)(uint32_t);
+    void (*DelayMs)(uint32_t delayCount);
     // Status Message Handler
-    void (*AsyncHandler)(char*);
+    void (*AsyncHandler)(char* message);
 }iRNBD_FunctionPtrs_t;
 
 extern const iRNBD_FunctionPtrs_t RNBD;
@@ -74,7 +74,6 @@ extern const iRNBD_FunctionPtrs_t RNBD;
  * \retval false - Not Connected
  */
 bool RNBD_IsConnected(void);
-bool RNBD_Interface_Init(void);
 <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
 uint8_t UART_CDC_Read(void);
 void UART_CDC_write(uint8_t buffer);

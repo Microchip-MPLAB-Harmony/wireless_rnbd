@@ -8,7 +8,7 @@
  *        create, and open a basic Transparent EUSART demonstration.
  */  
 /*
-    (c) 2019 Microchip Technology Inc. and its subsidiaries. 
+    (c) 2023 Microchip Technology Inc. and its subsidiaries. 
     
     Subject to your compliance with these terms, you may use Microchip software and any 
     derivatives exclusively with Microchip products. It is your responsibility to comply with third party 
@@ -56,12 +56,8 @@ static char statusBuffer[MAX_BUFFER_SIZE];
  * \def DEMO_PERIODIC_TRANSMIT_COUNT
  * This macro provide a definition for a periodic data transmission demostration
  */
-#define DEMO_PERIODIC_TRANSMIT_COUNT           (10000)
-/**
- * \def DEMO_PERIODIC_CHARACTER
- * This macro provide a character sent at a periodic rate for demostration
- */
-#define DEMO_PERIODIC_CHARACTER                 ('.')
+#define DEMO_PERIODIC_TRANSMIT_COUNT           (uint8_t)(100)
+
 /**
 <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
  * \ingroup RNBD_Example
@@ -98,7 +94,7 @@ static void RNBD_Example_Run(void);
 static void RN487x_Example_Run(void);
 </#if>
 
-volatile uint8_t readData;
+volatile static uint8_t readData;
 
 <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD"> 
 bool RNBD_Example_Initialized(void)
@@ -108,9 +104,9 @@ bool RN487x_Example_Initialized(void)
 {
     bool exampleIsInitialized = false;
     <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD"> 
-    exampleIsInitialized = RNBD_SetAsyncMessageHandler(statusBuffer, sizeof(statusBuffer));
+    exampleIsInitialized = RNBD_SetAsyncMessageHandler(statusBuffer, (uint8_t)sizeof(statusBuffer));
     <#else>
-    exampleIsInitialized = RN487x_SetAsyncMessageHandler(statusBuffer, sizeof(statusBuffer));
+    exampleIsInitialized = RN487x_SetAsyncMessageHandler(statusBuffer, (uint8_t)sizeof(statusBuffer));
     </#if>
     
     if (exampleIsInitialized == true)
@@ -130,7 +126,7 @@ static void RNBD_Example_Run(void)
 static void RN487x_Example_Run(void)
 </#if>
 {
-    while(1)
+    while(true)
     {
     <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
         if (true == RNBD_Example_BasicDataExchange())
@@ -182,15 +178,20 @@ static bool RN487x_Example_BasicDataExchange(void)
        if (periodicCounter == DEMO_PERIODIC_TRANSMIT_COUNT)
        {
         <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
-           RNBD.Write('.');
+           RNBD.Write('1');
         <#else>
-           RN487x.Write('.');
+           RN487x.Write('1');
         </#if>
            periodicCounter = 0;
        }
        else
        {
            periodicCounter++;
+           <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
+              RNBD.DelayMs(1);
+           <#else>
+              RN487x.DelayMs(1);
+           </#if>
        }
    }
    else

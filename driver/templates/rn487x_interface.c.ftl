@@ -3,7 +3,7 @@
  * \brief This file provides and interface between the RN487X and the hardware.
  */
 /*
-    (c) 2019 Microchip Technology Inc. and its subsidiaries. 
+    (c) 2023 Microchip Technology Inc. and its subsidiaries. 
     
     Subject to your compliance with these terms, you may use Microchip software and any 
     derivatives exclusively with Microchip products. It is your responsibility to comply with third party 
@@ -31,16 +31,17 @@
 <#if TRUST_ZONE_ENABLED = true>
 <#if (SERCOM_INTERFACE_NON_SECURE?? && SERCOM_CONSOLE_NON_SECURE??)>
 <#if (SERCOM_INTERFACE_NON_SECURE?? && SERCOM_CONSOLE_NON_SECURE??) && (SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = true) || (SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = true)>
-#include "../trustZone/rnbd/non_secure_entry.h"
+#include "../trustZone/rn487x/non_secure_entry.h"
 </#if>
 </#if>
 </#if>
 
 static bool connected = false,OTAComplete = false; //**< RN487x connection state */
 static uint32_t delay_ms_cycles = CPU_CLOCK_FREQUENCY/1000;
-uint8_t readbuffer[1];
+static uint8_t readbuffer[1];
+static size_t dummyread=0;
 <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
-uint8_t cdcreadbuffer[1];
+static uint8_t cdcreadbuffer[1];
 </#if> 
 
 /**
@@ -291,16 +292,16 @@ uint8_t UART_CDC_Read(void)
 {
 <#if TRUST_ZONE_ENABLED = true>
     <#if SERCOM_CONSOLE_NON_SECURE?? && SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = true>
-    CDC_SERCOM_Read(cdcreadbuffer,1);
+    dummyread=CDC_SERCOM_Read(cdcreadbuffer,1);
     </#if>
     <#if  (SERCOM_CONSOLE_NON_SECURE?? && CONSOLE_SERCOM_INST??)>
     <#if (SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_CONSOLE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-    ${CONSOLE_SERCOM_INST}_USART_Read(cdcreadbuffer,1);
+    dummyread=${CONSOLE_SERCOM_INST}_USART_Read(cdcreadbuffer,1);
     </#if>
     </#if>
 <#else>
     <#if CONSOLE_SERCOM_INST??>
-    ${CONSOLE_SERCOM_INST}_USART_Read(cdcreadbuffer,1);
+    dummyread=${CONSOLE_SERCOM_INST}_USART_Read(cdcreadbuffer,1);
     </#if>
 </#if>
     return *(uint8_t*)cdcreadbuffer;
@@ -311,16 +312,16 @@ void UART_CDC_write(uint8_t buffer)
 {
     <#if TRUST_ZONE_ENABLED = true>
     <#if SERCOM_CONSOLE_NON_SECURE?? && SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = true>
-    CDC_SERCOM_Write(buffer,1);
+    dummyread=CDC_SERCOM_Write(buffer,1);
     </#if>
     <#if (SERCOM_CONSOLE_NON_SECURE?? && CONSOLE_SERCOM_INST??)>
     <#if (SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_CONSOLE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-    ${CONSOLE_SERCOM_INST}_USART_Write(&buffer, 1);
+    dummyread=${CONSOLE_SERCOM_INST}_USART_Write(&buffer, 1);
     </#if>
     </#if>
     <#else>
     <#if CONSOLE_SERCOM_INST??>
-    ${CONSOLE_SERCOM_INST}_USART_Write(&buffer, 1);
+    dummyread=${CONSOLE_SERCOM_INST}_USART_Write(&buffer, 1);
     </#if>
     </#if>
 }
@@ -349,16 +350,16 @@ uint8_t UART_BLE_Read(void)
 {
 <#if TRUST_ZONE_ENABLED = true>
     <#if SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = true>
-    BLE_SERCOM_Read(readbuffer,1);
+    dummyread=BLE_SERCOM_Read(readbuffer,1);
     </#if>
     <#if (SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INST??)>
     <#if (SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_INTERFACE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-    ${SERCOM_INST}_USART_Read(readbuffer,1);
+    dummyread=${SERCOM_INST}_USART_Read(readbuffer,1);
 </#if>
     </#if>
 <#else>
     <#if SERCOM_INST??>
-    ${SERCOM_INST}_USART_Read(readbuffer,1);
+    dummyread=${SERCOM_INST}_USART_Read(readbuffer,1);
     </#if>
 </#if>
     return *(uint8_t*)readbuffer;
@@ -368,16 +369,16 @@ void UART_BLE_write(uint8_t buffer)
 {
 <#if TRUST_ZONE_ENABLED = true>
    <#if SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = true>
-     BLE_SERCOM_Write(buffer,1);
+     dummyread=BLE_SERCOM_Write(buffer,1);
     </#if>
     <#if (SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INST??)>
     <#if (SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_INTERFACE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-    ${SERCOM_INST}_USART_Write(&buffer, 1);
+    dummyread=${SERCOM_INST}_USART_Write(&buffer, 1);
     </#if>
     </#if>
 <#else>
     <#if SERCOM_INST??>	
-    ${SERCOM_INST}_USART_Write(&buffer, 1);
+    dummyread=${SERCOM_INST}_USART_Write(&buffer, 1);
     </#if>
 </#if>
 }
@@ -420,7 +421,7 @@ bool UART_BLE_TransmitDone(void)
 
 static inline void RN487x_Delay(uint32_t delayCount)
 {
-    if(delayCount > 0)
+    if(delayCount > 0U)
     {
         delayCount *= delay_ms_cycles;
         while(delayCount--)
@@ -482,22 +483,22 @@ static void RN487x_SetSystemMode(RN487x_SYSTEM_MODES_t mode)
 <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
 static inline void RN487x_PrintMessageStart(void)
 {
-    UART_CDC_write('<');
-    UART_CDC_write('<');
-    UART_CDC_write('<');
-    UART_CDC_write(' ');
+    UART_CDC_write((uint8_t)'<');
+    UART_CDC_write((uint8_t)'<');
+    UART_CDC_write((uint8_t)'<');
+    UART_CDC_write((uint8_t)' ');
 }
 </#if>
 <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
 static inline void RN487x_PrintMessageEnd(void)
 {
-    UART_CDC_write(' ');
-    UART_CDC_write('>');
-    UART_CDC_write('>');
-    UART_CDC_write('>');
-    UART_CDC_write(' ');
-    UART_CDC_write('\r');
-    UART_CDC_write('\n');
+    UART_CDC_write((uint8_t)' ');
+    UART_CDC_write((uint8_t)'>');
+    UART_CDC_write((uint8_t)'>');
+    UART_CDC_write((uint8_t)'>');
+    UART_CDC_write((uint8_t)' ');
+    UART_CDC_write((uint8_t)'\r');
+    UART_CDC_write((uint8_t)'\n');
 }
 </#if>
 <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
@@ -505,11 +506,11 @@ static inline void RN487x_PrintIndicatorCharacters(RN487x_MESSAGE_TYPE msgType)
 {
     if (DISCONNECT_MSG == msgType)
     {
-        UART_CDC_write('[');
+        UART_CDC_write((uint8_t)'[');
     }
     else if (STREAM_OPEN_MSG == msgType)
     {
-        UART_CDC_write(']');
+        UART_CDC_write((uint8_t)']');
     }
     else
     {
@@ -524,7 +525,7 @@ static inline void RN487x_PrintMessage(char* passedMessage)
     strcpy(printCharacter, passedMessage);
     for (uint8_t messageIndex = 0; messageIndex < strlen(passedMessage); messageIndex++)
     {
-       UART_CDC_write(printCharacter[messageIndex]);  
+       UART_CDC_write((uint8_t)printCharacter[messageIndex]);  
     }
 }
 </#if>
@@ -588,7 +589,7 @@ static void RN487x_MessageHandler(char* message)
 </#if>	
 
 <#if !BT_STATUS_PIN_CHECK_ENABLE>	
-    if (strstr(message, "DISCONNECT"))
+    if (strstr(message, "DISCONNECT")!= NULL)
     {
     <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
         messageType = DISCONNECT_MSG;
@@ -596,14 +597,14 @@ static void RN487x_MessageHandler(char* message)
         connected = false;
         OTAComplete = false;
     }
-    else if (strstr(message, "STREAM_OPEN"))
+    else if (strstr(message, "STREAM_OPEN")!= NULL)
     {
     <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
         messageType = STREAM_OPEN_MSG;
     </#if>
         connected = true;
     }
-    else if (strstr(message, "OTA_REQ"))
+    else if (strstr(message, "OTA_REQ")!= NULL)
     {
         OTAComplete = true;
         RN487x.Write('\r');

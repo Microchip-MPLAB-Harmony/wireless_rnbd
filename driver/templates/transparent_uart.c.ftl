@@ -12,7 +12,7 @@
  *        create, and open a basic Transparent EUSART demonstration.
  */  
 /*
-    (c) 2019 Microchip Technology Inc. and its subsidiaries. 
+    (c) 2023 Microchip Technology Inc. and its subsidiaries. 
     
     Subject to your compliance with these terms, you may use Microchip software and any 
     derivatives exclusively with Microchip products. It is your responsibility to comply with third party 
@@ -108,9 +108,9 @@ bool RN487x_Example_Initialized(void)
     bool exampleIsInitialized = false;
     
     <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
-    exampleIsInitialized = RNBD_SetAsyncMessageHandler(statusBuffer, sizeof(statusBuffer));
+    exampleIsInitialized = RNBD_SetAsyncMessageHandler(statusBuffer, (uint8_t)sizeof(statusBuffer));
     <#else>
-    exampleIsInitialized = RN487x_SetAsyncMessageHandler(statusBuffer, sizeof(statusBuffer));
+    exampleIsInitialized = RN487x_SetAsyncMessageHandler(statusBuffer, (uint8_t)sizeof(statusBuffer));
     </#if>
     
     if (exampleIsInitialized == true)
@@ -130,7 +130,7 @@ static void RN487x_Example_Run(void)
 </#if>
 {
     
-    while(1)
+    while(true)
     {
         <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
         if (true == RNBD_Example_TransparentUart())

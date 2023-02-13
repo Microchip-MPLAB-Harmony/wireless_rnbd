@@ -3,7 +3,7 @@
  * \brief This file provides and interface between the RN487x and the hardware.
  */
 /*
-    (c) 2019 Microchip Technology Inc. and its subsidiaries. 
+    (c) 2023 Microchip Technology Inc. and its subsidiaries. 
     
     Subject to your compliance with these terms, you may use Microchip software and any 
     derivatives exclusively with Microchip products. It is your responsibility to comply with third party 
@@ -48,20 +48,20 @@ typedef enum
 typedef struct
 {
     // RN487x UART interface control
-    void (*Write)(uint8_t);
+    void (*Write)(uint8_t txData);
     uint8_t (*Read)(void);
     bool (*TransmitDone)(void);
     bool (*DataReady)(void);
     // RN487x RX_IND pin control
-    void (*IndicateRx)(bool);
+    void (*IndicateRx)(bool value);
     // RN487x Reset pin control
-    void (*ResetModule)(bool);
+    void (*ResetModule)(bool value);
     // RN487x Mode pin set
-    void (*SetSystemMode)(RN487x_SYSTEM_MODES_t);
+    void (*SetSystemMode)(RN487x_SYSTEM_MODES_t mode);
     // Delay API
-    void (*DelayMs)(uint32_t);
+    void (*DelayMs)(uint32_t delayCount);
     // Status Message Handler
-    void (*AsyncHandler)(char*);
+    void (*AsyncHandler)(char* message);
 }iRN487x_FunctionPtrs_t;
 
 extern const iRN487x_FunctionPtrs_t RN487x;
@@ -74,7 +74,6 @@ extern const iRN487x_FunctionPtrs_t RN487x;
  * \retval false - Not Connected
  */
 bool RN487x_IsConnected(void);
-bool RN487x_Interface_Init(void);
 <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
 uint8_t UART_CDC_Read(void);
 void UART_CDC_write(uint8_t buffer);

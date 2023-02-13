@@ -17,7 +17,7 @@
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2020 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -150,20 +150,20 @@ typedef union
 /* Non-secure RNBD callable functions */
 extern bool  ${RNBD_MODULE_SELECTION}_Module_Init(void);
 
-extern void  ${RNBD_MODULE_SELECTION}_Module_SendCmd(const uint8_t *cmd, uint8_t cmdLen);
+extern void  ${RNBD_MODULE_SELECTION}_Module_SendCmd(const char *cmd, uint8_t cmdLen);
 
 extern uint8_t  ${RNBD_MODULE_SELECTION}_Module_GetCmd(const char *getCmd, uint8_t getCmdLen, char *getCmdResp);
 
-extern bool  ${RNBD_MODULE_SELECTION}_Module_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen);
+extern bool  ${RNBD_MODULE_SELECTION}_Module_ReadMsg(const char *expectedMsg, uint8_t msgLen);
  
 extern bool ${RNBD_MODULE_SELECTION}_Module_ReadDefaultResponse(void);
 
-extern void  ${RNBD_MODULE_SELECTION}_Module_WaitForMsg(const char *expectedMsg, uint8_t msgLen);
+//extern void  ${RNBD_MODULE_SELECTION}_Module_WaitForMsg(const char *expectedMsg, uint8_t msgLen);
 
 extern bool  ${RNBD_MODULE_SELECTION}_Module_EnterCmdMode(void);
 
 extern bool  ${RNBD_MODULE_SELECTION}_Module_EnterDataMode(void);
-
+/*
 extern bool  ${RNBD_MODULE_SELECTION}_Module_SetName(const char *name, uint8_t nameLen);
 
 extern bool  ${RNBD_MODULE_SELECTION}_Module_SetBaudRate(uint8_t baudRate);
@@ -183,6 +183,7 @@ extern bool  ${RNBD_MODULE_SELECTION}_Module_SetOutputs(${RNBD_MODULE_SELECTION}
 extern ${RNBD_MODULE_SELECTION}_gpio_stateBitMap_t  ${RNBD_MODULE_SELECTION}_Module_GetInputsValues(${RNBD_MODULE_SELECTION}_gpio_ioBitMap_t getGPIOs);
  
 extern uint8_t *  ${RNBD_MODULE_SELECTION}_Module_GetRSSIValue(void);
+*/
 
 extern bool  ${RNBD_MODULE_SELECTION}_Module_RebootCmd(void);
 
