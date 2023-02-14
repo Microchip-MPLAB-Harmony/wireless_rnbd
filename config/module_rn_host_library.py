@@ -24,7 +24,7 @@
 
 print('Load Module: Harmony Wireless RN Host Library Driver')
 
-rnHostComponent  = Module.CreateGeneratorComponent('RNBD_Dependency', 'RNBD', '/Wireless/Drivers/BLE','driver/rn_host_library/rn_host_common.py', 'driver/rn_host_library/rn_host.py')
+rnHostComponent  = Module.CreateGeneratorComponent('RNBD_Dependency', 'RNBD', '/Wireless/Drivers/BLE','config/rn_host_common.py', 'config/rn_host.py')
 rnHostComponent.setDisplayType('HOST<->RNBD INTERFACE\n\n\n')
 rnHostComponent.setInstanceHeaderText("Dependencies")
 rnHostComponent.setInstanceText("Dependency ${INDEX}")

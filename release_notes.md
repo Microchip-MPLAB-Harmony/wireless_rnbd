@@ -3,7 +3,7 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes.
 
-## RNBD/RN487x v3.13.0 Release
+## RNBD/RN487x v1.0.0 Release
 ### NEW FEATURES SUPPORTED
  - Supports both RNBD and RN487x BLE Library
  - This Library uses (1) UART, (1) GPIO, and DELAY support at minimal
