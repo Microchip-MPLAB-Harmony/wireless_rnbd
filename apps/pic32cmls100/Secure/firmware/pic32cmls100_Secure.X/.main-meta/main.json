@@ -1,0 +1,79 @@
+{
+    "metaDataVersion": "1.0.0",
+    "category": "com.microchip.ide.project",
+    "content": {
+        "metaDataVersion": "1.3.0",
+        "name": "com.microchip.mcu32.mplabx.project.wireless_rnbd_pic32cmls100_secure",
+        "version": "1.0.0",
+        "displayName": "PIC32CM5164LS00100 RNBD451 Demo Application for Basic Data Exchange",
+        "projectName": "RNBD451_pic32cm_ls00_secure",
+        "shortDescription": "This code example demonstrates how to transfer Data between mobile APP and to the PC Terminal for rnbd451 ble devices using MCU32 microcontroller.",
+        "ide": {
+            "name": "MPLABX",
+            "semverRange": ">=6.0.5"
+        },
+        "compiler": [
+            {
+                "name": "XC32",
+                "semverRange": ">=4.2.0"
+            }
+        ],
+        "dfp": {
+            "name": "PIC32CM-LS_DFP",
+            "semverRange": ">=1.2.267"
+        },
+        "configurator": {
+            "name": "MCC",
+            "semverRange": ">=5.2.2"
+        },
+        "device": {
+            "metaDataVersion": "1.0.0",
+            "category": "com.microchip.portal.contentRef",
+            "content": {
+                "metaDataVersion": "1.0.0",
+                "category": "com.microchip.device",
+                "name": "PIC32CM5164LS00100",
+                "versionRange": ""
+            }
+        },
+        "author": "Microchip",
+        "subcategories": [
+            [
+                "Development Kit",
+                "PIC32CM LS00 Curiosity Pro Evaluation Kit"
+            ],
+            [
+                "Harmony",
+                "Peripherals"
+            ],
+            [
+                "Peripherals",
+                "TRUSTZONE"
+            ]
+        ],
+        "peripherals": [
+            "UART",
+            "GPIO"
+        ],
+        "keywords": [
+            "MCC",
+            "Harmony",
+            "PIC32CM5164LS00100",
+            "PIC32CM LE00/LS00/LS60 Family",
+            "wireless",
+            "BLE",
+            "Connection"
+        ],
+        "additionalData": {
+            "longDescription": {
+                "metaDataVersion": "1.0.0",
+                "category": "com.microchip.portal.fileRef",
+                "content": {
+                    "metaDataVersion": "1.0.0",
+                    "fileName": "./../../../README.md",
+                    "mimeType": "text/markdown"
+                }
+            }
+        }
+    }
+}
