@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2023" />
+<meta name="DC.rights.owner" content="(C) Copyright 2023" />
+<meta name="DC.type" content="topic" />
+<meta name="DC.title" content="Non Trust Zone Project Setup" />
+<meta name="DC.format" content="XHTML" />
+<meta name="DC.identifier" content="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D" />
+<meta name="DC.language" content="en-US" />
+<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
+<title>Non Trust Zone Project Setup</title>
+<meta name="Microsoft.Help.Id" content="GUID-F13AB7DF-B2B1-4744-BB89-7377853B81A8-GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D" />
+<meta name="Microsoft.Help.TocParent" content="GUID-F13AB7DF-B2B1-4744-BB89-7377853B81A8" />
+<meta name="Microsoft.Help.TocOrder" content="2" />
+<meta name="Microsoft.Help.Locale" content="en-US" />
+<meta name="Microsoft.Help.TopicLocale" content="en-US" />
+<meta name="Microsoft.Help.DisplayVersion" content="RNBD_RN487x_32Bit_UserGuide User Guide A 11/2022" />
+<script language="javascript">
+       
+       if (window.parent.location.protocol != 'file:') {
+				document.addEventListener('click', function(e) {
+				    if (e.target) {
+               if (e.target.nodeName == "A" ) {
+                    if (!e.target.target) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                              
+                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
+                      if (origUrl.length === 0) {
+                          origUrl = window.parent.location.href;
+                      }
+                      var href= e.target.getAttribute("href");
+                      var parts = href.split("#");
+          
+                      var url = "";
+                      if (parts.length == 2 ) {
+                        if (!parts[0].length) {
+                            url = window.parent.location.search.replace('?','')
+                        } else {
+                            url = parts[0].replace('.html','');
+                        }
+                      } else {
+                        url = parts[0].replace('.html','');
+                      }
+
+                      if (parts.length == 2) {
+                          url += "#" + parts[1];
+                      }
+    
+                      window.parent.location.href = origUrl + "?" + url;
+
+                      return false;
+                    }
+               }
+            }
+				});
+			}
+
+		</script><script language="javascript">
+         
+         function copyContent(content, button) {
+         
+            var textArea = document.createElement("textarea");
+            
+            // Place in the top-left corner of screen regardless of scroll position.
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            
+            // Ensure it has a small width and height. Setting to 1px / 1em
+            // doesn't work as this gives a negative w/h on some browsers.
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            
+            // We don't need padding, reducing the size if it does flash render.
+            textArea.style.padding = 0;
+            
+            // Clean up any borders.
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            
+            // Avoid flash of the white box if rendered for any reason.
+            textArea.style.background = 'transparent';
+            
+            textArea.value = content;
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+               var successful = document.execCommand('copy');
+               var msg = successful ? 'successful' : 'unsuccessful';
+               if (!button.classList.contains("copied")){
+                  button.textContent = "Copied";
+                  button.classList.add("copied");
+                  setTimeout(function(){
+                     button.textContent = "Copy";
+                     button.classList.remove("copied");
+                  },1000);
+               }
+            } catch (err) {
+               console.log('Oops, unable to copy');
+            }
+            
+            document.body.removeChild(textArea);
+         }
+         
+         function cpy(id, button) {
+            var element = document.getElementById(id);
+            var content = element.getAttribute("content");
+            
+            copyContent(content, button);
+         }
+         
+         document.addEventListener("DOMContentLoaded", function(event) {
+            document.querySelectorAll(".codeblock").forEach(function(elem) {
+               elem.style.position = "relative";
+               var copy = document.createElement("button");
+               copy.textContent = "Copy";
+               copy.setAttribute("class", "copy-code");
+               
+               var content = elem.textContent;
+               
+               copy.addEventListener("click", function(){
+                  copyContent(content, copy);
+               });
+               
+               elem.addEventListener("mouseenter", function(evt){
+                  elem.prepend(copy);
+               });
+            });
+            
+            document.querySelectorAll(".codeblock").forEach(function(elem) {
+               elem.addEventListener("mouseleave", function(evt){
+                  document.querySelector(".copy-code").remove();
+               });
+            });
+         });
+         
+      </script><script language="javascript">
+          
+          // Add the MathML namespace to html
+          var html = document.getElementsByTagName("html")[0],
+          head = document.getElementsByTagName("head")[0];
+          
+          var mathJax = document.createElement("script");
+          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
+          head.appendChild(mathJax);
+          
+          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
+          
+          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
+          
+          if (!inIframe()) { 
+          
+          var Default = "index.html?GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D"; 
+          
+          var displaylocation = "value" + window.location.href;
+          
+          var GUIDS = displaylocation.split('GUID');          
+          
+          if (displaylocation.indexOf('#GUID') != -1) {            
+          var First = GUIDS[1].split('.html');  
+          if (GUIDS[3]){First = GUIDS[2].split('.html');}
+          if (GUIDS[4]){First = GUIDS[3].split('.html');}
+          if (GUIDS[5]){First = GUIDS[4].split('.html');}
+          
+          var Second = GUIDS[2].split('#');   
+          if (GUIDS[3]){Second = GUIDS[3].split('#');}
+          if (GUIDS[4]){Second = GUIDS[4].split('#');}
+          if (GUIDS[5]){Second = GUIDS[5].split('#');}
+          
+          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
+          }                    
+          window.top.location = Default;
+          }       
+          
+        </script><link rel="stylesheet" type="text/css" href="syntax-highlight.css" /><style xml:space="">
+        
+          button.copy-code{
+            display:none;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border-radius:0.15em;
+            box-sizing: border-box;
+            text-decoration:none;
+            font-family:'Roboto',sans-serif;
+            text-transform:uppercase;
+            font-weight:400;
+            color:#FFFFFF;
+            background-color:#9c9c9c;
+            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+            text-align:center;
+            position:relative;
+            border: 0;
+            float: right;
+            border-radius: .5em;
+            cursor: pointer;
+          }
+          button.copy-code:active{
+            top:0.1em;
+          }
+          
+          pre:hover button.copy-code{
+            display: inline-block !important;
+          }
+          button.copy-code.copied {
+            cursor: default !important;
+          }
+          
+          
+          @media all and (max-width:30em){
+            button.copy-code{
+              display:block;
+              margin:0.4em auto;
+            }
+          }
+        
+        
+      </style><link rel="stylesheet" type="text/css" href="syntax-highlight.css" /></head>
+<body id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D">
+
+<h1 class="title topictitle1" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-100FFF58-9CAA-4988-8616-2891FC32B26A" style="">Non Trust Zone Project Setup</h1>
+<div class="body">
+<div class="p">
+            <ol class="ol" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__OL_V1F_SW3_XVB">
+                <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-5E736571-052B-482A-AD0F-B29B04420391"><span class="indent-level-default">1.</span>Create MPLAB Harmany Project with
+                    below device and DFP version <div class="p">
+                        <ul class="ul" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__UL_PG1_1X3_XVB">
+                            <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-D6BAB8A2-997B-457B-87B4-324E01FF845A">Device:
+                                ATSAML21J18B</li>
+
+                            <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-DA57D396-D4CE-4000-A82E-F00F5177D5F9">XC32 Compiler:
+                                v4.10</li>
+
+                            <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-E77DE5A2-9E52-496A-9E0A-C0E27479A728">DFP: SAML21_DFP
+                                (v3.6.105)</li>
+
+                        </ul>
+
+                    </div>
+<p class="p"><strong class="ph b">1.1 </strong> Create new 32-bit MCC Harmony Project as shown below</p>
+<div class="p">
+                        <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_A34_TDR_ZVB" src="GUID-1F5749EC-E7B4-4523-897D-672357706EC6-low.png" /><br />
+                    </div>
+<p class="p"><strong class="ph b">1.2</strong> Select the <strong class="ph b">Framework Path</strong> (Framework path must match
+                        SDK setup document)and select <strong class="ph b">Next</strong></p>
+<div class="p">
+                        <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_GVQ_YDR_ZVB" src="GUID-3D19DD6B-F7D5-4C0D-BEA5-77D8003FC859-low.png" /><br />
+                    </div>
+<p class="p"><strong class="ph b">1.3</strong> Select Project Folder and select Next</p>
+<div class="p">
+                        <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_L51_D2R_ZVB" src="GUID-F1A8A999-FE9E-4D8F-9DE7-1152FB95BB02-low.png" /><br />
+                    </div>
+<p class="p"><strong class="ph b">1.4</strong> Select the device "ATSAML21J18B" for standalone project using
+                        the SAML21 device family in the "Target Device" and click Finish</p>
+<div class="p">
+                        <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_UPY_32R_ZVB" src="GUID-DD58810C-576C-4209-91DB-EB30366EBD70-low.png" /><br />
+                    </div>
+<p class="p"><strong class="ph b">1.5</strong> MPLABx Code Configurator will be launched automatically. Then
+                        Select <strong class="ph b">"MPLAB Harmony"</strong> and Click Next for the Harmony Framework
+                        Path.</p>
+<div class="p">
+                        <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_CCJ_P2R_ZVB" src="GUID-294FFF44-97E6-44FA-B024-CF107A950910-low.png" /><br />
+                    </div>
+<p class="p"><strong class="ph b">1.6</strong> Select <strong class="ph b">"Finish"</strong></p>
+<div class="p">
+                        <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_YT5_1FR_ZVB" src="GUID-12B3E149-2BA4-49D7-8518-4E0AF4053503-low.png" /><br />
+                    </div>
+<p class="p"><strong class="ph b">1.7</strong> Project Graph window of the Configurator may have predefined
+                        components</p>
+<div class="p">
+                        <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_RM2_DFR_ZVB" src="GUID-B7BABF5E-8835-4450-AE8F-4756671D5621-low.png" /><br />
+                    </div>
+<p class="p">Right click on the project properties and verify the selected
+                        configuration</p>
+<div class="p">
+                        <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_GCL_YW3_XVB" src="GUID-AFFFE743-53B2-4936-955F-91C9AD625657-low.png" /><br />
+                    </div>
+</li>
+
+                <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-42CFA1A0-60AF-4E47-BAC4-5D38B346A1C6"><span class="indent-level-default">2.</span>After creating the project as
+                    shown in the above step go to device resource and verify RNBD was under Wireless component<div class="p">
+                        <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_ZBF_FY3_XVB" src="GUID-8D6AAFC9-672F-4CEF-8A42-B848019EE289-low.png" /><br />
+                    </div>
+<p class="p">Click on Plus icon under RNBD to add it under the Project Resource </p>
+<div class="p">
+                        <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_EXQ_1BJ_XVB" src="GUID-C082E138-AB16-4561-B37C-8167A1EB3862-low.png" /><br />
+                    </div>
+</li>
+
+                <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-CD2EAF7E-29F0-48AD-84D5-3D829C992591"><span class="indent-level-default">3.</span>Project Graph and RNBD/RN487x
+                    Module Configuration<div class="p">
+                        <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_VMZ_4JJ_XVB" src="GUID-F82D5FA9-3ECA-4676-9866-B7236D123102-low.png" /><br />
+                    </div>
+<p class="p">User can Select <strong class="ph b">RNBD or RN487x</strong> under the Select Module Type Drop
+                        Down either of the one as shown below</p>
+<div class="p">
+                        <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_IQZ_BPL_XVB" src="GUID-20676429-4B4E-45F0-AFB6-2F9F24A05C90-low.png" /><br />
+                    </div>
+</li>
+
+                <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-8192E04B-3B89-411E-9358-99A0B2F5F1FB"><span class="indent-level-default">4.</span>Selecting Example Application<div class="p">
+                        <ul class="ul" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__UL_AMV_GQJ_XVB">
+                            <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-D4610C7E-4B39-45ED-B109-EC999319A460">Expand the Drop down
+                                under Select Example Application option and choose any one as
+                                mentioned in the below<ul class="ul" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__UL_FPT_HQJ_XVB">
+                                    <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-66F104C6-6B9B-4A3B-902F-ED7A4807C0D9">Basic Data
+                                        Exchange</li>
+
+                                    <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-AF0B895C-7CBF-4231-A7BD-7634CD1FD16E">Transparent
+                                        UART Application</li>
+
+                                </ul>
+</li>
+
+                        </ul>
+
+                    </div>
+<div class="p">
+                        <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_AN4_QKJ_XVB" src="GUID-C4728BF0-3624-47F6-BB59-D0D48ABE4304-low.png" /><br />
+                    </div>
+<p class="p"><strong class="ph b">4.1. Basic Data Exchange:</strong></p>
+<div class="p">
+                        <ul class="ul" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__UL_VDW_DLJ_XVB">
+                            <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-6AC8B04B-A98B-4DB8-99D2-DD178059B31D">Basic Data Exchange
+                                uses only <strong class="ph b">ONE</strong> SERCOM for the Data Transmission <div class="p">
+                                    <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_IFK_5NJ_XVB" src="GUID-7362913E-214A-4A5B-8025-EB5978FD83AA-low.png" /><br />
+                                </div>
+<div class="p">
+                                    <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_DW2_G4J_XVB" src="GUID-6D4F728F-800C-44DA-8DBA-D38FE09C05E2-low.png" /><br />
+                                </div>
+<div class="p">
+                                    <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_ELK_1ML_XVB" src="GUID-E0F435FE-B243-4B32-83CB-733D18E84AFB-low.png" /><br />
+                                </div>
+<div class="p">
+                                    <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_TL4_JML_XVB" src="GUID-1278FF0D-6D3C-4B0F-AE4D-89F168518DAF-low.png" /><br />
+                                </div>
+<p class="p"><strong class="ph b">4.2. Transparent UART:</strong></p>
+<ul class="ul" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__UL_GY5_31T_ZVB">
+                                    <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-52F6BA79-5A3D-4C1D-9FC8-D918B5B621C1">Transparent
+                                        UART Application uses <strong class="ph b">TWO</strong> SERCOM as a Dependency for
+                                        the Data Transmission<div class="p">
+                                            <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_VDM_X4J_XVB" src="GUID-0B984F72-4BD1-4A0E-A500-8F5E47635AAE-low.png" /><br />
+                                        </div>
+<div class="p">
+                                            <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_I4C_3PJ_XVB" src="GUID-8DFAD094-DC6C-452C-8B76-A8959FA8751A-low.png" /><br />
+                                        </div>
+<p class="p">SERCOM0 Pin Setting is same as mentioned under Basic
+                                            Data Exchange above.</p>
+<div class="p">
+                                            <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_FVJ_SNL_XVB" src="GUID-65B59EB7-F897-4632-B540-900B80FA985B-low.png" /><br />
+                                        </div>
+<div class="p">
+                                            <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_GK2_LZM_RWB" src="GUID-B7BC4E37-70AB-474A-BC7C-63F1BF807757-low.png" /><br />
+                                        </div>
+</li>
+
+                                </ul>
+</li>
+
+                        </ul>
+
+                    </div>
+</li>
+
+                <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-DA0DCD92-8751-4EB8-883D-FCAEF8D3B1A7"><span class="indent-level-default">5.</span>PIN Settings for Example
+                        Application:<ul class="ul" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__UL_OPC_MQJ_XVB">
+                        <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-7BE8A920-6776-455E-B60D-580F463592C8">Basic Data Exchange Pin Settings<div class="p">
+                                <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_MV4_DRJ_XVB" src="GUID-7799CCD7-257F-4372-A8B4-38B82D8D2EC6-low.png" /><br />
+                            </div>
+</li>
+
+                        <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-C6174CEF-9416-4F07-8E49-37FCF0DCBB49">Transparent UART Pin Settings<div class="p">
+                                <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_ECW_RRJ_XVB" src="GUID-1B561392-5A32-454E-BA0F-68DBF4D5201F-low.png" /><br />
+                            </div>
+</li>
+
+                    </ul>
+</li>
+
+                <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-B4078181-1486-4A6A-8CF5-9FABB77D831A"><span class="indent-level-default">6.</span>Code Generation and adding the example application to main.c<div class="p">
+                        <ul class="ul" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__UL_MRW_WPL_XVB">
+                            <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-6A88F3BD-740A-4C6E-BC1A-ED93082A89C5">After making the all the above settings click on Generate in which
+                                code will be generated for RNBD or RN487x as per the selection<div class="p">
+                                    <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_QWF_YPL_XVB" src="GUID-1C36EEDF-61DE-4BCF-B7C8-E249E7AF5651-low.png" /><br />
+                                </div>
+</li>
+
+                            <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-346017A7-95C3-4B55-A967-C3F19EA6D962">Once after Generation
+                                is complete include the headers for <strong class="ph b">RNBD</strong> or <strong class="ph b">RN487x</strong> as
+                                shown below <ul class="ul" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__UL_V5H_YQL_XVB">
+                                    <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-09E3F8E2-B672-47E7-9248-00CDC00FF5A6">if <strong class="ph b">Select
+                                            Module Type</strong> is selected for <strong class="ph b">RNBD</strong>: #include
+                                        "examples/rnbd_example.h"</li>
+
+                                    <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-1564B329-1C2D-4762-BCA0-DF580EC261DA">if <strong class="ph b">Select
+                                            Module Type</strong> is selected for <strong class="ph b">RN487x</strong>: #include "examples/rn487x_example.h"<div class="p">
+                                            <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_Z1D_1RL_XVB" src="GUID-31D005A3-ADEE-47E8-8312-1BBCAF0AEE53-low.png" /><br />
+                                        </div>
+<p class="p">Call the function <strong class="ph b">RNBD_Example_Initialized(); or
+                                                RN487x_Example_Initialized();</strong> in <strong class="ph b">main()</strong>
+                                            after <strong class="ph b">SYS_Initialize ( NULL );</strong></p>
+</li>
+
+                                </ul>
+</li>
+
+                        </ul>
+
+                    </div>
+</li>
+
+                <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-C086363E-0E36-4998-96BC-2A4E48C2E547"><span class="indent-level-default">7.</span>Build the Generated Project:<div class="p">
+                        <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_KQQ_FSL_XVB" src="GUID-69F2DB5D-6EEE-4922-935E-A0A0FB0E19F8-low.png" /><br />
+                    </div>
+</li>
+
+                <li class="li" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__GUID-2A646F8B-9601-494B-AA08-0CB7B963397D"><span class="indent-level-default">8.</span>Program to the Development Board<div class="p">
+                        <br /><img class="image" id="GUID-3690B0D7-2719-4C6C-ABB9-D451DF7C4E7D__IMAGE_P5Z_MSL_XVB" src="GUID-86E3F2BD-3777-4E96-95C3-F1C8DED00136-low.png" /><br />
+                    </div>
+</li>
+
+            </ol>
+
+        </div>
+
+        <p class="p">This is the End of Non-Trust Zone project kindly refer <a class="xref" href="GUID-3A0EE1D4-F09E-458E-9362-41B80E7092CE.html">RNBD</a> or <a class="xref" href="GUID-C5AC2C77-2C95-4385-9E22-E460412BB771.html">RN487x</a> Running
+            Example Application</p>
+
+</div>
+
+</body>
+</html>

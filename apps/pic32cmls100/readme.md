@@ -238,7 +238,7 @@ This guide will walk you through setting up your development environment with al
 
             <br />
 
-            ![](media/GUID-69A388D7-1519-4EF6-8846-F793F2DA432E-low.png)
+            ![](media/GUID-B7BC4E37-70AB-474A-BC7C-63F1BF807757-low.png)
 
             <br />
 
@@ -473,11 +473,13 @@ This is the End of Non-Trust Zone project kindly refer [RNBD](#running-rnbd-exam
 
             <br />
 
+            ![](media/GUID-604E7160-985D-4B90-B0ED-2AEB3274EFC4-low.png)
+
             SERCOM2 Pin Setting is same as mentioned under Basic<br /> Data Exchange above.
 
             <br />
 
-            ![](media/GUID-3DDB61A1-88A2-4684-AD19-EFEEA45F6764-low.png)
+            ![](media/GUID-B7BC4E37-70AB-474A-BC7C-63F1BF807757-low.png)
 
             <br />
 

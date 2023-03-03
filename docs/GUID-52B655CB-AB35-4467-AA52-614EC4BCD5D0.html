@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2023" />
+<meta name="DC.rights.owner" content="(C) Copyright 2023" />
+<meta name="DC.type" content="topic" />
+<meta name="DC.title" content="RNBD Example1: Running Basic Data Exchange Example Application" />
+<meta name="DC.relation" scheme="URI" content="GUID-3A0EE1D4-F09E-458E-9362-41B80E7092CE.html" />
+<meta name="DC.format" content="XHTML" />
+<meta name="DC.identifier" content="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0" />
+<meta name="DC.language" content="en-US" />
+<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
+<title>RNBD Example1: Running Basic Data Exchange Example Application</title>
+<meta name="Microsoft.Help.Id" content="GUID-F13AB7DF-B2B1-4744-BB89-7377853B81A8-GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0" />
+<meta name="Microsoft.Help.TocParent" content="GUID-F13AB7DF-B2B1-4744-BB89-7377853B81A8-GUID-3A0EE1D4-F09E-458E-9362-41B80E7092CE" />
+<meta name="Microsoft.Help.TocOrder" content="0" />
+<meta name="Microsoft.Help.Locale" content="en-US" />
+<meta name="Microsoft.Help.TopicLocale" content="en-US" />
+<meta name="Microsoft.Help.DisplayVersion" content="RNBD_RN487x_32Bit_UserGuide User Guide A 11/2022" />
+<script language="javascript">
+       
+       if (window.parent.location.protocol != 'file:') {
+				document.addEventListener('click', function(e) {
+				    if (e.target) {
+               if (e.target.nodeName == "A" ) {
+                    if (!e.target.target) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                              
+                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
+                      if (origUrl.length === 0) {
+                          origUrl = window.parent.location.href;
+                      }
+                      var href= e.target.getAttribute("href");
+                      var parts = href.split("#");
+          
+                      var url = "";
+                      if (parts.length == 2 ) {
+                        if (!parts[0].length) {
+                            url = window.parent.location.search.replace('?','')
+                        } else {
+                            url = parts[0].replace('.html','');
+                        }
+                      } else {
+                        url = parts[0].replace('.html','');
+                      }
+
+                      if (parts.length == 2) {
+                          url += "#" + parts[1];
+                      }
+    
+                      window.parent.location.href = origUrl + "?" + url;
+
+                      return false;
+                    }
+               }
+            }
+				});
+			}
+
+		</script><script language="javascript">
+         
+         function copyContent(content, button) {
+         
+            var textArea = document.createElement("textarea");
+            
+            // Place in the top-left corner of screen regardless of scroll position.
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            
+            // Ensure it has a small width and height. Setting to 1px / 1em
+            // doesn't work as this gives a negative w/h on some browsers.
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            
+            // We don't need padding, reducing the size if it does flash render.
+            textArea.style.padding = 0;
+            
+            // Clean up any borders.
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            
+            // Avoid flash of the white box if rendered for any reason.
+            textArea.style.background = 'transparent';
+            
+            textArea.value = content;
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+               var successful = document.execCommand('copy');
+               var msg = successful ? 'successful' : 'unsuccessful';
+               if (!button.classList.contains("copied")){
+                  button.textContent = "Copied";
+                  button.classList.add("copied");
+                  setTimeout(function(){
+                     button.textContent = "Copy";
+                     button.classList.remove("copied");
+                  },1000);
+               }
+            } catch (err) {
+               console.log('Oops, unable to copy');
+            }
+            
+            document.body.removeChild(textArea);
+         }
+         
+         function cpy(id, button) {
+            var element = document.getElementById(id);
+            var content = element.getAttribute("content");
+            
+            copyContent(content, button);
+         }
+         
+         document.addEventListener("DOMContentLoaded", function(event) {
+            document.querySelectorAll(".codeblock").forEach(function(elem) {
+               elem.style.position = "relative";
+               var copy = document.createElement("button");
+               copy.textContent = "Copy";
+               copy.setAttribute("class", "copy-code");
+               
+               var content = elem.textContent;
+               
+               copy.addEventListener("click", function(){
+                  copyContent(content, copy);
+               });
+               
+               elem.addEventListener("mouseenter", function(evt){
+                  elem.prepend(copy);
+               });
+            });
+            
+            document.querySelectorAll(".codeblock").forEach(function(elem) {
+               elem.addEventListener("mouseleave", function(evt){
+                  document.querySelector(".copy-code").remove();
+               });
+            });
+         });
+         
+      </script><script language="javascript">
+          
+          // Add the MathML namespace to html
+          var html = document.getElementsByTagName("html")[0],
+          head = document.getElementsByTagName("head")[0];
+          
+          var mathJax = document.createElement("script");
+          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
+          head.appendChild(mathJax);
+          
+          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
+          
+          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
+          
+          if (!inIframe()) { 
+          
+          var Default = "index.html?GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0"; 
+          
+          var displaylocation = "value" + window.location.href;
+          
+          var GUIDS = displaylocation.split('GUID');          
+          
+          if (displaylocation.indexOf('#GUID') != -1) {            
+          var First = GUIDS[1].split('.html');  
+          if (GUIDS[3]){First = GUIDS[2].split('.html');}
+          if (GUIDS[4]){First = GUIDS[3].split('.html');}
+          if (GUIDS[5]){First = GUIDS[4].split('.html');}
+          
+          var Second = GUIDS[2].split('#');   
+          if (GUIDS[3]){Second = GUIDS[3].split('#');}
+          if (GUIDS[4]){Second = GUIDS[4].split('#');}
+          if (GUIDS[5]){Second = GUIDS[5].split('#');}
+          
+          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
+          }                    
+          window.top.location = Default;
+          }       
+          
+        </script><link rel="stylesheet" type="text/css" href="syntax-highlight.css" /><style xml:space="">
+        
+          button.copy-code{
+            display:none;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border-radius:0.15em;
+            box-sizing: border-box;
+            text-decoration:none;
+            font-family:'Roboto',sans-serif;
+            text-transform:uppercase;
+            font-weight:400;
+            color:#FFFFFF;
+            background-color:#9c9c9c;
+            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+            text-align:center;
+            position:relative;
+            border: 0;
+            float: right;
+            border-radius: .5em;
+            cursor: pointer;
+          }
+          button.copy-code:active{
+            top:0.1em;
+          }
+          
+          pre:hover button.copy-code{
+            display: inline-block !important;
+          }
+          button.copy-code.copied {
+            cursor: default !important;
+          }
+          
+          
+          @media all and (max-width:30em){
+            button.copy-code{
+              display:block;
+              margin:0.4em auto;
+            }
+          }
+        
+        
+      </style><link rel="stylesheet" type="text/css" href="syntax-highlight.css" /></head>
+<body id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0">
+
+<h1 class="title topictitle1" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__GUID-599FB7D5-2BDD-4906-B47F-EF391DAFDB9E" style="">RNBD Example1: Running Basic Data Exchange
+        Example Application</h1>
+    <div class="body">
+        <div class="p"><strong class="ph b">Basic Data Exchange:</strong>
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__TABLE_K1Q_FFS_JVB" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap"><span class="table--title-label">Table 1. </span></span></caption>
+                    <col style="width:100%" />
+                    <tbody class="tbody">
+                        <tr class="row">
+                            <td class="entry cellrowborder" style="vertical-align:middle;"><span>This example shows how an MCU can be programmed to transmit data
+                                to a smart phone over BLE. Here the MCU device will send Periodic
+                                Transmission of a single character when <strong class="ph b">STREAM_OPEN</strong> is
+                                processed through the Message Handler. This indicates to the MCU
+                                &amp; RNBD Module that the application is in a DATA STREAMING mode
+                                of operation; and can expect to hear data over the BLE
+                                    connection.<p class="p">#define DEMO_PERIODIC_TRANSMIT_COUNT
+                                    (10000)</p>
+<p class="p">#define DEMO_PERIODIC_CHARACTER (‘1’)</p>
+<p class="p">Are
+                                    used in the example can be found #defined at the top of
+                                    rnbd_example.c.</p>
+</span></td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+</div>
+</div>
+
+        <div class="p">
+            <br /><img class="image" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__IMAGE_OKN_BZL_ZVB" src="GUID-74E91F2D-EED5-4586-8AE1-3ED592753615-low.png" /><br />
+        </div>
+
+        <div class="p">
+            <ol class="ol" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__OL_AZ4_JGS_JVB">
+                <li class="li" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__GUID-87584F37-B31B-4788-B305-ADC77AC8DF0D"><span class="indent-level-default">1.</span>Download and Install Phone
+                    Application for demonstration:<ol class="ol" type="a" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__OL_DTG_KGS_JVB">
+                        <li class="li" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__GUID-35C541C3-FFBE-4D27-9835-D5662F5BF3B0"><span class="indent-level-default">a.</span><strong class="ph b">Microchip Bluetooth
+                                Data </strong>by <strong class="ph b">Microchip</strong> from the <a class="xref" href="https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097" target="_blank">App Store</a> or from <a class="xref" href="https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&amp;hl=en_IN&amp;gl=US" target="_blank">Google Play Store</a>.</li>
+
+                    </ol>
+</li>
+
+                <li class="li" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__GUID-0378857D-EF98-49EC-A827-060C201700A8"><span class="indent-level-default">2.</span>Launch the Phone
+                            Application<p class="p"><img class="image" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__IMAGE_I5J_GHS_JVB" src="GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png" /><img class="image" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__IMAGE_BTG_HHS_JVB" src="GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png" /></p>
+<p class="p"></p>
+<div class="p">
+                        <br /><img class="image" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__IMAGE_TPV_MHS_JVB" src="GUID-8A9EE9CE-AA92-4648-8364-09987F2E0526-low.png" /><br />
+                    </div>
+<p class="p"></p>
+<div class="p">Click on the 'BLE Smart' Sub Apps as shown below:<br /><img class="image" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__IMAGE_Y1N_XHS_JVB" src="GUID-E19A7964-8190-4C53-8BBA-6370A19C9829-low.png" /><br /></div>
+</li>
+
+                <li class="li" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__GUID-34C8A352-DFBC-4A61-BCDC-6B51FD46273D"><span class="indent-level-default">3.</span>The Application scans the area
+                    for Bluetooth devices within a range. Look for "RNBD" devices under the scanned list.<div class="p">
+                        <br /><img class="image" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__IMAGE_LJH_13S_JVB" src="GUID-E5C513CE-6227-42C1-9DA8-3FA2075112DF-low.png" /><br />
+                    </div>
+</li>
+
+                <li class="li" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__GUID-96CFCF06-8298-4653-BCBA-7A189A370771"><span class="indent-level-default">4.</span>On selecting the "RNBD" device
+                    from the list will be ready to connect with RNBD Module once you click on
+                    CONNECT Button<div class="p">
+                        <br /><img class="image" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__IMAGE_GHV_C3S_JVB" src="GUID-5962533D-A1D4-40DA-8933-A7224139EBA7-low.png" /><br />
+                    </div>
+</li>
+
+                <li class="li" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__GUID-597DD11E-15AB-4951-8687-BA7FAFA67CDC"><span class="indent-level-default">5.</span>Once connected, the Microchip
+                    Bluetooth App discovers all the services and characteristics supported by the
+                    RNBD451 device as shown in the following figure.<br /><img class="image" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__IMAGE_RFS_G3S_JVB" src="GUID-AC320004-8543-404F-806A-4C5E70E09E3B-low.png" /><br /></li>
+
+                <li class="li" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__GUID-CAA5DA59-DF24-43EA-9C7E-78986D98DE4D"><span class="indent-level-default">6.</span>Click the <strong class="ph b">Microchip Data
+                        Service</strong> Option and Select the <strong class="ph b">Microchip Data Characteristic</strong> and
+                    Write Notify Indication to receive the data in Mobile App.<br /><img class="image" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__IMAGE_JGB_J3S_JVB" src="GUID-65CA4B07-2C54-4799-A9AE-826FD83B676D-low.png" /><br /></li>
+
+                <li class="li" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__GUID-8103E98B-5F0D-49BC-9A2F-6071C7C840CD"><span class="indent-level-default">7.</span>Select <strong class="ph b">Listen for
+                        notifications</strong> on the application.<ul class="ul" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__UL_DQB_K3S_JVB">
+                        <li class="li" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__GUID-7BD6410B-C520-4560-827C-E4EC3D264D85">
+                            <p class="p">It may be required to "enable notification" access to the app on the
+                                phone.</p>
+
+                            <p class="p">Data will begin to Send at a Periodic Rate to the device.</p>
+
+                            <p class="p">Data will become visible beneath the <strong class="ph b">Notify/Listen Toggle</strong>
+                                Option.</p>
+
+                            <ul class="ul" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__UL_ST5_L3S_JVB">
+                                <li class="li with-image" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__GUID-7852DC03-BE23-4146-A722-FC6A17F2FD16"><strong class="ph b">Before
+                                        Enabling</strong> the <strong class="ph b">Notify/Indicate Toggle</strong> Button:<br /><img class="image" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__IMAGE_SPT_43S_JVB" src="GUID-C5223277-D33D-4366-8CA4-124D340F0554-low.png" /><br /><div class="p"><strong class="ph b">After Enabling</strong> the
+                                            <strong class="ph b">Notify/Indicate Toggle</strong> Button Mobile App can read
+                                        the data <strong class="ph b">31(Hex Value)</strong> which was sent from RNBD
+                                            Module.<br /><img class="image" id="GUID-52B655CB-AB35-4467-AA52-614EC4BCD5D0__IMAGE_YLX_Q3S_JVB" src="GUID-83D3CD62-CA8C-4C6C-88AF-CA15728E6392-low.png" /><br /></div>
+</li>
+
+                            </ul>
+
+                        </li>
+
+                    </ul>
+</li>
+
+            </ol>
+
+        </div>
+
+        <p class="p">This is the END of the Basic Data Exchange Example</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-3A0EE1D4-F09E-458E-9362-41B80E7092CE.html">Running RNBD and RN487x Example Application</a></div>
+</div>
+</div></body>
+</html>

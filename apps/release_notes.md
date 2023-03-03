@@ -24,9 +24,9 @@ New features added in this release are as follows:
 
 ### Development Tools
 
-- [MPLABÂ® X IDE v6.05](https://www.microchip.com/mplab/mplab-x-ide)
-- MPLABÂ® X IDE plug-ins:
-  - MPLABÂ® Code Configurator (MCC) `v5.2.2`
-- [MPLABÂ® XC32 C/C++ Compiler v4.20](https://www.microchip.com/mplab/compilers)
+- [MPLAB® X IDE v6.05](https://www.microchip.com/mplab/mplab-x-ide)
+- MPLAB® X IDE plug-ins:
+  - MPLAB® Code Configurator (MCC) `v5.2.2`
+- [MPLAB® XC32 C/C++ Compiler v4.20](https://www.microchip.com/mplab/compilers)
 - **DFP 1.2.267 or above version**
 

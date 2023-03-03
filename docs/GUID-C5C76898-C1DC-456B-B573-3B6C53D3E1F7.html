@@ -1,0 +1,965 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2023" />
+<meta name="DC.rights.owner" content="(C) Copyright 2023" />
+<meta name="DC.type" content="topic" />
+<meta name="DC.title" content="Trust Zone Project Setup" />
+<meta name="DC.format" content="XHTML" />
+<meta name="DC.identifier" content="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7" />
+<meta name="DC.language" content="en-US" />
+<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
+<title>Trust Zone Project Setup</title>
+<meta name="Microsoft.Help.Id" content="GUID-F13AB7DF-B2B1-4744-BB89-7377853B81A8-GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7" />
+<meta name="Microsoft.Help.TocParent" content="GUID-F13AB7DF-B2B1-4744-BB89-7377853B81A8" />
+<meta name="Microsoft.Help.TocOrder" content="3" />
+<meta name="Microsoft.Help.Locale" content="en-US" />
+<meta name="Microsoft.Help.TopicLocale" content="en-US" />
+<meta name="Microsoft.Help.DisplayVersion" content="RNBD_RN487x_32Bit_UserGuide User Guide A 11/2022" />
+<script language="javascript">
+       
+       if (window.parent.location.protocol != 'file:') {
+				document.addEventListener('click', function(e) {
+				    if (e.target) {
+               if (e.target.nodeName == "A" ) {
+                    if (!e.target.target) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                              
+                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
+                      if (origUrl.length === 0) {
+                          origUrl = window.parent.location.href;
+                      }
+                      var href= e.target.getAttribute("href");
+                      var parts = href.split("#");
+          
+                      var url = "";
+                      if (parts.length == 2 ) {
+                        if (!parts[0].length) {
+                            url = window.parent.location.search.replace('?','')
+                        } else {
+                            url = parts[0].replace('.html','');
+                        }
+                      } else {
+                        url = parts[0].replace('.html','');
+                      }
+
+                      if (parts.length == 2) {
+                          url += "#" + parts[1];
+                      }
+    
+                      window.parent.location.href = origUrl + "?" + url;
+
+                      return false;
+                    }
+               }
+            }
+				});
+			}
+
+		</script><script language="javascript">
+         
+         function copyContent(content, button) {
+         
+            var textArea = document.createElement("textarea");
+            
+            // Place in the top-left corner of screen regardless of scroll position.
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            
+            // Ensure it has a small width and height. Setting to 1px / 1em
+            // doesn't work as this gives a negative w/h on some browsers.
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            
+            // We don't need padding, reducing the size if it does flash render.
+            textArea.style.padding = 0;
+            
+            // Clean up any borders.
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            
+            // Avoid flash of the white box if rendered for any reason.
+            textArea.style.background = 'transparent';
+            
+            textArea.value = content;
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+               var successful = document.execCommand('copy');
+               var msg = successful ? 'successful' : 'unsuccessful';
+               if (!button.classList.contains("copied")){
+                  button.textContent = "Copied";
+                  button.classList.add("copied");
+                  setTimeout(function(){
+                     button.textContent = "Copy";
+                     button.classList.remove("copied");
+                  },1000);
+               }
+            } catch (err) {
+               console.log('Oops, unable to copy');
+            }
+            
+            document.body.removeChild(textArea);
+         }
+         
+         function cpy(id, button) {
+            var element = document.getElementById(id);
+            var content = element.getAttribute("content");
+            
+            copyContent(content, button);
+         }
+         
+         document.addEventListener("DOMContentLoaded", function(event) {
+            document.querySelectorAll(".codeblock").forEach(function(elem) {
+               elem.style.position = "relative";
+               var copy = document.createElement("button");
+               copy.textContent = "Copy";
+               copy.setAttribute("class", "copy-code");
+               
+               var content = elem.textContent;
+               
+               copy.addEventListener("click", function(){
+                  copyContent(content, copy);
+               });
+               
+               elem.addEventListener("mouseenter", function(evt){
+                  elem.prepend(copy);
+               });
+            });
+            
+            document.querySelectorAll(".codeblock").forEach(function(elem) {
+               elem.addEventListener("mouseleave", function(evt){
+                  document.querySelector(".copy-code").remove();
+               });
+            });
+         });
+         
+      </script><script language="javascript">
+          
+          // Add the MathML namespace to html
+          var html = document.getElementsByTagName("html")[0],
+          head = document.getElementsByTagName("head")[0];
+          
+          var mathJax = document.createElement("script");
+          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
+          head.appendChild(mathJax);
+          
+          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
+          
+          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
+          
+          if (!inIframe()) { 
+          
+          var Default = "index.html?GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7"; 
+          
+          var displaylocation = "value" + window.location.href;
+          
+          var GUIDS = displaylocation.split('GUID');          
+          
+          if (displaylocation.indexOf('#GUID') != -1) {            
+          var First = GUIDS[1].split('.html');  
+          if (GUIDS[3]){First = GUIDS[2].split('.html');}
+          if (GUIDS[4]){First = GUIDS[3].split('.html');}
+          if (GUIDS[5]){First = GUIDS[4].split('.html');}
+          
+          var Second = GUIDS[2].split('#');   
+          if (GUIDS[3]){Second = GUIDS[3].split('#');}
+          if (GUIDS[4]){Second = GUIDS[4].split('#');}
+          if (GUIDS[5]){Second = GUIDS[5].split('#');}
+          
+          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
+          }                    
+          window.top.location = Default;
+          }       
+          
+        </script><link rel="stylesheet" type="text/css" href="syntax-highlight.css" /><style xml:space="">
+        
+          button.copy-code{
+            display:none;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border-radius:0.15em;
+            box-sizing: border-box;
+            text-decoration:none;
+            font-family:'Roboto',sans-serif;
+            text-transform:uppercase;
+            font-weight:400;
+            color:#FFFFFF;
+            background-color:#9c9c9c;
+            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+            text-align:center;
+            position:relative;
+            border: 0;
+            float: right;
+            border-radius: .5em;
+            cursor: pointer;
+          }
+          button.copy-code:active{
+            top:0.1em;
+          }
+          
+          pre:hover button.copy-code{
+            display: inline-block !important;
+          }
+          button.copy-code.copied {
+            cursor: default !important;
+          }
+          
+          
+          @media all and (max-width:30em){
+            button.copy-code{
+              display:block;
+              margin:0.4em auto;
+            }
+          }
+        
+        
+      </style><link rel="stylesheet" type="text/css" href="syntax-highlight.css" /></head>
+<body id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7">
+
+<h1 class="title topictitle1" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-BE3E9178-26B5-4E28-AAB2-1F42D479FE32" style="">Trust Zone Project Setup</h1>
+<div class="body">
+<div class="p">
+            <ol class="ol" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__OL_Y13_FTL_XVB">
+                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-DA131481-DFBC-4641-8B9C-43AF31EEF3A1"><span class="indent-level-default">1.</span>Create MPLAB Harmany Project with below device and DFP version <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_TTT_GTL_XVB">
+                        <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-6D2FBEC9-752F-4D02-BA4E-0CEE9B4D0107">Device: PIC32CM5164LS00100</li>
+
+                        <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-DA57D396-D4CE-4000-A82E-F00F5177D5F9">XC32 Compiler: v4.10</li>
+
+                        <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-381A1181-F715-4831-8C13-C5F17490C8A9">DFP: PIC32CM-LS_DFP
+                                    (v1.1.162)<p class="p"><strong class="ph b">1.1 </strong>Create new 32-bit MCC Harmony Project as
+                                shown below</p>
+<div class="p">
+                                <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_A34_TDR_ZVB" src="GUID-1F5749EC-E7B4-4523-897D-672357706EC6-low.png" /><br />
+                            </div>
+<p class="p"><strong class="ph b">1.2</strong> Select the <strong class="ph b">Framework Path</strong> (Framework path must
+                                match SDK setup document)and select <strong class="ph b">Next</strong></p>
+<div class="p">
+                                <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_GVQ_YDR_ZVB" src="GUID-3D19DD6B-F7D5-4C0D-BEA5-77D8003FC859-low.png" /><br />
+                            </div>
+<p class="p"><strong class="ph b">1.3</strong> Select Project Folder and select Next</p>
+<div class="p">
+                                <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_L51_D2R_ZVB" src="GUID-F1A8A999-FE9E-4D8F-9DE7-1152FB95BB02-low.png" /><br />
+                            </div>
+<p class="p"><strong class="ph b">1.4</strong> Select the device "PIC32CM5164LS00100" for standalone
+                                project using the PIC32CM-LS device family in the "Target Device"
+                                and click Finish</p>
+<div class="p">
+                                <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_ZGD_LGR_ZVB" src="GUID-5F1FF3AB-ECC8-4737-A413-94BF029B8BA6-low.png" /><br />
+                            </div>
+<p class="p"><strong class="ph b">1.5</strong> MPLABx Code Configurator will be launched
+                                automatically. Then Select <strong class="ph b">"MPLAB Harmony"</strong> and Click Next for
+                                the Harmony Framework Path.</p>
+<div class="p">
+                                <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_CCJ_P2R_ZVB" src="GUID-294FFF44-97E6-44FA-B024-CF107A950910-low.png" /><br />
+                            </div>
+<p class="p"><strong class="ph b">1.6</strong> Select <strong class="ph b">"Finish"</strong></p>
+<div class="p">
+                                <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_YT5_1FR_ZVB" src="GUID-12B3E149-2BA4-49D7-8518-4E0AF4053503-low.png" /><br />
+                            </div>
+<p class="p"><strong class="ph b">1.7</strong> Project Graph window of the Configurator may have
+                                predefined components</p>
+<div class="p">
+                                <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_RM2_DFR_ZVB" src="GUID-B7BABF5E-8835-4450-AE8F-4756671D5621-low.png" /><br />
+                            </div>
+<p class="p">Right click on the project properties and verify the selected
+                                configuration</p>
+<div class="p">
+                                <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_W3J_P5L_XVB" src="GUID-854E224C-04F1-4BDA-85F6-9B80E67341E8-low.png" /><br />
+                            </div>
+</li>
+
+                    </ul>
+</li>
+
+                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-04DBB6D1-753C-4219-B5B8-9B8C110C4BE9"><span class="indent-level-default">2.</span>After creating the project as shown in the above step go to device resource and
+                    verify RNBD was under Wireless component<div class="p">
+                        <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_SSH_ZWL_XVB" src="GUID-90230AC0-170B-49BE-8966-59DBCE84E4B8-low.png" /><br />
+                    </div>
+<p class="p">Click on Plus icon under RNBD to add it under the Project Resource </p>
+<div class="p">
+                        <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_SGG_PXL_XVB" src="GUID-897EAA48-0C5B-45F0-A3BA-E426618531C2-low.png" /><br />
+                    </div>
+</li>
+
+                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-155EF9F1-54C5-401A-B3BE-77BAE70929C1"><span class="indent-level-default">3.</span>Project Graph and RNBD/RN487x
+                    Module Configuration<div class="p">
+                        <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_EZ1_FYL_XVB" src="GUID-E98E66A5-023F-4A59-A415-188A9407B727-low.png" /><br />
+                    </div>
+<p class="p">User can Select <strong class="ph b">RNBD </strong>or<strong class="ph b"> RN487x</strong> under the Select Module Type
+                        Drop Down either of the one as shown below</p>
+<div class="p">
+                        <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_FM1_CJQ_XVB" src="GUID-2B7B2E95-2F31-4C72-BBFB-2ED03594AC60-low.png" /><br />
+                    </div>
+</li>
+
+                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-E743FCFA-535F-4251-AF30-04728BF80B18"><span class="indent-level-default">4.</span>Selecting Example Application<div class="p">
+                        <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_BPQ_DJQ_XVB">
+                            <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-D350F4B2-E960-42B7-94CF-729E76B0224D">Expand the Drop down
+                                under Select Example Application option and choose any one as
+                                mentioned in the below<div class="p">
+                                    <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_WXJ_2JQ_XVB">
+                                        <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-FFD5D780-D859-448D-80B6-D7C9C21BDBE5">Basic
+                                            Data Exchange</li>
+
+                                        <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-AF0B895C-7CBF-4231-A7BD-7634CD1FD16E">Transparent UART Application</li>
+
+                                    </ul>
+
+                                </div>
+</li>
+
+                        </ul>
+
+                    </div>
+<div class="p">
+                        <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_PVC_XJQ_XVB" src="GUID-1183333D-3FE6-47A6-9A1C-DB89187FC07F-low.png" /><br />
+                    </div>
+<p class="p"><strong class="ph b">4.1 Basic Data Exchange:</strong></p>
+<div class="p">
+                        <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_BTX_1KQ_XVB">
+                            <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-A21D31FF-D2D9-4B3D-818E-D49B37B5D8DD">Basic Data Exchange
+                                uses only <strong class="ph b">ONE</strong> SERCOM for the Data Transmission <div class="p">
+                                    <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_EPX_KKQ_XVB" src="GUID-F906B088-0615-48F2-8E9B-2BBD390714F4-low.png" /><br />
+                                </div>
+<div class="p">
+                                    <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_VXY_5KQ_XVB" src="GUID-237C2D6E-AB20-4D66-9BF5-B4967B189A89-low.png" /><br />
+                                </div>
+<div class="p">
+                                    <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_CHY_PLQ_XVB" src="GUID-934D5E9F-070D-4C79-BBD8-E1FAB742B8AA-low.png" /><br />
+                                </div>
+<p class="p"><strong class="ph b">4.2 Transparent UART</strong></p>
+<ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_L5G_GCT_ZVB">
+                                    <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-38C5456D-A593-4AE5-B5BC-95D369C6227B">Transparent
+                                        UART Application uses <strong class="ph b">TWO</strong> SERCOM as a Dependency for
+                                        the Data Transmission<div class="p">
+                                            <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_DR5_1MQ_XVB" src="GUID-C123B1D2-B140-478F-986F-05CBE5F5F778-low.png" /><br />
+                                        </div>
+<div class="p">
+                                            <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_IFG_NMQ_XVB" src="GUID-237C2D6E-AB20-4D66-9BF5-B4967B189A89-low.png" /><br />
+                                        </div>
+<div class="p">
+                                            <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_KQ2_DBN_RWB" src="GUID-604E7160-985D-4B90-B0ED-2AEB3274EFC4-low.png" /><br />
+                                        </div>
+<p class="p">SERCOM3 Pin Setting is same as mentioned under Basic
+                                            Data Exchange above.</p>
+<div class="p">
+                                            <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_U1V_NDN_RWB" src="GUID-C8F1047D-8344-471A-8509-45CD2CBA0027-low.png" /><br />
+                                        </div>
+</li>
+
+                                </ul>
+</li>
+
+                        </ul>
+
+                    </div>
+</li>
+
+                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-83D85B3B-C78B-49E0-878A-0AFE9F20C29A"><span class="indent-level-default">5.</span>PIN Settings for Example Application:<div class="p">
+                        <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_XNH_RNQ_XVB">
+                            <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-67A341ED-D685-418D-8285-BD05F69CCBAD">Basic Data Exchange Pin Settings<div class="p">
+                                    <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_ZKW_SNQ_XVB" src="GUID-C9051DF7-2E47-4890-953A-FF5408FA7A47-low.png" /><br />
+                                </div>
+</li>
+
+                            <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-64B3F27A-36DC-4751-86A7-4151CCA1BA72">Transparent UART Pin Settings<div class="p">
+                                    <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_KYX_M4Q_XVB" src="GUID-13237D2B-D9C8-4BCF-9495-8EB4AF31F439-low.png" /><br />
+                                </div>
+</li>
+
+                        </ul>
+
+                    </div>
+</li>
+
+                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-7EBA88B8-A426-472D-ABB3-28C0B7BFA9D3"><span class="indent-level-default">6.</span>Enabling RNBD/RN487x Secure and
+                    Non Secure for Trust Zone Devices<p class="p">Click the below check box to Enable and
+                        Disable RNBD secure</p>
+<div class="p">
+                        <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_GCZ_RYL_XVB" src="GUID-55BAA7ED-4492-464B-9C33-38369A61A792-low.png" /><br />
+                    </div>
+</li>
+
+                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-5957FA96-F757-4059-89B5-5B0B5A9F6506"><span class="indent-level-default">7.</span>Table for Secure and Non-Secure Configuration<div class="p">
+                        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__TABLE_ZRD_ZYL_XVB" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap"><span class="table--title-label">Table 1. </span></span></caption>
+                                <col style="width:25%" />
+                                <col style="width:25%" />
+                                <col style="width:25%" />
+                                <col style="width:25%" />
+                                <thead class="thead" style="text-align:left;">
+                                    <tr class="row">
+                                        <th class="entry cellrowborder" style="vertical-align:middle;" id="d532e274"><span>S.no</span></th>
+
+                                        <th class="entry cellrowborder" style="vertical-align:middle;" id="d532e277"><span>RNBD Secure (Check Box in the UI)</span></th>
+
+                                        <th class="entry cellrowborder" style="vertical-align:middle;" id="d532e280"><span>Dependency(SERCOM)</span></th>
+
+                                        <th class="entry cellrowborder" style="vertical-align:middle;" id="d532e283"><span>Pins </span></th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody class="tbody">
+                                    <tr class="row">
+                                        <td class="entry cellrowborder" style="vertical-align:middle;" headers="d532e274 "><span>1</span></td>
+
+                                        <td class="entry cellrowborder" style="vertical-align:middle;" headers="d532e277 "><span>Non Secure</span></td>
+
+                                        <td class="entry cellrowborder" style="vertical-align:middle;" headers="d532e280 "><span>Non Secure</span></td>
+
+                                        <td class="entry cellrowborder" style="vertical-align:middle;" headers="d532e283 "><span>Non Secure</span></td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry cellrowborder" style="vertical-align:middle;" headers="d532e274 "><span>2</span></td>
+
+                                        <td class="entry cellrowborder" style="vertical-align:middle;" headers="d532e277 "><span>Non Secure</span></td>
+
+                                        <td class="entry cellrowborder" style="vertical-align:middle;" headers="d532e280 "><span>Secure</span></td>
+
+                                        <td class="entry cellrowborder" style="vertical-align:middle;" headers="d532e283 "><span>Non Secure</span></td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry cellrowborder" style="vertical-align:middle;" headers="d532e274 "><span>3</span></td>
+
+                                        <td class="entry cellrowborder" style="vertical-align:middle;" headers="d532e277 "><span>Secure</span></td>
+
+                                        <td class="entry cellrowborder" style="vertical-align:middle;" headers="d532e280 "><span>Secure</span></td>
+
+                                        <td class="entry cellrowborder" style="vertical-align:middle;" headers="d532e283 "><span>Secure</span></td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+</div>
+
+                    </div>
+<div class="p">
+                        <div class="note" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__NOTE_ZKR_TZL_XVB"><span class="notetitle">Note:</span> If RNBD Secure (Check Box in the UI) is marked
+                            to secure then BT_RST pin settings should be Secured and if RNBD Secure
+                            (Check Box in the UI) is marked to Non-secure then BT_RST pin settings
+                            should be Non-Secure</div>
+
+                    </div>
+<div class="p">
+                        <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_DQ5_1HQ_XVB">
+                            <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-0D68D6E6-F7FE-4B28-BE7E-D5DEFD2E9C35"><strong class="ph b">Case1: </strong> (RNBD:
+                                Non-Secure, Dependency: Non-Secure, BT_RST Pin: Non-Secure)<ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_NT2_CSH_ZVB">
+                                    <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-601C009C-A382-45BA-956A-3DFA684802AB">
+                                        <p class="p"><strong class="ph b">RNBD Secure (Check Box in the UI) –&gt; Unchecked
+                                                (Non-Secure)</strong> as shown below</p>
+
+                                        <div class="p">
+                                            <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_NSF_33Q_XVB" src="GUID-55BAA7ED-4492-464B-9C33-38369A61A792-low.png" /><br />
+                                        </div>
+
+                                    </li>
+
+                                    <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-DAC7C4FA-65A5-4936-AD0B-1DF26144DE7E">
+                                        <p class="p"><strong class="ph b">Dependency –&gt; Non-Secure</strong></p>
+
+                                        <div class="p">
+                                            <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_BTD_V4Q_XVB">
+                                                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-C5417088-09FD-4072-9B7E-5924622D4EB7">Goto –&gt; Project Graph –&gt; expand the plugins
+                                                  drop down –&gt; and select Arm TRUSTZONE for Armv8-M<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_DVP_NPQ_XVB" src="GUID-66D4E1DA-5032-4A14-8035-EE95C5F3C769-low.png" /><br />
+                                                  </div>
+</li>
+
+                                                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-FFBAEF60-AC5E-436F-8D40-F0CF25966DD8">
+                                                  <p class="p">Select <strong class="ph b">Peripheral Configuration</strong> as shown
+                                                  below</p>
+
+                                                  <div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_JNB_2QQ_XVB" src="GUID-F21C855A-415F-4609-A5E0-843B0D21BF86-low.png" /><br />
+                                                  </div>
+
+                                                </li>
+
+                                                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-3C788D6B-C061-4C12-8B88-E45F10015B4E"><strong class="ph b">NOTE:</strong> Set SERCOM2 from secure to
+                                                  Non-Secure as shown below (Applicable for
+                                                  <strong class="ph b">Transparent UART</strong> if <strong class="ph b">TWO</strong>
+                                                  <strong class="ph b">SERCOM</strong> was used)<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_MD1_5NH_ZVB" src="GUID-1B755990-97B9-41F3-86B2-BBF85A0F050F-low.png" /><br />
+                                                  </div>
+</li>
+
+                                            </ul>
+
+                                        </div>
+
+                                    </li>
+
+                                    <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-0BF8B2BE-F632-4996-A156-825CE0031293">
+                                        <p class="p"><strong class="ph b">Pin Settings –&gt; Non-Secure</strong></p>
+
+                                        <div class="p">
+                                            <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_VRF_2WQ_XVB">
+                                                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-7BEA7F18-1FD0-4585-A914-D1ACBFB7B22C">Goto –&gt; Project Graph –&gt; expand the plugins
+                                                  drop down –&gt; and select Pin Configuration as
+                                                  shown below<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_OKJ_HWQ_XVB" src="GUID-F462E3AF-C296-496D-9B1A-A453C133EB86-low.png" /><br />
+                                                  </div>
+</li>
+
+                                                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-A7FB753D-73D9-4F29-A7B0-54C47AA745B2">Set <strong class="ph b">BT_RST</strong> pin to <strong class="ph b">Non-Secure</strong> under
+                                                  PIN Security Mode as shown below<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_WP4_KRH_ZVB" src="GUID-0B32338D-9798-4785-9004-93F9BDC7A0EE-low.png" /><br />
+                                                  </div>
+</li>
+
+                                            </ul>
+
+                                        </div>
+
+                                    </li>
+
+                                    <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-62BC4EA2-6DB6-4D2D-9CD3-8C8142539327"><strong class="ph b">Project
+                                            Structure:</strong><p class="p">Click Generate Button under Project
+                                            Resource for Code Generation to the selected
+                                            configuration</p>
+<div class="p">
+                                            <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_IJQ_CX3_ZVB" src="GUID-C132E098-4CB8-4CE8-8E88-4B6DEBE1532F-low.png" /><br />
+                                        </div>
+<div class="p">
+                                            <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_YKC_ZVH_ZVB" src="GUID-ACC3BAE3-899F-424B-B448-FF8EFA4E55D6-low.png" /><br />
+                                        </div>
+</li>
+
+                                    <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-954C6C1D-5933-4DE2-8250-5BEEA17DECE6"><strong class="ph b">Adding example application to main.c</strong><div class="p">
+                                            <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_J3N_1JP_ZVB">
+                                                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-4AAC122F-E5FD-4F55-9650-FD8391A40B94">Once after Generation is complete include the
+                                                  headers for <strong class="ph b">RNBD</strong> or <strong class="ph b">RN487x</strong> as shown
+                                                  below <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_NS4_CJP_ZVB">
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-09E3F8E2-B672-47E7-9248-00CDC00FF5A6">if <strong class="ph b">Select Module Type</strong> is selected<strong class="ph b">n</strong>
+                                                  is for <strong class="ph b">RNBD</strong>: #include
+                                                  "examples/rnbd_example.h"</li>
+
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-1564B329-1C2D-4762-BCA0-DF580EC261DA">if <strong class="ph b">Select Module Type</strong> is selected for
+                                                  <strong class="ph b">RN487x</strong>: #include "examples/rn487x_example.h"<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_Z1D_1RL_XVB" src="GUID-31D005A3-ADEE-47E8-8312-1BBCAF0AEE53-low.png" /><br />
+                                                  </div>
+<p class="p">Call the function
+                                                  <strong class="ph b">RNBD_Example_Initialized(); or
+                                                  RN487x_Example_Initialized();</strong> in <strong class="ph b">main()</strong>
+                                                  after <strong class="ph b">SYS_Initialize ( NULL );</strong></p>
+</li>
+
+                                                  </ul>
+</li>
+
+                                            </ul>
+
+                                        </div>
+</li>
+
+                                    <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-FC85293D-1488-468D-A276-87CA1981BDC8"><strong class="ph b">Build the
+                                            Generated Project:</strong><div class="p">
+                                            <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_KQQ_FSL_XVB" src="GUID-69F2DB5D-6EEE-4922-935E-A0A0FB0E19F8-low.png" /><br />
+                                        </div>
+</li>
+
+                                    <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-4F0FA48A-31DE-4F5C-9F14-458E9F0DED7B"><strong class="ph b">Program to
+                                            the Development Board</strong><div class="p">
+                                            <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_P5Z_MSL_XVB" src="GUID-86E3F2BD-3777-4E96-95C3-F1C8DED00136-low.png" /><br />
+                                        </div>
+<p class="p">This is the End of <strong class="ph b">Case1</strong>  project kindly refer
+                                                <a class="xref" href="GUID-3A0EE1D4-F09E-458E-9362-41B80E7092CE.html">RNBD</a> or <a class="xref" href="GUID-C5AC2C77-2C95-4385-9E22-E460412BB771.html">RN487x</a> Running Example
+                                            Application</p>
+</li>
+
+                                </ul>
+</li>
+
+                            <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-EA5E2E9E-822D-44D8-B231-1E5D4F943EC8"><strong class="ph b">Case 2:</strong> (RNBD:
+                                    <strong class="ph b">Non-Secur</strong>e, Dependency<strong class="ph b">: Secure</strong>, BT_RST Pin:
+                                    <strong class="ph b">Non-Secure</strong>)<div class="p">
+                                    <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_Y11_LTH_ZVB">
+                                        <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-23D73A9E-A4CE-473E-98B7-6F818431B094"><strong class="ph b">RNBD
+                                                Secure (Check Box in the UI) –&gt;</strong><strong class="ph b"> Unchecked
+                                                (Non-Secure)</strong> as shown below<div class="p">
+                                                <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_U3T_3TH_ZVB" src="GUID-55BAA7ED-4492-464B-9C33-38369A61A792-low.png" /><br />
+                                            </div>
+</li>
+
+                                        <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-42602C06-3303-46BF-94C9-B608E30E7538"><strong class="ph b">Dependency –&gt; Secure</strong><div class="p">
+                                                <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_KS2_5TH_ZVB">
+                                                  <li class="li with-image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-7BC7D6D2-463A-4578-AABA-5EB672370101">Goto –&gt; Project Graph –&gt; expand the plugins
+                                                  drop down –&gt; and select Arm TRUSTZONE for
+                                                  Armv8-M<p class="p"></p>
+<br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_EGW_VTH_ZVB" src="GUID-66D4E1DA-5032-4A14-8035-EE95C5F3C769-low.png" /><br /></li>
+
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-A31BBA80-FCB8-4DBF-98FF-6E4C2BEE005F">Select <strong class="ph b">Peripheral Configuration</strong> as shown below<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_WF3_YTH_ZVB" src="GUID-F21C855A-415F-4609-A5E0-843B0D21BF86-low.png" /><br />
+                                                  </div>
+</li>
+
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-E0F36D43-3933-4D12-B2ED-62BFF8D1C7EE"><strong class="ph b">NOTE</strong>: Set SERCOM2 from secure to
+                                                  Non-Secure as shown below (Applicable for
+                                                  <strong class="ph b">Transparent UART</strong> if <strong class="ph b">TWO</strong>
+                                                  <strong class="ph b">SERCOM</strong> was used)</li>
+
+                                                </ul>
+
+                                            </div>
+</li>
+
+                                        <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-C06DD369-2B27-4A19-B1CD-29E7F974D0C5"><strong class="ph b">Pin
+                                                Settings –&gt; Non-Secure</strong><div class="p">
+                                                <ul class="ul">
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-C3DF5D97-8763-436B-BBAE-ADB443B85C48">Goto –&gt; Project Graph –&gt; expand the plugins
+                                                  drop down –&gt; and select Pin Configuration as
+                                                  shown below<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_MDB_35H_ZVB" src="GUID-F462E3AF-C296-496D-9B1A-A453C133EB86-low.png" /><br />
+                                                  </div>
+</li>
+
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-D7EEE9FC-ACBD-4063-941D-A3A654C46D19">Set <strong class="ph b">BT_RST</strong> pin to <strong class="ph b">Non-Secure</strong> under
+                                                  PIN Security Mode as shown below<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_NDB_35H_ZVB" src="GUID-0B32338D-9798-4785-9004-93F9BDC7A0EE-low.png" /><br />
+                                                  </div>
+</li>
+
+                                                </ul>
+
+                                            </div>
+</li>
+
+                                        <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-3C833889-ED53-4912-887C-607AAFAEA7BF"><strong class="ph b">Project Folder Structure:</strong><p class="p">Click Generate
+                                                Button under Project Resource for Code Generation to
+                                                the selected configuration</p>
+<div class="p">
+                                                <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_QH5_BX3_ZVB" src="GUID-C132E098-4CB8-4CE8-8E88-4B6DEBE1532F-low.png" /><br />
+                                            </div>
+<div class="p">
+                                                <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_NDL_BWH_ZVB" src="GUID-ACC3BAE3-899F-424B-B448-FF8EFA4E55D6-low.png" /><br />
+                                            </div>
+</li>
+
+                                        <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-AB50DCAF-30E8-434A-831C-F21FD2AA8918"><strong class="ph b">Adding
+                                                example application to main.c</strong><div class="p">
+                                                <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_P3Q_MJP_ZVB">
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-E2EC5ACF-349E-4E6D-83E0-4190067D8FCD">Once after Generation is complete include the
+                                                  headers for RNBD or RN487x as shown below <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_Q3Q_MJP_ZVB">
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-23554445-615E-49F1-9D24-2C1FEE823366">if <strong class="ph b">Select Module Type</strong> is selected for
+                                                  <strong class="ph b">RNBD</strong>: #include
+                                                  "examples/rnbd_example.h"</li>
+
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-3BDC05D5-755A-413B-AA42-1DE68051957E">if <strong class="ph b">Select Module Type</strong> is selected for<strong class="ph b">
+                                                  RN487x</strong>: #include "examples/rn487x_example.h"<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_R3Q_MJP_ZVB" src="GUID-31D005A3-ADEE-47E8-8312-1BBCAF0AEE53-low.png" /><br />
+                                                  </div>
+<p class="p">Call the function
+                                                  <strong class="ph b">RNBD_Example_Initialized(); or
+                                                  RN487x_Example_Initialized();</strong> in <strong class="ph b">main()</strong>
+                                                  after <strong class="ph b">SYS_Initialize ( NULL );</strong></p>
+</li>
+
+                                                  </ul>
+</li>
+
+                                                </ul>
+
+                                            </div>
+</li>
+
+                                        <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-CC94FFB6-C34D-4FE5-97AD-7C3A24CE238A"><strong class="ph b">Build
+                                                the Generated Project:</strong><div class="p">
+                                                <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_T3Q_MJP_ZVB" src="GUID-69F2DB5D-6EEE-4922-935E-A0A0FB0E19F8-low.png" /><br />
+                                            </div>
+</li>
+
+                                        <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-C90A51E1-6766-49C3-AA02-68FE09E22D32"><strong class="ph b">Program to the Development Board</strong><div class="p">
+                                                <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_V3Q_MJP_ZVB" src="GUID-86E3F2BD-3777-4E96-95C3-F1C8DED00136-low.png" /><br />
+                                            </div>
+<p class="p">This is the End of <strong class="ph b">Case2</strong>  project kindly
+                                                refer <a class="xref" href="GUID-3A0EE1D4-F09E-458E-9362-41B80E7092CE.html">RNBD</a> or <a class="xref" href="GUID-C5AC2C77-2C95-4385-9E22-E460412BB771.html">RN487x</a> Running Example
+                                                Application</p>
+</li>
+
+                                    </ul>
+
+                                </div>
+</li>
+
+                            <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-DC931CDB-3143-4EE9-A02F-2553F75D18DE"><strong class="ph b">Case 3</strong>: (RNBD:
+                                    <strong class="ph b">Secure</strong>, Dependency: <strong class="ph b">Secure</strong>, BT_RST Pin:
+                                    <strong class="ph b">Secure</strong>)<div class="p">
+                                    <ol class="ol" type="a" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__OL_OV2_GXH_ZVB">
+                                        <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-9071467A-DBB1-40BA-BE0D-D832BB7756D4"><span class="indent-level-default">1.</span><strong class="ph b">Scenario 1:</strong><ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_V1C_LYH_ZVB">
+                                                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-A278E98B-E065-4962-98DA-2FD14D44451C">
+                                                  <p class="p"><strong class="ph b">RNBD Secure (Check Box in the UI) –&gt;
+                                                  Enable Check (Secure)</strong></p>
+
+                                                  <div class="p">
+                                                  <div class="note" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__NOTE_WTW_MT3_ZVB"><span class="notetitle">Note:</span> <strong class="ph b">Generate RNBD Non
+                                                  Secure Entry</strong> check box Disabled (Unchecked) as
+                                                  shown below</div>
+
+                                                  </div>
+
+                                                  <div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_VN2_YXH_ZVB" src="GUID-9EE3A6D2-4F83-4524-8538-C79820877CB9-low.png" /><br />
+                                                  </div>
+
+                                                </li>
+
+                                                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-CAD16D32-F855-425F-B9DB-E525122DFA77"><strong class="ph b">Dependency –&gt; Secure</strong><div class="p">
+                                                  <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_N51_NP3_ZVB">
+                                                  <li class="li with-image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-DD3D0BFC-4850-40C3-B9CF-4167DE6FDB47">
+                                                  <p class="p">Goto –&gt; Project Graph –&gt; expand the
+                                                  plugins drop down –&gt; and select Arm TRUSTZONE
+                                                  for Armv8-M</p>
+
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_NY3_WP3_ZVB" src="GUID-66D4E1DA-5032-4A14-8035-EE95C5F3C769-low.png" /><br />
+                                                  </li>
+
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-370D4A04-F97D-41AC-B554-59209167778D">
+                                                  <p class="p">Select <strong class="ph b">Peripheral Configuration</strong> as shown
+                                                  below</p>
+
+                                                  <div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_UZ3_CQ3_ZVB" src="GUID-F21C855A-415F-4609-A5E0-843B0D21BF86-low.png" /><br />
+                                                  </div>
+
+                                                  <p class="p"><strong class="ph b">NOTE</strong>: Set SERCOM2 from secure to
+                                                  Non-Secure as shown below (Applicable for
+                                                  <strong class="ph b">Transparent UART</strong> if <strong class="ph b">TWO</strong>
+                                                  <strong class="ph b">SERCOM</strong> was used)</p>
+
+                                                  </li>
+
+                                                  </ul>
+
+                                                  </div>
+</li>
+
+                                                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-493A82CE-8F5B-4710-ADDE-47D843D1CE35"><strong class="ph b">Pin Settings –&gt; Secure</strong><div class="p">
+                                                  <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_M4W_KQ3_ZVB">
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-DA54025C-2EB1-4AE0-842A-ECC80D161BCD">Goto –&gt; Project Graph –&gt; expand the plugins
+                                                  drop down –&gt; and select Pin Configuration as
+                                                  shown below<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_D5N_NQ3_ZVB" src="GUID-F462E3AF-C296-496D-9B1A-A453C133EB86-low.png" /><br />
+                                                  </div>
+</li>
+
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-D0108971-8880-4AEB-9600-F7D0E5EF02E5">Set <strong class="ph b">BT_RST</strong> pin to <strong class="ph b">Non-Secure</strong> under
+                                                  PIN Security Mode as shown below<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_N1L_4R3_ZVB" src="GUID-32A08681-AD83-445E-8B52-970DA3BB4050-low.png" /><br />
+                                                  </div>
+</li>
+
+                                                  </ul>
+
+                                                  </div>
+</li>
+
+                                                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-857C9603-111F-4225-8F10-CB4FA7B3BB48"><strong class="ph b">Project Folder Structure:</strong><p class="p">Click Generate
+                                                  Button under Project Resource for Code Generation
+                                                  to the selected configuration</p>
+<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_UFP_ZW3_ZVB" src="GUID-C132E098-4CB8-4CE8-8E88-4B6DEBE1532F-low.png" /><br />
+                                                  </div>
+<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_LGP_RS3_ZVB" src="GUID-7B3F7448-3312-4B7E-9A50-D0DB07FA33C6-low.png" /><br />
+                                                  </div>
+</li>
+
+                                                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-A1CDBE71-E9DE-4F9D-B2FE-096FB78D0D3E"><strong class="ph b">Adding example application to main.c</strong><div class="p">
+                                                  <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_F3B_4JP_ZVB">
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-14F659DA-A45F-4729-AAF8-F073CCDF0551">Once after Generation is complete include the
+                                                  headers for RNBD or RN487x as shown below <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_G3B_4JP_ZVB">
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-B024B236-CE26-41CE-A294-B954B1CBC2DA">if <strong class="ph b">Select Module Type</strong> is selected for
+                                                  <strong class="ph b">RNBD</strong>: #include
+                                                  "examples/rnbd_example.h"</li>
+
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-9C1B91AE-0251-45B0-BCD5-5FF5DA35E999">if <strong class="ph b">Select Module Type</strong> is selected for
+                                                  <strong class="ph b">RN487x</strong>: #include "examples/rn487x_example.h"<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_H3B_4JP_ZVB" src="GUID-31D005A3-ADEE-47E8-8312-1BBCAF0AEE53-low.png" /><br />
+                                                  </div>
+<p class="p">Call the function
+                                                  <strong class="ph b">RNBD_Example_Initialized(); or
+                                                  RN487x_Example_Initialized();</strong> in <strong class="ph b">main()</strong>
+                                                  after <strong class="ph b">SYS_Initialize ( NULL );</strong></p>
+</li>
+
+                                                  </ul>
+</li>
+
+                                                  </ul>
+
+                                                  </div>
+</li>
+
+                                                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-A66E91BB-C32D-4EA4-A178-4FF0ECCEC2F0"><strong class="ph b">Build the Generated Project:</strong><div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_J3B_4JP_ZVB" src="GUID-69F2DB5D-6EEE-4922-935E-A0A0FB0E19F8-low.png" /><br />
+                                                  </div>
+</li>
+
+                                                <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-3AA8AEFA-8B31-4013-AD86-91972419D238"><strong class="ph b">Program to the Development Board</strong><div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_L3B_4JP_ZVB" src="GUID-86E3F2BD-3777-4E96-95C3-F1C8DED00136-low.png" /><br />
+                                                  </div>
+</li>
+
+                                            </ul>
+<p class="p">This is the End of <strong class="ph b">Case3 –&gt; Scenario 1</strong>
+                                                project kindly refer <a class="xref" href="GUID-3A0EE1D4-F09E-458E-9362-41B80E7092CE.html">RNBD</a> or <a class="xref" href="GUID-C5AC2C77-2C95-4385-9E22-E460412BB771.html">RN487x</a> Running Example
+                                                Application</p>
+</li>
+
+                                        <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-D840935C-09F1-4DCF-B475-D22EC6D85E8C"><span class="indent-level-default">2.</span><strong class="ph b">Scenario 2</strong>:<div class="p">
+                                                <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_HLX_5S3_ZVB">
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-A13BC08F-20C2-4D2D-B238-9132AF88424F"><strong class="ph b">RNBD Secure (Check Box in the UI) –&gt; Enable
+                                                  Check (Secure)</strong><div class="p">
+                                                  <div class="note" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__NOTE_MNP_QT3_ZVB"><span class="notetitle">Note:</span> <strong class="ph b">Generate RNBD Non
+                                                  Secure Entry</strong> check box Enabled (checked) as
+                                                  shown below</div>
+
+                                                  </div>
+<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_HKL_LT3_ZVB" src="GUID-07EBA86D-DDC1-413A-8905-A691BE598C97-low.png" /><br />
+                                                  </div>
+</li>
+
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-C4D44613-081F-4C98-ACF5-024069DC3A6C"><strong class="ph b">Dependency –&gt; Secure</strong><div class="p">
+                                                  <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_XLM_WT3_ZVB">
+                                                  <li class="li with-image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-F99189CC-CED3-451E-B2D9-8D60E32DF5C2">
+                                                  <p class="p">Goto –&gt; Project Graph –&gt; expand the
+                                                  plugins drop down –&gt; and select Arm TRUSTZONE
+                                                  for Armv8-M</p>
+
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_YLM_WT3_ZVB" src="GUID-66D4E1DA-5032-4A14-8035-EE95C5F3C769-low.png" /><br />
+                                                  </li>
+
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-2B2D4064-3C33-4D7A-B73C-32BDC3FFF029">
+                                                  <p class="p">Select <strong class="ph b">Peripheral Configuration</strong> as shown
+                                                  below</p>
+
+                                                  <div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_ZLM_WT3_ZVB" src="GUID-F21C855A-415F-4609-A5E0-843B0D21BF86-low.png" /><br />
+                                                  </div>
+
+                                                  <p class="p"><strong class="ph b">NOTE</strong>: Set SERCOM2 from secure to
+                                                  Non-Secure as shown below (Applicable for
+                                                  <strong class="ph b">Transparent UART</strong> if <strong class="ph b">TWO</strong>
+                                                  <strong class="ph b">SERCOM</strong> was used)</p>
+
+                                                  </li>
+
+                                                  </ul>
+
+                                                  </div>
+</li>
+
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-CF451856-A54B-4372-A5AF-175463222D59"><strong class="ph b">Pin Settings –&gt; Secure</strong><div class="p">
+                                                  <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_DYV_153_ZVB">
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-5FA61FA3-F01F-4F95-9662-120C41C8FFD7">Goto –&gt; Project Graph –&gt; expand the plugins
+                                                  drop down –&gt; and select Pin Configuration as
+                                                  shown below<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_HR4_C53_ZVB" src="GUID-F462E3AF-C296-496D-9B1A-A453C133EB86-low.png" /><br />
+                                                  </div>
+</li>
+
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-89DBB00E-852C-4BB9-9CED-B8F26D1A0DE1">Set <strong class="ph b">BT_RST</strong> pin to <strong class="ph b">Non-Secure</strong> under
+                                                  PIN Security Mode as shown below<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_GPX_253_ZVB" src="GUID-32A08681-AD83-445E-8B52-970DA3BB4050-low.png" /><br />
+                                                  </div>
+</li>
+
+                                                  </ul>
+
+                                                  </div>
+</li>
+
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-61FC9955-392F-4283-8946-21E8163DE5B3"><strong class="ph b">Project Folder Structure:</strong><p class="p">Click Generate
+                                                  Button under Project Resource for Code Generation
+                                                  to the selected configuration</p>
+<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_YDK_V53_ZVB" src="GUID-C132E098-4CB8-4CE8-8E88-4B6DEBE1532F-low.png" /><br />
+                                                  </div>
+<p class="p">Verify the RNBD/RN487x Non-Secure Entry
+                                                  code Generation as shown below</p>
+<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_WG2_WW3_ZVB" src="GUID-56BE2E74-91E0-474B-B011-28CBD4BBD0BE-low.png" /><br />
+                                                  </div>
+</li>
+
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-340CE9A7-831A-4224-8A2D-73495F3E9482"><strong class="ph b">Adding example application to main.c</strong><div class="p">
+                                                  <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_BSC_QJP_ZVB">
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-ACDEAD3E-4596-489F-8278-C683BDFEC705">Once after Generation is complete include the
+                                                  headers for RNBD or RN487x as shown below <ul class="ul" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__UL_CSC_QJP_ZVB">
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-93DF6302-2D0C-47C7-8CF9-081A37FF8005">if <strong class="ph b">Select Module Type</strong> is selected for
+                                                  <strong class="ph b">RNBD</strong>: #include
+                                                  "examples/rnbd_example.h"</li>
+
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-69340563-C044-4ABC-8C16-08807E6FFD2E">if <strong class="ph b">Select Module Type</strong> is selected for
+                                                  <strong class="ph b">RN487x</strong>: #include "examples/rn487x_example.h"<div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_DSC_QJP_ZVB" src="GUID-31D005A3-ADEE-47E8-8312-1BBCAF0AEE53-low.png" /><br />
+                                                  </div>
+<p class="p">Call the function
+                                                  <strong class="ph b">RNBD_Example_Initialized(); or
+                                                  RN487x_Example_Initialized();</strong> in <strong class="ph b">main()</strong>
+                                                  after <strong class="ph b">SYS_Initialize ( NULL );</strong></p>
+</li>
+
+                                                  </ul>
+</li>
+
+                                                  </ul>
+
+                                                  </div>
+</li>
+
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-57584AE5-9A38-40C9-B3F1-2362FD9E6152"><strong class="ph b">Build the Generated Project:</strong><div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_FSC_QJP_ZVB" src="GUID-69F2DB5D-6EEE-4922-935E-A0A0FB0E19F8-low.png" /><br />
+                                                  </div>
+</li>
+
+                                                  <li class="li" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__GUID-F2EF29AE-2913-4B00-A573-F1F9C4E87982"><strong class="ph b">Program to the Development Board</strong><div class="p">
+                                                  <br /><img class="image" id="GUID-C5C76898-C1DC-456B-B573-3B6C53D3E1F7__IMAGE_HSC_QJP_ZVB" src="GUID-86E3F2BD-3777-4E96-95C3-F1C8DED00136-low.png" /><br />
+                                                  </div>
+<p class="p">This is the End of <strong class="ph b">Case3 –&gt; Scenario
+                                                  2</strong>  project kindly refer <a class="xref" href="GUID-3A0EE1D4-F09E-458E-9362-41B80E7092CE.html">RNBD</a> or <a class="xref" href="GUID-C5AC2C77-2C95-4385-9E22-E460412BB771.html">RN487x</a> Running Example
+                                                  Application</p>
+</li>
+
+                                                </ul>
+
+                                            </div>
+</li>
+
+                                    </ol>
+
+                                </div>
+</li>
+
+                        </ul>
+
+                    </div>
+</li>
+
+            </ol>
+
+        </div>
+
+</div>
+
+</body>
+</html>
