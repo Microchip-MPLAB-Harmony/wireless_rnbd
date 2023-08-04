@@ -160,9 +160,8 @@ extern bool ${RNBD_MODULE_SELECTION}_Module_ReadDefaultResponse(void);
 
 //extern void  ${RNBD_MODULE_SELECTION}_Module_WaitForMsg(const char *expectedMsg, uint8_t msgLen);
 
-extern bool  ${RNBD_MODULE_SELECTION}_Module_EnterCmdMode(void);
+extern bool  ${RNBD_MODULE_SELECTION}_Module_SendCommand_ReceiveResponse(const char *cmdMsg, uint8_t cmdLen, const char *responsemsg);
 
-extern bool  ${RNBD_MODULE_SELECTION}_Module_EnterDataMode(void);
 /*
 extern bool  ${RNBD_MODULE_SELECTION}_Module_SetName(const char *name, uint8_t nameLen);
 

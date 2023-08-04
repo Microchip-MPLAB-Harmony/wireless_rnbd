@@ -230,27 +230,19 @@ bool RNBD_ReadDefaultResponse(void);
 
  /**
   * \ingroup RNBD
-  * \brief Puts the RNBD in command mode.
+  * \brief Puts the RNBD in user defined mode (Command Mode/Data Mode/ Set commands etc..).
   * 
-  * This API puts the RNBD in command mode. 
+  * This API puts the RNBD in user defined mode (Command Mode/Data Mode/ Set commands etc..). 
   * 
-  * \return Command Mode Status
+  * \return User Defined Mode Status
   * \retval true - Success
   * \retval false - Failure
-  */
-bool RNBD_EnterCmdMode(void);
 
- /**
-  * \ingroup RNBD
-  * \brief Puts the RNBD in data mode.
-  * 
-  * This API puts the RNBD in data mode.
-  * 
-  * \return Data Mode Status
-  * \retval true - Success
-  * \retval false - Failure
+  * Paramater 1 - Command to be sent
+  * Parameter 2 - Length of Command to be sent
+  * Parameter 3 - Expected Response message 
   */
-bool RNBD_EnterDataMode(void);
+bool RNBD_SendCommand_ReceiveResponse(const char *cmdMsg, uint8_t cmdLen, const char *responsemsg);
 
  /**
   * \ingroup RNBD

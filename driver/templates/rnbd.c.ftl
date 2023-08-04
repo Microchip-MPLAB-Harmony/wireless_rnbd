@@ -27,6 +27,9 @@
 #include "rnbd.h"
 #include "rnbd_interface.h"
 #include "definitions.h" 
+#include <string.h>
+#include <stddef.h>
+#include <stdlib.h> 
 
 /**
  * \def STATUS_MESSAGE_DELIMITER
@@ -42,6 +45,29 @@ static uint8_t asyncBufferSize;                     /**< Size of the Async Messa
 static char *pHead;                                 /**< Pointer to the Head of the Async Message Buffer */
 static uint8_t peek = 0;                            /**< Recieved Non-Status Message Data */
 static bool dataReady = false;                      /**< Flag which indicates whether Non-Status Message Data is ready */
+uint8_t resp[100];
+/* Use this below code to pass the command and expected response under your application file.
+bool retval = false;
+char enterCmdMode[] = {'$', '$', '$'};
+char CmdModeResponse[] = {'C', 'M', 'D', '>', ' '};
+char exitCmdMode[] = {'-', '-', '-', '\r', '\n'};
+char exitcmdResponse[] = {'E', 'N', 'D', '\r', '\n'};
+char SetNamePrompt[] = {'S','N', ',', 'R', 'N', 'B', 'D', '-', '4', '5', '1', '\r', '\n'};
+char SetNameResponseSuccessPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
+char SetNameResponseErrorPrompt[] = {'E', 'R', 'R', '\r', '\n', 'C', 'M', 'D', '>', ' '};
+char RebootPrompt[] = {'r', ',', '1', '\r', '\n'};
+char RebootResponse[] = {'R', 'e', 'b', 'o', 'o', 't', 'i', 'n', 'g', '\r', '\n'};
+*/
+extern bool retval;
+extern char enterCmdMode[3];
+extern char CmdModeResponse[5]; 
+extern char exitCmdMode[5];
+extern char exitcmdResponse[5];
+extern char SetNamePrompt[13];
+extern char SetNameResponseSuccessPrompt[10];
+extern char SetNameResponseErrorPrompt[10];
+extern char RebootPrompt[5];
+extern char RebootResponse[11];
 
 /**
  * \brief This function filters status messages from RNBD data.
@@ -76,14 +102,15 @@ void RNBD_SendCmd(const char *cmd, uint8_t cmdLen)
 {
     uint8_t index = 0;
 
-    while (index < cmdLen)
-    {
+	do{
         if (RNBD.TransmitDone())
         {
             RNBD.Write(cmd[index]);
             index++;
         }
     }
+    while(index < cmdLen);
+    while(RNBD.TransmitDone());
 }
 
 uint8_t RNBD_GetCmd(const char *getCmd, uint8_t getCmdLen, char *getCmdResp)
@@ -123,22 +150,27 @@ bool RNBD_ReadMsg(const char *expectedMsg, uint8_t msgLen)
 
 bool RNBD_ReadDefaultResponse(void)
 {
-    char resp[3];
+    char DefaultResponse[30];
     bool status = false;
-
-    resp[0] = (char)RNBD.Read();
-    resp[1] = (char)RNBD.Read();
-    resp[2] = (char)RNBD.Read();
+    int ResponseWait=0,DataReadcount=0;
+    while(!RNBD.DataReady() && ResponseWait<=15)
+    {
+        RNBD.DelayMs(1);
+        ResponseWait++;
+    }
+    while(RNBD.DataReady())
+    {
+        DefaultResponse[DataReadcount]=RNBD.Read();
     <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
-    UART_CDC_write((uint8_t)resp[0]);
-    UART_CDC_write((uint8_t)resp[1]);
-    UART_CDC_write((uint8_t)resp[2]);
+		UART_CDC_write((uint8_t)DefaultResponse[DataReadcount]);
     </#if>
-    switch (resp[0])
+        DataReadcount++;
+    }
+    switch (DefaultResponse[0])
     {
         case 'A':
         {
-            if ((resp[1] == 'O') && (resp[2] == 'K'))
+            if ((DefaultResponse[1] == 'O') && (DefaultResponse[2] == 'K'))
             {
                 status = true;
             }
@@ -147,7 +179,7 @@ bool RNBD_ReadDefaultResponse(void)
         }
         case 'E':
         {
-            if ((resp[1] == 'r') && (resp[2] == 'r'))
+            if ((DefaultResponse[1] == 'r') && (DefaultResponse[2] == 'r'))
             {
                 status = false;
             }
@@ -172,6 +204,38 @@ bool RNBD_ReadDefaultResponse(void)
     dummyread=RNBD.Read();
   
     return status;
+}
+bool RNBD_SendCommand_ReceiveResponse(const char *cmdMsg, uint8_t cmdLen, const char *responsemsg)
+{
+    int ResponseRead=0,ResponseTime=0,ResponseCheck=0;
+    //Flush out any unread data
+    while (RNBD.DataReady())
+    {
+        RNBD.Read();
+    }
+    //Sending Command to UART
+    RNBD_SendCmd(cmdMsg, cmdLen);
+    //Wait for the response time
+    while(!RNBD.DataReady() && ResponseTime<=15)
+    {
+        RNBD.DelayMs(1);
+        ResponseTime++;
+    }
+    //Read Ready data 
+    while(RNBD.DataReady())
+    {
+        resp[ResponseRead]=RNBD.Read();
+        ResponseRead++;
+    }
+    //Comparing the Response with expected result
+    for(ResponseCheck=0;ResponseCheck<ResponseRead;ResponseCheck++)
+    {
+        if (resp[ResponseCheck] != responsemsg[ResponseCheck])
+        {
+            return false;
+        }
+    }
+    return true;
 }
 /*
 void RNBD_WaitForMsg(const char *expectedMsg, uint8_t msgLen)
@@ -199,34 +263,6 @@ void RNBD_WaitForMsg(const char *expectedMsg, uint8_t msgLen)
     while (index < msgLen);
 }
 */
-
-bool RNBD_EnterCmdMode(void)
-{
-    const char cmdPrompt[] = {'C', 'M', 'D', '>', ' '};
-
-    cmdBuf[0] = '$';
-    cmdBuf[1] = '$';
-    cmdBuf[2] = '$';
-
-    RNBD_SendCmd(cmdBuf, 3U);
-
-    return RNBD_ReadMsg(cmdPrompt, (uint8_t)sizeof (cmdPrompt));
-}
-
-bool RNBD_EnterDataMode(void)
-{
-    const char cmdPrompt[] = {'E', 'N', 'D', '\r', '\n'};
-
-    cmdBuf[0] = '-';
-    cmdBuf[1] = '-';
-    cmdBuf[2] = '-';
-    cmdBuf[3] = '\r';
-    cmdBuf[4] = '\n';
-
-    RNBD_SendCmd(cmdBuf, 5U);
-
-    return RNBD_ReadMsg(cmdPrompt, (uint8_t)sizeof (cmdPrompt));
-}
 
 /*
 bool RNBD_SetName(const char *name, uint8_t nameLen)

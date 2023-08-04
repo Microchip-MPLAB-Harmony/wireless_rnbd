@@ -52,7 +52,7 @@
 
 <#if RNBD_NON_SECURE_ENTRY = true && RNBD_NON_SECURE = false>
 <#if RNBD_MODULE_SELECTION == "RNBD">
-#include "rnHostLib/rnbd.h"
+#include "rnbd/rnbd.h"
 <#else>
 #include "examples/rn487x.h"
 </#if>
@@ -150,15 +150,12 @@ void __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_WaitF
 }
 */
 
-bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_EnterCmdMode(void)
+bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SendCommand_ReceiveResponse(const char *cmdMsg, uint8_t cmdLen, const char *responsemsg)
 {
-    return ${RNBD_MODULE_SELECTION}_EnterCmdMode();
+	return ${RNBD_MODULE_SELECTION}_SendCommand_ReceiveResponse(cmdMsg, cmdLen, responsemsg);
 }
 
-bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_EnterDataMode(void)
-{
-    return ${RNBD_MODULE_SELECTION}_EnterDataMode();
-}
+
 /*
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SetName(const char *name, uint8_t nameLen)
 {
