@@ -154,6 +154,14 @@
 #pragma config BOOTROM_UDS_5 = 0xffffffffU
 #pragma config BOOTROM_UDS_6 = 0xffffffffU
 #pragma config BOOTROM_UDS_7 = 0xffffffffU
+#pragma config BOOTROM_IOPROTKEY_0 = 0xffffffffU
+#pragma config BOOTROM_IOPROTKEY_1 = 0xffffffffU
+#pragma config BOOTROM_IOPROTKEY_2 = 0xffffffffU
+#pragma config BOOTROM_IOPROTKEY_3 = 0xffffffffU
+#pragma config BOOTROM_IOPROTKEY_4 = 0xffffffffU
+#pragma config BOOTROM_IOPROTKEY_5 = 0xffffffffU
+#pragma config BOOTROM_IOPROTKEY_6 = 0xffffffffU
+#pragma config BOOTROM_IOPROTKEY_7 = 0xffffffffU
 #pragma config BOOTROM_BOCORHASH_0 = 0xffffffffU
 #pragma config BOOTROM_BOCORHASH_1 = 0xffffffffU
 #pragma config BOOTROM_BOCORHASH_2 = 0xffffffffU
@@ -197,9 +205,9 @@ void SYS_Initialize ( void* data )
 
 
 
-    NVMCTRL_Initialize();
-
     SERCOM2_USART_Initialize();
+
+    NVMCTRL_Initialize();
 
     EVSYS_Initialize();
 

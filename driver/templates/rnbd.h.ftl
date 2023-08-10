@@ -182,7 +182,7 @@ bool RNBD_Init(void);
   * \param cmdLen RNBD command length
   * \return Nothing
   */
-void RNBD_SendCmd(const char *cmd, uint8_t cmdLen);
+void RNBD_SendCmd(const uint8_t *cmd, uint8_t cmdLen);
 
 /**
  * \ingroup RNBD
@@ -242,7 +242,29 @@ bool RNBD_ReadDefaultResponse(void);
   * Parameter 2 - Length of Command to be sent
   * Parameter 3 - Expected Response message 
   */
-bool RNBD_SendCommand_ReceiveResponse(const char *cmdMsg, uint8_t cmdLen, const char *responsemsg);
+bool RNBD_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, const uint8_t *responsemsg);
+/**
+  * \ingroup RNBD
+  * \brief Puts the RNBD in command mode.
+  * 
+  * This API puts the RNBD in command mode. 
+  * 
+  * \return Command Mode Status
+  * \retval true - Success
+  * \retval false - Failure
+  */
+bool RNBD_EnterCmdMode(void);
+ /**
+  * \ingroup RNBD
+  * \brief Puts the RNBD in data mode.
+  * 
+  * This API puts the RNBD in data mode.
+  * 
+  * \return Data Mode Status
+  * \retval true - Success
+  * \retval false - Failure
+  */
+bool RNBD_EnterDataMode(void);
 
  /**
   * \ingroup RNBD

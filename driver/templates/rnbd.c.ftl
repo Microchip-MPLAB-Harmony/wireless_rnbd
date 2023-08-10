@@ -37,7 +37,7 @@
  */
 #define STATUS_MESSAGE_DELIMITER        ('%')
 
-static char cmdBuf[64];                                /**< Command TX Buffer */
+static uint8_t cmdBuf[64];                                /**< Command TX Buffer */
 static uint8_t dummyread;
 
 static char *asyncBuffer;                           /**< Async Message Buffer */
@@ -46,28 +46,6 @@ static char *pHead;                                 /**< Pointer to the Head of 
 static uint8_t peek = 0;                            /**< Recieved Non-Status Message Data */
 static bool dataReady = false;                      /**< Flag which indicates whether Non-Status Message Data is ready */
 uint8_t resp[100];
-/* Use this below code to pass the command and expected response under your application file.
-bool retval = false;
-char enterCmdMode[] = {'$', '$', '$'};
-char CmdModeResponse[] = {'C', 'M', 'D', '>', ' '};
-char exitCmdMode[] = {'-', '-', '-', '\r', '\n'};
-char exitcmdResponse[] = {'E', 'N', 'D', '\r', '\n'};
-char SetNamePrompt[] = {'S','N', ',', 'R', 'N', 'B', 'D', '-', '4', '5', '1', '\r', '\n'};
-char SetNameResponseSuccessPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
-char SetNameResponseErrorPrompt[] = {'E', 'R', 'R', '\r', '\n', 'C', 'M', 'D', '>', ' '};
-char RebootPrompt[] = {'r', ',', '1', '\r', '\n'};
-char RebootResponse[] = {'R', 'e', 'b', 'o', 'o', 't', 'i', 'n', 'g', '\r', '\n'};
-*/
-extern bool retval;
-extern char enterCmdMode[3];
-extern char CmdModeResponse[5]; 
-extern char exitCmdMode[5];
-extern char exitcmdResponse[5];
-extern char SetNamePrompt[13];
-extern char SetNameResponseSuccessPrompt[10];
-extern char SetNameResponseErrorPrompt[10];
-extern char RebootPrompt[5];
-extern char RebootResponse[11];
 
 /**
  * \brief This function filters status messages from RNBD data.
@@ -98,7 +76,7 @@ bool RNBD_Init(void)
     return true;
 }
 
-void RNBD_SendCmd(const char *cmd, uint8_t cmdLen)
+void RNBD_SendCmd(const uint8_t *cmd, uint8_t cmdLen)
 {
     uint8_t index = 0;
 
@@ -117,7 +95,7 @@ uint8_t RNBD_GetCmd(const char *getCmd, uint8_t getCmdLen, char *getCmdResp)
 {
     uint8_t index = 0;
 
-    RNBD_SendCmd(getCmd, getCmdLen);
+    RNBD_SendCmd((uint8_t *) getCmd, getCmdLen);
 
     do
     {
@@ -205,7 +183,7 @@ bool RNBD_ReadDefaultResponse(void)
   
     return status;
 }
-bool RNBD_SendCommand_ReceiveResponse(const char *cmdMsg, uint8_t cmdLen, const char *responsemsg)
+bool RNBD_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, const uint8_t *responsemsg)
 {
     int ResponseRead=0,ResponseTime=0,ResponseCheck=0;
     //Flush out any unread data
@@ -236,6 +214,18 @@ bool RNBD_SendCommand_ReceiveResponse(const char *cmdMsg, uint8_t cmdLen, const 
         }
     }
     return true;
+}
+bool RNBD_EnterCmdMode(void)
+{
+    const uint8_t cmdmode[] = {'$', '$', '$'};
+    const uint8_t cmdModeResponse[] = {'C', 'M', 'D', '>', ' '};
+    return RNBD_SendCommand_ReceiveResponse(cmdmode, 3, cmdModeResponse);
+}
+bool RNBD_EnterDataMode(void)
+{
+    const uint8_t dataMode[] = {'-', '-', '-', '\r', '\n'};
+    const uint8_t dataModeResponse[] = {'E', 'N', 'D', '\r', '\n'};
+    return RNBD_SendCommand_ReceiveResponse(dataMode, 5, dataModeResponse);
 }
 /*
 void RNBD_WaitForMsg(const char *expectedMsg, uint8_t msgLen)
@@ -510,17 +500,12 @@ uint8_t * RNBD_GetRSSIValue(void)
 
 bool RNBD_RebootCmd(void)
 {
-    const char reboot[] = {'R', 'e', 'b', 'o', 'o', 't', 'i', 'n', 'g', '\r', '\n'};
+    const uint8_t rebootCommand[] = {'R', ',', '1', '\r', '\n'};
+    const uint8_t rebootResponse[] = {'R', 'R', 'b', 'o', 'o', 't', 'i', 'n', 'g', '\r', '\n'};
 
-    cmdBuf[0] = 'R';
-    cmdBuf[1] = ',';
-    cmdBuf[2] = '1';
-    cmdBuf[4] = '\r';
-    cmdBuf[5] = '\n';
 
-    RNBD_SendCmd(cmdBuf, 5U);
 
-    return RNBD_ReadMsg(reboot, (uint8_t)sizeof (reboot));
+    return RNBD_SendCommand_ReceiveResponse(rebootCommand, 5, rebootResponse);
 }
 
 bool RNBD_FactoryReset(RNBD_FACTORY_RESET_MODE_t resetMode)

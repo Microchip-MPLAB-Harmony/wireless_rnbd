@@ -29,8 +29,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "rnbd_example.h"
-#include "../rnHostLib/rnbd_interface.h"
-#include "../rnHostLib/rnbd.h"
+#include "../rnbd/rnbd_interface.h"
+#include "../rnbd/rnbd.h"
 
 /** MACRO used to configure the application used buffer sizes.
  *  This is used by the application for communication buffers.

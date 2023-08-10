@@ -123,7 +123,7 @@ bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_Init(
     return ${RNBD_MODULE_SELECTION}_Init();
 }
 
-void __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SendCmd(const char *cmd, uint8_t cmdLen)
+void __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SendCmd(const uint8_t *cmd, uint8_t cmdLen)
 {
     ${RNBD_MODULE_SELECTION}_SendCmd(cmd,cmdLen);
 }
@@ -150,11 +150,18 @@ void __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_WaitF
 }
 */
 
-bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SendCommand_ReceiveResponse(const char *cmdMsg, uint8_t cmdLen, const char *responsemsg)
+bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, const uint8_t *responsemsg)
 {
 	return ${RNBD_MODULE_SELECTION}_SendCommand_ReceiveResponse(cmdMsg, cmdLen, responsemsg);
 }
-
+bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_EnterCmdMode(void)
+{
+	return ${RNBD_MODULE_SELECTION}_EnterCmdMode();
+}
+bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_EnterDataMode(void)
+{
+	return ${RNBD_MODULE_SELECTION}_EnterDataMode();
+}
 
 /*
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SetName(const char *name, uint8_t nameLen)

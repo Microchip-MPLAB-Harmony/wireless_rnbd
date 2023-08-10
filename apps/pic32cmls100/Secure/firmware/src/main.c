@@ -56,9 +56,9 @@ int main ( void )
         /* Start non-secure state software application */
         NonSecure_ResetHandler();
     }
-    
-    RNBD_Example_Initialized();
 
+    RNBD_Example_Initialized();
+    
     while ( true )
     {
     }

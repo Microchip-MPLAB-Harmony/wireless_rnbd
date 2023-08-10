@@ -4,7 +4,7 @@
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
             <name>pic32cmls100_NonSecure</name>
-            <creation-uuid>4b87360d-9c2c-4df5-b2db-5ada8dc6306d</creation-uuid>
+            <creation-uuid>7217b901-ab6a-4f39-8785-a28d345af6ab</creation-uuid>
             <make-project-type>0</make-project-type>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects>

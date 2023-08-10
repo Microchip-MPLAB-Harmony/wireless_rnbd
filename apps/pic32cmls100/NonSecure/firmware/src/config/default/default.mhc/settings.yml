@@ -1,9 +1,9 @@
 format_version: v1.0
 configName: default
-folderName: pic32cmls100_Secure
-frameworkPath: D:\Harmony2
-processor: PIC32CM5164LS00100
-projectName: pic32cmls100_Secure
+folderName: pic32cmls100_NonSecure
+frameworkPath: D:\EAP2\EV19J06A\H3
+processor: PIC32CM5164LS60100
+projectName: pic32cmls100_NonSecure
 settings:
   PackageFilter: ''
   FORCE_OPTIMIZATION: 'false'
@@ -11,4 +11,4 @@ settings:
   TRUSTZONE: 'true'
   CMSISPath: dev_packs\arm\CMSIS\5.8.0
   MERGE_STRATEGY: USER_ALL
-  DFPPath: dev_packs\Microchip\PIC32CM-LS_DFP\1.1.162\PIC32CM-LS00\atdf\PIC32CM5164LS00100.atdf
+  DFPPath: dev_packs\Microchip\PIC32CM-LS_DFP\1.1.162\PIC32CM-LS60\atdf\PIC32CM5164LS60100.atdf

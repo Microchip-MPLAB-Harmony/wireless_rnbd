@@ -150,7 +150,7 @@ typedef union
 /* Non-secure RNBD callable functions */
 extern bool  ${RNBD_MODULE_SELECTION}_Module_Init(void);
 
-extern void  ${RNBD_MODULE_SELECTION}_Module_SendCmd(const char *cmd, uint8_t cmdLen);
+extern void  ${RNBD_MODULE_SELECTION}_Module_SendCmd(const uint8_t *cmd, uint8_t cmdLen);
 
 extern uint8_t  ${RNBD_MODULE_SELECTION}_Module_GetCmd(const char *getCmd, uint8_t getCmdLen, char *getCmdResp);
 
@@ -160,7 +160,9 @@ extern bool ${RNBD_MODULE_SELECTION}_Module_ReadDefaultResponse(void);
 
 //extern void  ${RNBD_MODULE_SELECTION}_Module_WaitForMsg(const char *expectedMsg, uint8_t msgLen);
 
-extern bool  ${RNBD_MODULE_SELECTION}_Module_SendCommand_ReceiveResponse(const char *cmdMsg, uint8_t cmdLen, const char *responsemsg);
+extern bool  ${RNBD_MODULE_SELECTION}_Module_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, const uint8_t *responsemsg);
+extern bool  ${RNBD_MODULE_SELECTION}_Module_EnterCmdMode(void);
+extern bool  ${RNBD_MODULE_SELECTION}_Module_EnterDataMode(void);
 
 /*
 extern bool  ${RNBD_MODULE_SELECTION}_Module_SetName(const char *name, uint8_t nameLen);
