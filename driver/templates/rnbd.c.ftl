@@ -31,6 +31,8 @@
 #include <stddef.h>
 #include <stdlib.h> 
 
+/* This value depends upon the System Clock Frequency, Baudrate value and Error percentage of Baudrate*/
+#define RESPONSE_TIMEOUT 65 
 /**
  * \def STATUS_MESSAGE_DELIMITER
  * This Variable provide a definition of the RNBD devices PRE/POST status message delimiter.
@@ -89,36 +91,62 @@ void RNBD_SendCmd(const uint8_t *cmd, uint8_t cmdLen)
         }
     }
     while(index < cmdLen);
-    while(RNBD.TransmitDone());
+    while(!RNBD.TransmitDone());
 }
 
-uint8_t RNBD_GetCmd(const char *getCmd, uint8_t getCmdLen, char *getCmdResp)
+uint8_t RNBD_GetCmd(const uint8_t *getCmd, uint8_t getCmdLen)
 {
-    uint8_t index = 0;
+    uint8_t index = 0, ResponseTime=0;
 
-    RNBD_SendCmd((uint8_t *) getCmd, getCmdLen);
+    RNBD_SendCmd(getCmd, getCmdLen);
 
+	//Wait for the response time
+    while(!RNBD.DataReady() && ResponseTime<=RESPONSE_TIMEOUT)
+    {
+        RNBD.DelayMs(1);
+        ResponseTime++;
+    }
     do
     {
-        getCmdResp[index++] = (char)RNBD.Read();
+        //Read Ready data 
+        if(RNBD.DataReady())
+        {
+            resp[index++]=RNBD.Read();
+        }
     }
-    while (getCmdResp[index - 1U] != '\n');
+    while (resp[index - 1U] != '>');
 
     return index;
 }
 
-bool RNBD_ReadMsg(const char *expectedMsg, uint8_t msgLen)
+bool RNBD_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen)
 {
-    uint8_t index;
-    uint8_t resp;
-
-    for (index = 0; index < msgLen; index++)
+	unsigned int ResponseRead=0,ResponseTime=0,ResponseCheck=0;
+	//Wait for the response time
+    while(!RNBD.DataReady() && ResponseTime<=RESPONSE_TIMEOUT)
     {
-        resp = RNBD.Read();
+        RNBD.DelayMs(1);
+        ResponseTime++;
+    }
+    
+    //Read Ready data 
+    while(RNBD.DataReady())
+    {
+        resp[ResponseRead]=RNBD.Read();
         <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
-        UART_CDC_write(resp);
+		UART_CDC_write(resp[ResponseRead]);
         </#if>
-        if (resp != (uint8_t)expectedMsg[index])
+        ResponseRead++;
+    }
+	//Comparing length of response expected
+    if (ResponseRead != msgLen)
+    {
+        return false;
+    }
+    //Comparing the Response with expected result
+    for(ResponseCheck=0;ResponseCheck<ResponseRead;ResponseCheck++)
+    {
+        if (resp[ResponseCheck] != expectedMsg[ResponseCheck])
         {
             return false;
         }
@@ -131,8 +159,8 @@ bool RNBD_ReadDefaultResponse(void)
 {
     char DefaultResponse[30];
     bool status = false;
-    int ResponseWait=0,DataReadcount=0;
-    while(!RNBD.DataReady() && ResponseWait<=65)
+    unsigned int ResponseWait=0,DataReadcount=0;
+    while(!RNBD.DataReady() && ResponseWait<=RESPONSE_TIMEOUT)
     {
         RNBD.DelayMs(1);
         ResponseWait++;
@@ -177,7 +205,7 @@ bool RNBD_ReadDefaultResponse(void)
 }
 bool RNBD_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, const uint8_t *responsemsg, uint8_t responseLen)
 {
-    int ResponseRead=0,ResponseTime=0,ResponseCheck=0;
+    unsigned int ResponseRead=0,ResponseTime=0,ResponseCheck=0;
     //Flush out any unread data
     while (RNBD.DataReady())
     {
@@ -186,7 +214,7 @@ bool RNBD_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, con
     //Sending Command to UART
     RNBD_SendCmd(cmdMsg, cmdLen);
     //Wait for the response time
-    while(!RNBD.DataReady() && ResponseTime<=65)
+    while(!RNBD.DataReady() && ResponseTime<=RESPONSE_TIMEOUT)
     {
         RNBD.DelayMs(1);
         ResponseTime++;
@@ -195,6 +223,9 @@ bool RNBD_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, con
     while(RNBD.DataReady())
     {
         resp[ResponseRead]=RNBD.Read();
+		<#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
+		UART_CDC_write((uint8_t)resp[ResponseRead]);
+		</#if>
         ResponseRead++;
     }
 	//Comparing length of response expected
@@ -230,32 +261,8 @@ bool RNBD_EnterDataMode(void)
     cmdBuf[4] = '\n';
     return RNBD_SendCommand_ReceiveResponse(cmdBuf, 5U, dataModeResponse,5U);
 }
-/*
-void RNBD_WaitForMsg(const char *expectedMsg, uint8_t msgLen)
-{
-    uint8_t index = 0;
-    uint8_t resp;
 
-    do
-    {
-        resp = RNBD.Read();
 
-        if (resp == expectedMsg[index])
-        {
-            index++;
-        }
-        else
-        {
-            index = 0;
-            if (resp == expectedMsg[index])
-            {
-                index++;
-            }
-        }
-    }
-    while (index < msgLen);
-}
-*/
 
 
 bool RNBD_SetName(const uint8_t *name, uint8_t nameLen)
@@ -282,12 +289,14 @@ bool RNBD_SetName(const uint8_t *name, uint8_t nameLen)
 
 bool RNBD_SetBaudRate(uint8_t baudRate)
 {
+	uint8_t temp = (baudRate >> 4);
 	const uint8_t cmdPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
     cmdBuf[0] = 'S';
     cmdBuf[1] = 'B';
     cmdBuf[2] = ',';
-    cmdBuf[3] = ((uint8_t)(baudRate >> 4)) & 0x0F;
-    cmdBuf[4] = (baudRate & 0x0F);
+    cmdBuf[3] = NIBBLE2ASCII(temp);
+	temp = (baudRate & 0x0F);
+    cmdBuf[4] = NIBBLE2ASCII(temp);
     cmdBuf[5] = '\r';
     cmdBuf[6] = '\n';
 
@@ -470,7 +479,8 @@ RNBD_gpio_stateBitMap_t RNBD_GetInputsValues(RNBD_gpio_ioBitMap_t getGPIOs)
 
 uint8_t * RNBD_GetRSSIValue(void)
 {
-    static uint8_t resp[3];
+    static uint8_t rssiResp[20];
+    unsigned int ResponseRead=0,ResponseTime=0;
 
     cmdBuf[0] = 'M';
     cmdBuf[1] = '\r';
@@ -478,22 +488,22 @@ uint8_t * RNBD_GetRSSIValue(void)
 
     RNBD_SendCmd(cmdBuf, 3);
 
-    resp[0] = RNBD.Read();
-    resp[1] = RNBD.Read();
-    resp[2] = RNBD.Read();
-
-    // Read carriage return and line feed
-    RNBD.Read();
-    RNBD.Read();
-
-    // Read CMD>
-    RNBD.Read();
-    RNBD.Read();
-    RNBD.Read();
-    RNBD.Read();
-    RNBD.Read();
-
-    return resp;
+	//Wait for the response time
+    while(!RNBD.DataReady() && ResponseTime<=RESPONSE_TIMEOUT)
+    {
+        RNBD.DelayMs(1);
+        ResponseTime++;
+    }
+    //Read Ready data 
+    while(RNBD.DataReady())
+    {
+        resp[ResponseRead]=RNBD.Read();
+        ResponseRead++;
+    }
+    rssiResp[0]=resp[0];
+    rssiResp[1]=resp[1];
+    rssiResp[2]=resp[2];
+    return rssiResp;
 }
 
 
@@ -543,19 +553,19 @@ bool RNBD_Disconnect(void)
 
     return RNBD_ReadDefaultResponse();
 }
-void set_StatusDelimter(char Delimter_Character)
+void RNBD_set_StatusDelimter(char Delimter_Character)
 {
 	STATUS_MESSAGE_DELIMITER = Delimter_Character;
 }
-char get_StatusDelimter()
+char RNBD_get_StatusDelimter()
 {
 	return STATUS_MESSAGE_DELIMITER;
 }
-void set_NoDelimter(bool value)
+void RNBD_set_NoDelimter(bool value)
 {
     skip_Delimter=value;
 }
-bool get_NoDelimter()
+bool RNBD_get_NoDelimter()
 {
     return skip_Delimter;
 }

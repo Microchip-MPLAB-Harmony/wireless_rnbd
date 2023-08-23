@@ -181,7 +181,7 @@ bool RN487x_Init(void);
   * \param cmdLen RN487x command length
   * \return Nothing
   */
-void RN487x_SendCmd(const char *cmd, uint8_t cmdLen);
+void RN487x_SendCmd(const uint8_t *cmd, uint8_t cmdLen);
 
 /**
  * \ingroup RN487x
@@ -192,12 +192,11 @@ void RN487x_SendCmd(const char *cmd, uint8_t cmdLen);
  * 
  * \param getCmd Get command to send
  * \param getCmdLen Get command length
- * \param getCmdResp Buffer to store get command response
  * 
  * \return Length of get command response.
  * \retval index - tracked command response length.
  */
-uint8_t RN487x_GetCmd(const char *getCmd, uint8_t getCmdLen, char *getCmdResp);
+uint8_t RN487x_GetCmd(const uint8_t *getCmd, uint8_t getCmdLen);
 
  /**
   * \ingroup RN487x
@@ -213,7 +212,7 @@ uint8_t RN487x_GetCmd(const char *getCmd, uint8_t getCmdLen, char *getCmdResp);
   * \retval true - Expected Message Received
   * \retval false - Otherwise
   */
-bool RN487x_ReadMsg(const char *expectedMsg, uint8_t msgLen);
+bool RN487x_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen);
 
  /**
   * \ingroup RN487x
@@ -226,6 +225,21 @@ bool RN487x_ReadMsg(const char *expectedMsg, uint8_t msgLen);
   * \retval false - Otherwise
   */
 bool RN487x_ReadDefaultResponse(void);
+/**
+  * \ingroup RN487x
+  * \brief Puts the RN487x in user defined mode (Command Mode/Data Mode/ Set commands etc..).
+  * 
+  * This API puts the RN487x in user defined mode (Command Mode/Data Mode/ Set commands etc..). 
+  *  
+  * \return User Defined Mode Status
+  * \retval true - Success
+  * \retval false - Failure
+  * Paramater 1 - Command to be sent
+  * Parameter 2 - Length of Command to be sent
+  * Parameter 3 - Expected Response message
+  * Parameter 4 - Expected Response length 
+  */
+bool RN487x_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, const uint8_t *responsemsg, uint8_t responseLen);
 
  /**
   * \ingroup RN487x
@@ -265,21 +279,8 @@ bool RN487x_EnterDataMode(void);
   * \retval true - Sets device name
   * \retval false - Failure
   */
-//bool RN487x_SetName(const char *name, uint8_t nameLen);
+bool RN487x_SetName(const uint8_t *name, uint8_t nameLen);
 
- /**
-  * \ingroup RN487x
-  * \brief Waits for specific message from RN487x.
-  * 
-  * This API takes input from application on the expected response/status 
-  * message. It waits until it receives expected message from RN487x.
-  * This helps to read the RN487x status messages.
-  * 
-  * \param expectedMsg Expected response/status message from RN487x
-  * \param msgLen Expected response/status message length
-  * \return Nothing
-  */
-//void RN487x_WaitForMsg(const char *expectedMsg, uint8_t msgLen);
 
  /**
   * \ingroup RN487x
@@ -368,7 +369,7 @@ uint8_t RN487x_Read(void);
   * \retval true - Sets device name
   * \retval false - Failure
   */
-//bool RN487x_SetBaudRate(uint8_t baudRate);
+bool RN487x_SetBaudRate(uint8_t baudRate);
 
  /**
   * \ingroup RN487x
@@ -385,7 +386,7 @@ uint8_t RN487x_Read(void);
   * \retval true - Sets service bitmap
   * \retval false - Failure
   */
-//bool RN487x_SetServiceBitmap(uint8_t serviceBitmap);
+bool RN487x_SetServiceBitmap(uint8_t serviceBitmap);
 
  /**
   * \ingroup RN487x
@@ -401,7 +402,7 @@ uint8_t RN487x_Read(void);
   * \retval true - Sets features bitmap
   * \retval false - Failure
   */
-//bool RN487x_SetFeaturesBitmap(uint16_t featuresBitmap);
+bool RN487x_SetFeaturesBitmap(uint16_t featuresBitmap);
 
  /**
   * \ingroup RN487x
@@ -418,7 +419,7 @@ uint8_t RN487x_Read(void);
   * \retval true - Sets IO capability
   * \retval false - Failure
   */
-//bool RN487x_SetIOCapability(uint8_t ioCapability);
+bool RN487x_SetIOCapability(uint8_t ioCapability);
 
  /**
   * \ingroup RN487x
@@ -436,7 +437,7 @@ uint8_t RN487x_Read(void);
   * \retval true - Sets security pin code
   * \retval false - Failure
   */
-//bool RN487x_SetPinCode(const char *pinCode, uint8_t pinCodeLen);
+bool RN487x_SetPinCode(const char *pinCode, uint8_t pinCodeLen);
 
  /**
   * \ingroup RN487x
@@ -454,7 +455,7 @@ uint8_t RN487x_Read(void);
   * \retval true - Delimiters are Set to new characters
   * \retval false - Failure
   */
-//bool RN487x_SetStatusMsgDelimiter(char preDelimiter, char postDelimiter);
+bool RN487x_SetStatusMsgDelimiter(char preDelimiter, char postDelimiter);
 
  /**
   * \ingroup RN487x
@@ -467,7 +468,7 @@ uint8_t RN487x_Read(void);
   * \retval true - Success
   * \retval false - Failure
   */
-//bool RN487x_SetOutputs(RN487x_gpio_bitmap_t bitMap);
+bool RN487x_SetOutputs(RN487x_gpio_bitmap_t bitMap);
 
  /**
   * \ingroup RN487x
@@ -480,7 +481,7 @@ uint8_t RN487x_Read(void);
   * \return GPIO State values
   * \retval RND_gpio_stateBitMap_t - 8bit value coordinated to possible pin options
   */
-//RN487x_gpio_stateBitMap_t RN487x_GetInputsValues(RN487x_gpio_ioBitMap_t getGPIOs);
+RN487x_gpio_stateBitMap_t RN487x_GetInputsValues(RN487x_gpio_ioBitMap_t getGPIOs);
 
  /**
   * \ingroup RN487x
@@ -493,8 +494,41 @@ uint8_t RN487x_Read(void);
   * \retval <RSSI>
   * \retval ERR - Not Connected to RN487x
   */
-//uint8_t * RN487x_GetRSSIValue(void);
-
-
-
+uint8_t * RN487x_GetRSSIValue(void);
+/**
+  * \ingroup RN487x
+  * \brief Sets StatusDelimter value.
+  * 
+  * This variable sets the RN487x devices PRE/POST status message delimiter. 
+  * 
+  * \return Nothing
+  */
+void RN487x_set_StatusDelimter(char Delimter_Character);
+/**
+  * \ingroup RN487x
+  * \brief Get StatusDelimter value.
+  * 
+  * This variable gets the RN487x devices PRE/POST status message delimiter. 
+  * 
+  * \returns the current StatusDelimter value
+  */
+char RN487x_get_StatusDelimter();
+/**
+  * \ingroup RN487x
+  * \brief Sets the No Delimter check during HOST OTA Update.
+  * 
+  * This variable is used to set and not setting the Delimter check . 
+  * 
+  * \returns Nothing
+  */
+void RN487x_set_NoDelimter(bool value);
+/**
+  * \ingroup RN487x
+  * \brief Returns the current status No Delimter status.
+  * 
+  * This variable return true or false current status No Delimter status. 
+  * 
+  * \returns true or false 
+  */
+bool RN487x_get_NoDelimter();
 #endif	/* RN487X_H */

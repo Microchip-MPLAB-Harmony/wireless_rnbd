@@ -819,6 +819,12 @@ def extract_pin_num_ID(pin_num_req = '',pin_ID_req = '',req = 'PIN_NUM'):
         elif req == 'PIN_ID':
             if pin_num_req == pin_num:
                 return pin_ID
+def RNBDPinSelectionUpdatesCallback(symbol,event):
+	value = event['value']
+	if value == '':
+		rnHostRstSet.setValue(False)
+	else:
+		rnHostRstSet.setValue(True)
 
 ######################################################################################
 
@@ -1286,6 +1292,12 @@ def instantiateComponent(rnHostLib):
     rnHostRstPin.setReadOnly(True)
     #rnHostRstPin.setDefaultValue(False)
     rnHostRstPin.setDependencies(GPIO_Update_Callback,gpio_dependency)
+    global rnHostRstSet
+    rnHostRstSet = rnHostLib.createBooleanSymbol("BLE_RST_PIN_SELECTED",rnHostPinConfigmenu)
+    rnHostRstSet.setLabel("BT Reset Pin Selected")
+    rnHostRstSet.setVisible(False)
+    rnHostRstSet.setDefaultValue(False)
+    rnHostRstSet.setDependencies(RNBDPinSelectionUpdatesCallback,['BLE_RST_PIN_UPDATE'])
 
     global rnHostRstPinMsg
     rnHostRstPinMsg = rnHostLib.createCommentSymbol(None,rnHostPinConfigmenu)

@@ -198,7 +198,7 @@ void RNBD_SendCmd(const uint8_t *cmd, uint8_t cmdLen);
  * \return Length of get command response.
  * \retval index - tracked command response length.
  */
-uint8_t RNBD_GetCmd(const char *getCmd, uint8_t getCmdLen, char *getCmdResp);
+uint8_t RNBD_GetCmd(const uint8_t *getCmd, uint8_t getCmdLen);
 
  /**
   * \ingroup RNBD
@@ -214,7 +214,7 @@ uint8_t RNBD_GetCmd(const char *getCmd, uint8_t getCmdLen, char *getCmdResp);
   * \retval true - Expected Message Received
   * \retval false - Otherwise
   */
-bool RNBD_ReadMsg(const char *expectedMsg, uint8_t msgLen);
+bool RNBD_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen);
 
  /**
   * \ingroup RNBD
@@ -241,6 +241,7 @@ bool RNBD_ReadDefaultResponse(void);
   * Paramater 1 - Command to be sent
   * Parameter 2 - Length of Command to be sent
   * Parameter 3 - Expected Response message 
+  * Parameter 4 - Expected Response length 
   */
 bool RNBD_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, const uint8_t *responsemsg, uint8_t responseLen);
 /**
@@ -343,20 +344,7 @@ uint8_t RNBD_Read(void);
 
 /**
   * \ingroup RNBD
-  * \brief Waits for specific message from RNBD.
-  * 
-  * This API takes input from application on the expected response/status 
-  * message. It waits until it receives expected message from RNBD.
-  * This helps to read the RNBD status messages.
-  * 
-  * \param expectedMsg Expected response/status message from RNBD
-  * \param msgLen Expected response/status message length
-  * \return Nothing
-  */
-void RNBD_WaitForMsg(const char *expectedMsg, uint8_t msgLen);
 
- /**
-  * \ingroup RNBD
   * \brief Sets device name.
   * 
   * This routine sets the RNBD device name. For more details, refer SN
@@ -516,7 +504,7 @@ uint8_t * RNBD_GetRSSIValue(void);
   * 
   * \return Nothing
   */
-void set_StatusDelimter(char Delimter_Character);
+void RNBD_set_StatusDelimter(char Delimter_Character);
 /**
   * \ingroup RNBD
   * \brief Get StatusDelimter value.
@@ -525,7 +513,7 @@ void set_StatusDelimter(char Delimter_Character);
   * 
   * \returns the current StatusDelimter value
   */
-char get_StatusDelimter();
+char RNBD_get_StatusDelimter();
 /**
   * \ingroup RNBD
   * \brief Sets the No Delimter check during HOST OTA Update.
@@ -534,7 +522,7 @@ char get_StatusDelimter();
   * 
   * \returns Nothing
   */
-void set_NoDelimter(bool value);
+void RNBD_set_NoDelimter(bool value);
 /**
   * \ingroup RNBD
   * \brief Returns the current status No Delimter status.
@@ -543,5 +531,5 @@ void set_NoDelimter(bool value);
   * 
   * \returns true or false 
   */
-bool get_NoDelimter();
+bool RNBD_get_NoDelimter();
 #endif	/* RNBD_H */

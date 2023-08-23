@@ -434,7 +434,7 @@ static inline void RNBD_Delay(uint32_t delayCount)
 
 static void RNBD_Reset(bool value)
 {
-<#if BT_RST_Pin_Selected>
+<#if BLE_RST_PIN_SELECTED == true>
     if (true == value)
     {
         BT_RST_Clear();

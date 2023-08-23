@@ -198,7 +198,7 @@ void RNBD_SendCmd(const uint8_t *cmd, uint8_t cmdLen);
  * \return Length of get command response.
  * \retval index - tracked command response length.
  */
-uint8_t RNBD_GetCmd(const char *getCmd, uint8_t getCmdLen, char *getCmdResp);
+uint8_t RNBD_GetCmd(const uint8_t *getCmd, uint8_t getCmdLen);
 
  /**
   * \ingroup RNBD
@@ -241,7 +241,7 @@ bool RNBD_ReadDefaultResponse(void);
   * Parameter 2 - Length of Command to be sent
   * Parameter 3 - Expected Response message 
   */
-bool RNBD_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, const uint8_t *responsemsg);
+bool RNBD_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, const uint8_t *responsemsg, uint8_t responseLen);
 
 /**
   * \ingroup RNBD
@@ -369,7 +369,7 @@ uint8_t RNBD_Read(void);
   * \retval true - Sets device name
   * \retval false - Failure
   */
-//bool RNBD_SetName(const char *name, uint8_t nameLen);
+bool RNBD_SetName(const uint8_t *name, uint8_t nameLen);
 
  /**
   * \ingroup RNBD
@@ -383,7 +383,7 @@ uint8_t RNBD_Read(void);
   * \retval true - Sets device name
   * \retval false - Failure
   */
-//bool RNBD_SetBaudRate(uint8_t baudRate);
+bool RNBD_SetBaudRate(uint8_t baudRate);
 
  /**
   * \ingroup RNBD
@@ -400,7 +400,7 @@ uint8_t RNBD_Read(void);
   * \retval true - Sets service bitmap
   * \retval false - Failure
   */
-//bool RNBD_SetServiceBitmap(uint8_t serviceBitmap);
+bool RNBD_SetServiceBitmap(uint8_t serviceBitmap);
 
  /**
   * \ingroup RNBD
@@ -416,7 +416,7 @@ uint8_t RNBD_Read(void);
   * \retval true - Sets features bitmap
   * \retval false - Failure
   */
-//bool RNBD_SetFeaturesBitmap(uint16_t featuresBitmap);
+bool RNBD_SetFeaturesBitmap(uint16_t featuresBitmap);
 
  /**
   * \ingroup RNBD
@@ -433,7 +433,7 @@ uint8_t RNBD_Read(void);
   * \retval true - Sets IO capability
   * \retval false - Failure
   */
-//bool RNBD_SetIOCapability(uint8_t ioCapability);
+bool RNBD_SetIOCapability(uint8_t ioCapability);
 
  /**
   * \ingroup RNBD
@@ -451,7 +451,7 @@ uint8_t RNBD_Read(void);
   * \retval true - Sets security pin code
   * \retval false - Failure
   */
-//bool RNBD_SetPinCode(const char *pinCode, uint8_t pinCodeLen);
+bool RNBD_SetPinCode(const char *pinCode, uint8_t pinCodeLen);
 
  /**
   * \ingroup RNBD
@@ -469,7 +469,7 @@ uint8_t RNBD_Read(void);
   * \retval true - Delimiters are Set to new characters
   * \retval false - Failure
   */
-//bool RNBD_SetStatusMsgDelimiter(char preDelimiter, char postDelimiter);
+bool RNBD_SetStatusMsgDelimiter(char preDelimiter, char postDelimiter);
 
  /**
   * \ingroup RNBD
@@ -482,7 +482,7 @@ uint8_t RNBD_Read(void);
   * \retval true - Success
   * \retval false - Failure
   */
-//bool RNBD_SetOutputs(RNBD_gpio_bitmap_t bitMap);
+bool RNBD_SetOutputs(RNBD_gpio_bitmap_t bitMap);
 
  /**
   * \ingroup RNBD
@@ -495,7 +495,7 @@ uint8_t RNBD_Read(void);
   * \return GPIO State values
   * \retval RND_gpio_stateBitMap_t - 8bit value coordinated to possible pin options
   */
-//RNBD_gpio_stateBitMap_t RNBD_GetInputsValues(RNBD_gpio_ioBitMap_t getGPIOs);
+RNBD_gpio_stateBitMap_t RNBD_GetInputsValues(RNBD_gpio_ioBitMap_t getGPIOs);
 
  /**
   * \ingroup RNBD
@@ -508,6 +508,42 @@ uint8_t RNBD_Read(void);
   * \retval <RSSI>
   * \retval ERR - Not Connected to RNBD
   */
-//uint8_t * RNBD_GetRSSIValue(void);
+uint8_t * RNBD_GetRSSIValue(void);
 
+ /**
+  * \ingroup RNBD
+  * \brief Sets StatusDelimter value.
+  * 
+  * This variable sets the RNBD devices PRE/POST status message delimiter. 
+  * 
+  * \return Nothing
+  */
+void RNBD_set_StatusDelimter(char Delimter_Character);
+/**
+  * \ingroup RNBD
+  * \brief Get StatusDelimter value.
+  * 
+  * This variable gets the RNBD devices PRE/POST status message delimiter. 
+  * 
+  * \returns the current StatusDelimter value
+  */
+char RNBD_get_StatusDelimter();
+/**
+  * \ingroup RNBD
+  * \brief Sets the No Delimter check during HOST OTA Update.
+  * 
+  * This variable is used to set and not setting the Delimter check . 
+  * 
+  * \returns Nothing
+  */
+void RNBD_set_NoDelimter(bool value);
+/**
+  * \ingroup RNBD
+  * \brief Returns the current status No Delimter status.
+  * 
+  * This variable return true or false current status No Delimter status. 
+  * 
+  * \returns true or false 
+  */
+bool RNBD_get_NoDelimter();
 #endif	/* RNBD_H */

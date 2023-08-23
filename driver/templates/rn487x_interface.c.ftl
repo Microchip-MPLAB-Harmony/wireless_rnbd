@@ -433,7 +433,7 @@ static inline void RN487x_Delay(uint32_t delayCount)
 
 static void RN487x_Reset(bool value)
 {
-<#if BT_RST_Pin_Selected>
+<#if BLE_RST_PIN_SELECTED == true>
     if (true == value)
     {
         BT_RST_Clear();

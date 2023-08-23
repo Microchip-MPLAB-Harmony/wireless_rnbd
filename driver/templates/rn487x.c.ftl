@@ -27,14 +27,20 @@
 #include "rn487x.h"
 #include "rn487x_interface.h"
 #include "definitions.h" 
+#include <string.h>
+#include <stddef.h>
+#include <stdlib.h> 
 
+/* This value depends upon the System Clock Frequency, Baudrate value and Error percentage of Baudrate*/
+#define RESPONSE_TIMEOUT 65 
 /**
  * \def STATUS_MESSAGE_DELIMITER
- * This macro provide a definition of the RN487X devices PRE/POST status message delimiter.
+ * This Variable provide a definition of the RN487X devices PRE/POST status message delimiter.
  */
-#define STATUS_MESSAGE_DELIMITER        ('%')
+char STATUS_MESSAGE_DELIMITER = '%';
 
-static char cmdBuf[64];                                 /**< Command TX Buffer */
+bool skip_Delimter = false;
+static uint8_t cmdBuf[64];                                 /**< Command TX Buffer */
 static uint8_t dummyread;
 
 static char *asyncBuffer;                           /**< Async Message Buffer */
@@ -42,6 +48,7 @@ static uint8_t asyncBufferSize;                     /**< Size of the Async Messa
 static char *pHead;                                 /**< Pointer to the Head of the Async Message Buffer */
 static uint8_t peek = 0;                            /**< Recieved Non-Status Message Data */
 static bool dataReady = false;                      /**< Flag which indicates whether Non-Status Message Data is ready */
+uint8_t resp[100];
 
 /**
  * \brief This function filters status messages from RN487x data.
@@ -72,47 +79,74 @@ bool RN487x_Init(void)
     return true;
 }
 
-void RN487x_SendCmd(const char *cmd, uint8_t cmdLen)
+void RN487x_SendCmd(const uint8_t *cmd, uint8_t cmdLen)
 {
     uint8_t index = 0;
 
-    while (index < cmdLen)
-    {
+	do{
         if (RN487x.TransmitDone())
         {
             RN487x.Write(cmd[index]);
             index++;
         }
     }
+    while(index < cmdLen);
+    while(!RN487x.TransmitDone());
 }
 
-uint8_t RN487x_GetCmd(const char *getCmd, uint8_t getCmdLen, char *getCmdResp)
+uint8_t RN487x_GetCmd(const uint8_t *getCmd, uint8_t getCmdLen)
 {
-    uint8_t index = 0;
+	uint8_t index = 0, ResponseTime=0;
 
     RN487x_SendCmd(getCmd, getCmdLen);
 
+	//Wait for the response time
+    while(!RN487x.DataReady() && ResponseTime<=RESPONSE_TIMEOUT)
+    {
+        RN487x.DelayMs(1);
+        ResponseTime++;
+    }
     do
     {
-        getCmdResp[index++] = (char)RN487x.Read();
+        //Read Ready data 
+        if(RN487x.DataReady())
+        {
+            resp[index++]=RN487x.Read();
+        }
     }
-    while (getCmdResp[index - 1U] != '\n');
+    while (resp[index - 1U] != '>');
 
     return index;
 }
 
-bool RN487x_ReadMsg(const char *expectedMsg, uint8_t msgLen)
+bool RN487x_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen)
 {
-    uint8_t index;
-    uint8_t resp;
-
-    for (index = 0; index < msgLen; index++)
+    unsigned int ResponseRead=0,ResponseTime=0,ResponseCheck=0;
+	//Wait for the response time
+    while(!RN487x.DataReady() && ResponseTime<=RESPONSE_TIMEOUT)
     {
-        resp = RN487x.Read();
+        RN487x.DelayMs(1);
+        ResponseTime++;
+    }
+    
+    //Read Ready data 
+    while(RN487x.DataReady())
+    {
+        resp[ResponseRead]=RN487x.Read();
         <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
-        UART_CDC_write(resp);
+		UART_CDC_write(resp[ResponseRead]);
         </#if>
-        if (resp != (uint8_t)expectedMsg[index])
+        ResponseRead++;
+    }
+	//Comparing length of response expected
+    if (ResponseRead != msgLen)
+    {
+        return false;
+    }
+    //Comparing the Response with expected result
+    for(ResponseCheck=0;ResponseCheck<ResponseRead;ResponseCheck++)
+    {
+        if (resp[ResponseCheck] != expectedMsg[ResponseCheck])
         {
             return false;
         }
@@ -123,22 +157,27 @@ bool RN487x_ReadMsg(const char *expectedMsg, uint8_t msgLen)
 
 bool RN487x_ReadDefaultResponse(void)
 {
-    char resp[3];
+    char DefaultResponse[30];
     bool status = false;
-
-    resp[0] = (char)RN487x.Read();
-    resp[1] = (char)RN487x.Read();
-    resp[2] = (char)RN487x.Read();
+    unsigned int ResponseWait=0,DataReadcount=0;
+    while(!RN487x.DataReady() && ResponseWait<=RESPONSE_TIMEOUT)
+    {
+        RN487x.DelayMs(1);
+        ResponseWait++;
+    }
+    while(RN487x.DataReady())
+    {
+        DefaultResponse[DataReadcount]=RN487x.Read();
     <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
-    UART_CDC_write((uint8_t)resp[0]);
-    UART_CDC_write((uint8_t)resp[1]);
-    UART_CDC_write((uint8_t)resp[2]);
+		UART_CDC_write((uint8_t)DefaultResponse[DataReadcount]);
     </#if>
-    switch (resp[0])
+        DataReadcount++;
+    }
+    switch (DefaultResponse[0])
     {
         case 'A':
         {
-            if ((resp[1] == 'O') && (resp[2] == 'K'))
+            if ((DefaultResponse[1] == 'O') && (DefaultResponse[2] == 'K'))
             {
                 status = true;
             }
@@ -147,7 +186,7 @@ bool RN487x_ReadDefaultResponse(void)
         }
         case 'E':
         {
-            if ((resp[1] == 'r') && (resp[2] == 'r'))
+            if ((DefaultResponse[1] == 'r') && (DefaultResponse[2] == 'r'))
             {
                 status = false;
             }
@@ -160,62 +199,71 @@ bool RN487x_ReadDefaultResponse(void)
         }
     }
 
-    /* Read carriage return and line feed comes with response */
-    dummyread=RN487x.Read();
-    dummyread=RN487x.Read();
 
-    //Read CMD>
-    dummyread=RN487x.Read();
-    dummyread=RN487x.Read();
-    dummyread=RN487x.Read();
-    dummyread=RN487x.Read();
-    dummyread=RN487x.Read();
   
     return status;
 }
-/*
-void RN487x_WaitForMsg(const char *expectedMsg, uint8_t msgLen)
+
+bool RN487x_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, const uint8_t *responsemsg, uint8_t responseLen)
 {
-    uint8_t index = 0;
-    uint8_t resp;
+    unsigned int ResponseRead=0,ResponseTime=0,ResponseCheck=0;
 
-    do
+    //Flush out any unread data
+    while (RN487x.DataReady())
     {
-        resp = RN487x.Read();
-
-        if (resp == expectedMsg[index])
+        RN487x.Read();
+    }
+    
+    //Sending Command to UART
+    RN487x_SendCmd(cmdMsg, cmdLen);
+    //Wait for the response time
+    while(!RN487x.DataReady() && ResponseTime<=RESPONSE_TIMEOUT)
         {
-            index++;
+        RN487x.DelayMs(1);
+        ResponseTime++;
         }
-        else
+    
+    //Read Ready data 
+    while(RN487x.DataReady())
         {
-            index = 0;
-            if (resp == expectedMsg[index])
+        resp[ResponseRead]=RN487x.Read();
+		<#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
+		UART_CDC_write((uint8_t)resp[ResponseRead]);
+		</#if>
+        ResponseRead++;
+    }
+	//Comparing length of response expected
+    if (ResponseRead != responseLen)
             {
-                index++;
+        return false;
             }
+    //Comparing the Response with expected result
+    for(ResponseCheck=0;ResponseCheck<ResponseRead;ResponseCheck++)
+    {
+        if (resp[ResponseCheck] != responsemsg[ResponseCheck])
+        {
+            return false;
         }
     }
-    while (index < msgLen);
+    return true;
 }
-*/
+
 
 bool RN487x_EnterCmdMode(void)
 {
-    const char cmdPrompt[] = {'C', 'M', 'D', '>', ' '};
+    const uint8_t cmdModeResponse[] = {'C', 'M', 'D', '>', ' '};
 
     cmdBuf[0] = '$';
     cmdBuf[1] = '$';
     cmdBuf[2] = '$';
 
-    RN487x_SendCmd(cmdBuf, 3U);
 
-    return RN487x_ReadMsg(cmdPrompt, (uint8_t)sizeof (cmdPrompt));
+    return RN487x_SendCommand_ReceiveResponse(cmdBuf, 3U, cmdModeResponse,5U);
 }
 
 bool RN487x_EnterDataMode(void)
 {
-    const char cmdPrompt[] = {'E', 'N', 'D', '\r', '\n'};
+    const uint8_t dataModeResponse[] = {'E', 'N', 'D', '\r', '\n'};
 
     cmdBuf[0] = '-';
     cmdBuf[1] = '-';
@@ -223,15 +271,15 @@ bool RN487x_EnterDataMode(void)
     cmdBuf[3] = '\r';
     cmdBuf[4] = '\n';
 
-    RN487x_SendCmd(cmdBuf, 5U);
 
-    return RN487x_ReadMsg(cmdPrompt, (uint8_t)sizeof (cmdPrompt));
+    return RN487x_SendCommand_ReceiveResponse(cmdBuf, 5U, dataModeResponse,5U);
 }
 
-/*
-bool RN487x_SetName(const char *name, uint8_t nameLen)
+
+bool RN487x_SetName(const uint8_t *name, uint8_t nameLen)
 {
     uint8_t index;
+	const uint8_t cmdPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
 
     cmdBuf[0] = 'S';
     cmdBuf[1] = 'N';
@@ -246,28 +294,30 @@ bool RN487x_SetName(const char *name, uint8_t nameLen)
     cmdBuf[index++] = '\r';
     cmdBuf[index++] = '\n';
 
-    RN487x_SendCmd(cmdBuf, nameLen + 5);
+    return RN487x_SendCommand_ReceiveResponse(cmdBuf, nameLen + 5U, cmdPrompt, 10);
 
-    return RN487x_ReadDefaultResponse();
 }
 
 bool RN487x_SetBaudRate(uint8_t baudRate)
 {
+    uint8_t temp = (baudRate >> 4);
+	const uint8_t cmdPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
     cmdBuf[0] = 'S';
     cmdBuf[1] = 'B';
     cmdBuf[2] = ',';
-    cmdBuf[3] = ((uint8_t)(baudRate >> 4)) & 0x0F;
-    cmdBuf[4] = (baudRate & 0x0F);
+    cmdBuf[3] = NIBBLE2ASCII(temp);
+	temp = (baudRate & 0x0F);
+    cmdBuf[4] = NIBBLE2ASCII(temp);
     cmdBuf[5] = '\r';
     cmdBuf[6] = '\n';
 
-    RN487x_SendCmd(cmdBuf, 7);
 
-    return RN487x_ReadDefaultResponse();
+	return RN487x_SendCommand_ReceiveResponse(cmdBuf, 7U, cmdPrompt, 10);
 }
 
 bool RN487x_SetServiceBitmap(uint8_t serviceBitmap)
 {
+    const uint8_t cmdPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
     uint8_t temp = (serviceBitmap >> 4);
 
     cmdBuf[0] = 'S';
@@ -279,13 +329,13 @@ bool RN487x_SetServiceBitmap(uint8_t serviceBitmap)
     cmdBuf[5] = '\r';
     cmdBuf[6] = '\n';
 
-    RN487x_SendCmd(cmdBuf, 7);
 
-    return RN487x_ReadDefaultResponse();
+	return RN487x_SendCommand_ReceiveResponse(cmdBuf, 7U, cmdPrompt, 10);
 }
 
 bool RN487x_SetFeaturesBitmap(uint16_t featuresBitmap)
 {
+    const uint8_t cmdPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
     uint8_t temp = (uint8_t) (featuresBitmap >> 12);
 
     cmdBuf[0] = 'S';
@@ -305,13 +355,13 @@ bool RN487x_SetFeaturesBitmap(uint16_t featuresBitmap)
     cmdBuf[7] = '\r';
     cmdBuf[8] = '\n';
 
-    RN487x_SendCmd(cmdBuf, 9);
 
-    return RN487x_ReadDefaultResponse();
+	return RN487x_SendCommand_ReceiveResponse(cmdBuf, 9U, cmdPrompt, 10);
 }
 
 bool RN487x_SetIOCapability(uint8_t ioCapability)
 {
+    const uint8_t cmdPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
     cmdBuf[0] = 'S';
     cmdBuf[1] = 'A';
     cmdBuf[2] = ',';
@@ -319,13 +369,13 @@ bool RN487x_SetIOCapability(uint8_t ioCapability)
     cmdBuf[4] = '\r';
     cmdBuf[5] = '\n';
 
-    RN487x_SendCmd(cmdBuf, 6);
 
-    return RN487x_ReadDefaultResponse();
+	return RN487x_SendCommand_ReceiveResponse(cmdBuf, 6U, cmdPrompt, 10);
 }
 
 bool RN487x_SetPinCode(const char *pinCode, uint8_t pinCodeLen)
 {
+    const uint8_t cmdPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
     uint8_t index;
 
     cmdBuf[0] = 'S';
@@ -340,13 +390,13 @@ bool RN487x_SetPinCode(const char *pinCode, uint8_t pinCodeLen)
     cmdBuf[index++] = '\r';
     cmdBuf[index++] = '\n';
 
-    RN487x_SendCmd(cmdBuf, index);
 
-    return RN487x_ReadDefaultResponse();
+	return RN487x_SendCommand_ReceiveResponse(cmdBuf, index, cmdPrompt, 10);
 }
 
 bool RN487x_SetStatusMsgDelimiter(char preDelimiter, char postDelimiter)
 {
+    const uint8_t cmdPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
     cmdBuf[0] = 'S';
     cmdBuf[1] = '%';
     cmdBuf[2] = ',';
@@ -356,18 +406,15 @@ bool RN487x_SetStatusMsgDelimiter(char preDelimiter, char postDelimiter)
     cmdBuf[6] = '\r';
     cmdBuf[7] = '\n';
 
-    RN487x_SendCmd(cmdBuf, 8);
+	return RN487x_SendCommand_ReceiveResponse(cmdBuf, 8, cmdPrompt, 10);
 
-    if (RN487x_ReadDefaultResponse())
-    {
-        return true;
     }
 
-    return false;
-}
+
 
 bool RN487x_SetOutputs(RN487x_gpio_bitmap_t bitMap)
 {
+    const uint8_t cmdPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
     char ioHighNibble = '0';
     char ioLowNibble = '0';
     char stateHighNibble = '0';
@@ -406,8 +453,7 @@ bool RN487x_SetOutputs(RN487x_gpio_bitmap_t bitMap)
     cmdBuf[8] = '\r';
     cmdBuf[9] = '\n';
 
-    RN487x_SendCmd(cmdBuf, 10);
-    return RN487x_ReadDefaultResponse();
+	return RN487x_SendCommand_ReceiveResponse(cmdBuf, 10U, cmdPrompt, 10U);
 }
 
 RN487x_gpio_stateBitMap_t RN487x_GetInputsValues(RN487x_gpio_ioBitMap_t getGPIOs)
@@ -437,15 +483,15 @@ RN487x_gpio_stateBitMap_t RN487x_GetInputsValues(RN487x_gpio_ioBitMap_t getGPIOs
     cmdBuf[5] = '\r';
     cmdBuf[6] = '\n';
 
-    RN487x_SendCmd(cmdBuf, 7);
-    RN487x_ReadMsg(ioValue, sizeof (ioValue));    
+	RN487x_SendCommand_ReceiveResponse(cmdBuf, 7, ioValue, sizeof (ioValue));
     ioBitMapValue.gpioStateBitMap = ( (((ioValue[0] - '0') & 0x0F) << 4) | ((ioValue[1] - '0') & 0x0F) );
     return ioBitMapValue;
 }
 
 uint8_t * RN487x_GetRSSIValue(void)
 {
-    static uint8_t resp[3];
+    static uint8_t rssiResp[20];
+    unsigned int ResponseRead=0,ResponseTime=0;
 
     cmdBuf[0] = 'M';
     cmdBuf[1] = '\r';
@@ -453,53 +499,57 @@ uint8_t * RN487x_GetRSSIValue(void)
 
     RN487x_SendCmd(cmdBuf, 3);
 
-    resp[0] = RN487x.Read();
-    resp[1] = RN487x.Read();
-    resp[2] = RN487x.Read();
-
-    // Read carriage return and line feed
-    RN487x.Read();
-    RN487x.Read();
-
-    // Read CMD>
-    RN487x.Read();
-    RN487x.Read();
-    RN487x.Read();
-    RN487x.Read();
-    RN487x.Read();
-
-    return resp;
+	//Wait for the response time
+    while(!RN487x.DataReady() && ResponseTime<=RESPONSE_TIMEOUT)
+    {
+        RN487x.DelayMs(1);
+        ResponseTime++;
+    }
+    //Read Ready data 
+    while(RN487x.DataReady())
+    {
+        resp[ResponseRead]=RN487x.Read();
+        ResponseRead++;
+    }
+    rssiResp[0]=resp[0];
+    rssiResp[1]=resp[1];
+    rssiResp[2]=resp[2];
+    return rssiResp;
 }
-*/
+
 
 bool RN487x_RebootCmd(void)
 {
-    const char reboot[] = {'R', 'e', 'b', 'o', 'o', 't', 'i', 'n', 'g', '\r', '\n'};
+    bool RebootStatus = false;
+    const uint8_t rebootResponse[] = {'R', 'e', 'b', 'o', 'o', 't', 'i', 'n', 'g', '\r', '\n'};
 
     cmdBuf[0] = 'R';
     cmdBuf[1] = ',';
     cmdBuf[2] = '1';
     cmdBuf[4] = '\r';
     cmdBuf[5] = '\n';
+    RebootStatus = RN487x_SendCommand_ReceiveResponse(cmdBuf, 5U, rebootResponse, 11U);
 
-    RN487x_SendCmd(cmdBuf, 5U);
+	RN487x.DelayMs(250);
 
-    return RN487x_ReadMsg(reboot, (uint8_t)sizeof (reboot));
+	return RebootStatus;
 }
 
 bool RN487x_FactoryReset(RN487x_FACTORY_RESET_MODE_t resetMode)
 {
-    const char reboot[] = {'R', 'e', 'b', 'o', 'o', 't', ' ', 'a', 'f', 't', 'e', 'r', ' ', 'F', 'a', 'c', 't', 'o', 'r', 'y', ' ', 'R', 'e', 's', 'e', 't', '\r', '\n'};
+    bool FactoryResetStatus = false;
+    const uint8_t reboot[] = {'R', 'e', 'b', 'o', 'o', 't', ' ', 'a', 'f', 't', 'e', 'r', ' ', 'F', 'a', 'c', 't', 'o', 'r', 'y', ' ', 'R', 'e', 's', 'e', 't', '\r', '\n'};
     cmdBuf[0] = 'S';
     cmdBuf[1] = 'F';
     cmdBuf[2] = ',';
     cmdBuf[4] = (char)resetMode;
     cmdBuf[5] = '\r';
-    cmdBuf[5] = '\n';
+    cmdBuf[6] = '\n';
+    FactoryResetStatus = RN487x_SendCommand_ReceiveResponse(cmdBuf, 6U, reboot, 28U);
 
-    RN487x_SendCmd(cmdBuf, 6U);
+	RN487x.DelayMs(250);
 
-    return RN487x_ReadMsg(reboot, (uint8_t)sizeof (reboot));
+	return FactoryResetStatus;
 }
 
 bool RN487x_Disconnect(void)
@@ -513,6 +563,22 @@ bool RN487x_Disconnect(void)
     RN487x_SendCmd(cmdBuf, 5U);
 
     return RN487x_ReadDefaultResponse();
+}
+void RN487x_set_StatusDelimter(char Delimter_Character)
+{
+	STATUS_MESSAGE_DELIMITER = Delimter_Character;
+}
+char RN487x_get_StatusDelimter()
+{
+	return STATUS_MESSAGE_DELIMITER;
+}
+void RN487x_set_NoDelimter(bool value)
+{
+    skip_Delimter=value;
+}
+bool RN487x_get_NoDelimter()
+{
+    return skip_Delimter;
 }
 
 bool RN487x_SetAsyncMessageHandler(char* pBuffer, uint8_t len)
@@ -575,13 +641,14 @@ static bool RN487x_FilterData(void)
     }
     else
     {
-        if (readChar == (uint8_t)STATUS_MESSAGE_DELIMITER)
+        if (readChar == (uint8_t)STATUS_MESSAGE_DELIMITER && (skip_Delimter == false))
         {
             asyncBuffering = true;
             pHead = asyncBuffer;
         }
         else 
         {
+			skip_Delimter = true;
             dataReady = true;
             peek = readChar;
         }
