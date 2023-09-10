@@ -25,7 +25,7 @@
 */
 
 #include "rn487x.h"
-#include "rn487x_interface.h"
+#include "../config/default/rn487x/rn487x_interface.h"
 #include "definitions.h" 
 #include <string.h>
 #include <stddef.h>
@@ -641,7 +641,13 @@ static bool RN487x_FilterData(void)
     }
     else
     {
-        if (readChar == (uint8_t)STATUS_MESSAGE_DELIMITER && (skip_Delimter == false))
+		if((readChar != (uint8_t)STATUS_MESSAGE_DELIMITER ) && ((RN487x_IsOTABegin() == false)))
+        {        
+            asyncBuffering = true;
+            pHead = asyncBuffer;
+            *pHead++ = (char)readChar;
+        }
+        else if ((readChar == (uint8_t)STATUS_MESSAGE_DELIMITER && (skip_Delimter == false)) && (RNBD_IsOTABegin() == false))
         {
             asyncBuffering = true;
             pHead = asyncBuffer;

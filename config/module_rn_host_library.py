@@ -30,4 +30,4 @@ rnHostComponent.setInstanceHeaderText("Dependencies")
 rnHostComponent.setInstanceText("Dependency ${INDEX}")
 
 rnHostComponent.addDependency("RNBD_USART_Dependency", "UART",'UART',False, True)
-rnHostComponent.addCapability("RNBD_WIRELESS_CAPABILITY","WIRELESS","Wireless",False)
+rnHostComponent.addCapability("RNBD_WIRELESS_CAPABILITY","Wireless","Wireless",False)

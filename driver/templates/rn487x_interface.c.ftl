@@ -36,7 +36,7 @@
 </#if>
 </#if>
 
-static bool connected = false,OTAComplete = false; //**< RN487x connection state */
+static bool connected = false,OTABegin = false; //**< RN487x connection state */
 static uint32_t delay_ms_cycles = CPU_CLOCK_FREQUENCY/1000;
 static uint8_t readbuffer[1];
 static size_t dummyread=0;
@@ -257,9 +257,9 @@ bool RN487x_IsConnected(void)
     return connected;
 }
 
-bool RN487x_IsOTAComplete(void)
+bool RN487x_IsOTABegin(void)
 {
-    return OTAComplete;
+    return OTABegin;
 }
 
 /*****************************************************
@@ -296,12 +296,12 @@ uint8_t UART_CDC_Read(void)
     </#if>
     <#if  (SERCOM_CONSOLE_NON_SECURE?? && CONSOLE_SERCOM_INST??)>
     <#if (SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_CONSOLE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-    dummyread=${CONSOLE_SERCOM_INST}_USART_Read(cdcreadbuffer,1);
+    dummyread=${.vars["${CONSOLE_SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_Read(cdcreadbuffer,1);
     </#if>
     </#if>
 <#else>
     <#if CONSOLE_SERCOM_INST??>
-    dummyread=${CONSOLE_SERCOM_INST}_USART_Read(cdcreadbuffer,1);
+    dummyread=${.vars["${CONSOLE_SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_Read(cdcreadbuffer,1);
     </#if>
 </#if>
     return *(uint8_t*)cdcreadbuffer;
@@ -316,12 +316,12 @@ void UART_CDC_write(uint8_t buffer)
     </#if>
     <#if (SERCOM_CONSOLE_NON_SECURE?? && CONSOLE_SERCOM_INST??)>
     <#if (SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_CONSOLE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-    dummyread=${CONSOLE_SERCOM_INST}_USART_Write(&buffer, 1);
+    dummyread=${.vars["${CONSOLE_SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_Write(&buffer, 1);
     </#if>
     </#if>
     <#else>
     <#if CONSOLE_SERCOM_INST??>
-    dummyread=${CONSOLE_SERCOM_INST}_USART_Write(&buffer, 1);
+    dummyread=${.vars["${CONSOLE_SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_Write(&buffer, 1);
     </#if>
     </#if>
 }
@@ -335,12 +335,12 @@ size_t UART_CDC_DataReady(void)
     </#if>
     <#if  (SERCOM_CONSOLE_NON_SECURE?? && CONSOLE_SERCOM_INST??)>
     <#if (SERCOM_CONSOLE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_CONSOLE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-    return ${CONSOLE_SERCOM_INST}_USART_ReadCountGet();
+    return ${.vars["${CONSOLE_SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_ReadCountGet();
     </#if>
     </#if>
     <#else>
     <#if CONSOLE_SERCOM_INST??>
-    return ${CONSOLE_SERCOM_INST}_USART_ReadCountGet();
+    return ${.vars["${CONSOLE_SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_ReadCountGet();
     </#if>
     </#if>
     
@@ -354,12 +354,12 @@ uint8_t UART_BLE_Read(void)
     </#if>
     <#if (SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INST??)>
     <#if (SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_INTERFACE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-    dummyread=${SERCOM_INST}_USART_Read(readbuffer,1);
+    dummyread=${.vars["${SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_Read(readbuffer,1);
 </#if>
     </#if>
 <#else>
     <#if SERCOM_INST??>
-    dummyread=${SERCOM_INST}_USART_Read(readbuffer,1);
+    dummyread=${.vars["${SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_Read(readbuffer,1);
     </#if>
 </#if>
     return *(uint8_t*)readbuffer;
@@ -373,12 +373,12 @@ void UART_BLE_write(uint8_t buffer)
     </#if>
     <#if (SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INST??)>
     <#if (SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_INTERFACE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-    dummyread=${SERCOM_INST}_USART_Write(&buffer, 1);
+    dummyread=${.vars["${SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_Write(&buffer, 1);
     </#if>
     </#if>
 <#else>
     <#if SERCOM_INST??>	
-    dummyread=${SERCOM_INST}_USART_Write(&buffer, 1);
+    dummyread=${.vars["${SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_Write(&buffer, 1);
     </#if>
 </#if>
 }
@@ -391,12 +391,12 @@ size_t UART_BLE_DataReady(void)
     </#if>
     <#if (SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INST??)>
     <#if (SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_INTERFACE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-    return ${SERCOM_INST}_USART_ReadCountGet();
+    return ${.vars["${SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_ReadCountGet();
     </#if>
     </#if>
 <#else>
     <#if SERCOM_INST??>
-    return ${SERCOM_INST}_USART_ReadCountGet();
+    return ${.vars["${SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_ReadCountGet();
     </#if>
 </#if>
 }
@@ -409,7 +409,7 @@ bool UART_BLE_TransmitDone(void)
     </#if>
     <#if (SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INST??)>
     <#if (SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_INTERFACE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-    return ${SERCOM_INST}_USART_WriteCountGet()? false:true;
+    return ${.vars["${SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_WriteCountGet()? false:true;
     </#if>
     </#if>
     <#else>
@@ -426,7 +426,18 @@ static inline void RN487x_Delay(uint32_t delayCount)
         delayCount *= delay_ms_cycles;
         while(delayCount--)
         {
+            <#if core.CoreArchitecture == "CORTEX-M0PLUS">
             __NOP();
+			</#if>
+			<#if core.CoreArchitecture == "CORTEX-M4">
+            __NOP();
+			</#if>
+			<#if core.CoreArchitecture == "CORTEX-M23">
+            __NOP();
+			</#if>
+			<#if core.CoreArchitecture == "MIPS">
+            asm("NOP");
+			</#if>
         }
     }
 }
@@ -548,7 +559,7 @@ static void RN487x_MessageHandler(char* message)
         messageType = DISCONNECT_MSG;
     </#if>
         connected = false;
-     OTAComplete = false;
+     OTABegin = false;
     }
     else if (BT_Status_Ind1 && BT_Status_Ind2)
     {
@@ -559,10 +570,6 @@ static void RN487x_MessageHandler(char* message)
     }
     else if (strstr(message, "OTA_REQ"))
     {
-        OTAComplete = true;
-        RN487x.Write('\r');
-        RN487x.Write('\n');        
-
         RN487x.Write('O');
         RN487x.Write('T');
         RN487x.Write('A');
@@ -570,8 +577,17 @@ static void RN487x_MessageHandler(char* message)
         RN487x.Write(',');
         RN487x.Write('0');
         RN487x.Write('1');
+        RN487x.Write(',');
+        RN487x.Write('0');
+        RN487x.Write('2');
+        RN487x.Write('1');
+        RN487x.Write('3');
         RN487x.Write('\r');
-        RN487x.Write('\n');
+        RN487x.Write('\n');  
+    }
+	else if (strstr(message, "OTA_START")!= NULL)
+    {
+        OTABegin = true;
     }
     else
     {
@@ -595,7 +611,7 @@ static void RN487x_MessageHandler(char* message)
         messageType = DISCONNECT_MSG;
     </#if>
         connected = false;
-        OTAComplete = false;
+        OTABegin = false;
     }
     else if (strstr(message, "STREAM_OPEN")!= NULL)
     {
@@ -606,10 +622,6 @@ static void RN487x_MessageHandler(char* message)
     }
     else if (strstr(message, "OTA_REQ")!= NULL)
     {
-        OTAComplete = true;
-        RN487x.Write('\r');
-        RN487x.Write('\n');        
-
         RN487x.Write('O');
         RN487x.Write('T');
         RN487x.Write('A');
@@ -617,8 +629,17 @@ static void RN487x_MessageHandler(char* message)
         RN487x.Write(',');
         RN487x.Write('0');
         RN487x.Write('1');
+        RN487x.Write(',');
+        RN487x.Write('0');
+        RN487x.Write('2');
+        RN487x.Write('1');
+        RN487x.Write('3');
         RN487x.Write('\r');
-        RN487x.Write('\n');
+        RN487x.Write('\n');  
+    }
+	else if (strstr(message, "OTA_START")!= NULL)
+    {
+        OTABegin = true;
     }
     else
     {

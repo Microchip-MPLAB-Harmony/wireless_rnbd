@@ -22,6 +22,11 @@
 # THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 ##############################################################################
 
+deviceNode = ATDF.getNode("/avr-tools-device-file/devices")
+deviceChild = deviceNode.getChildren()
+deviceName = deviceChild[0].getAttribute("family")
+deviceArchitecture = deviceChild[0].getAttribute("architecture")
+
 Application_Menu_options = ["TRANSPARENT UART","BASIC DATA EXCHANGE","NONE"]
 Module_Type_options      = ["RNBD","RN487x"]
 Security_Options         = ["NON SECURE","SECURE"]
@@ -522,6 +527,31 @@ def get_port_pin_dependencies():
     #print('pin_IDS',pin_IDS)
     #print('gpio_attr_update',gpio_attr_update)
     #print('pin_num_ID_map',pin_num_ID_map)
+
+# parse XML
+#def get_port_pin_dependencies():
+#    global pinoutXmlPath
+#    global pin_map_internal
+#    global portPackage
+#    pin_map_internal = {}
+#    package = {}
+#    global gpio_dependency
+#    gpio_dependency = []
+#    global gpio_attr_sym
+#    gpio_attr_sym = {}
+#    global gpio_attr_update
+#    gpio_attr_update = {}
+#    global pin_map
+#    pin_map = {}
+#    currentPath = os.path.dirname(os.path.abspath(inspect.stack()[0][1]))
+#    deviceXmlPath = os.path.join(currentPath, "../plugin/pin_xml/components/" + Variables.get("__PROCESSOR") + ".xml")
+#    deviceXmlTree = ET.parse(deviceXmlPath)
+#    deviceXmlRoot = deviceXmlTree.getroot()
+#    pinoutXmlName = deviceXmlRoot.get("pins")
+#    pinoutXmlPath = os.path.join(currentPath, "../plugin/pin_xml/pins/" + pinoutXmlName + ".xml")
+#    pinoutXmlPath = os.path.normpath(pinoutXmlPath)
+#    tree = ET.parse(pinoutXmlPath)
+#    root = tree.getroot()
 
 def check_Assigned_GPIO_Functionality(GPIO_Name,pinNumber):
     if GPIO_Name == 'BT_RST':
@@ -1274,8 +1304,9 @@ def instantiateComponent(rnHostLib):
     #rnHostlibPinSettingsMsg  = rnHostLib.createCommentSymbol("RN_HOST_PIN_SETTINGS_MSG_POP_UP", rnHostlibmenu)
     #rnHostlibPinSettingsMsg.setLabel("***NOTE:Select the BLE_TX, BLE_RX, RX_IND and BT_RST pins inside pin configuration using same naming***")
 
-    ## GPIO PORT DEPENDENCIES 
-    get_port_pin_dependencies()
+    ## GPIO PORT DEPENDENCIES
+    if(deviceArchitecture != "MIPS"):
+        get_port_pin_dependencies()
 
     rnHostPinConfigmenu  = rnHostLib.createMenuSymbol("RN_HOST_LIB_PIN_MENU",rnHostlibmenu)
     rnHostPinConfigmenu.setLabel("Module Pin Selections")
@@ -1291,7 +1322,8 @@ def instantiateComponent(rnHostLib):
     rnHostRstPin.setLabel("BT Reset Pin")
     rnHostRstPin.setReadOnly(True)
     #rnHostRstPin.setDefaultValue(False)
-    rnHostRstPin.setDependencies(GPIO_Update_Callback,gpio_dependency)
+    if(deviceArchitecture != "MIPS"):
+        rnHostRstPin.setDependencies(GPIO_Update_Callback,gpio_dependency)
     global rnHostRstSet
     rnHostRstSet = rnHostLib.createBooleanSymbol("BLE_RST_PIN_SELECTED",rnHostPinConfigmenu)
     rnHostRstSet.setLabel("BT Reset Pin Selected")
@@ -1383,7 +1415,7 @@ def instantiateComponent(rnHostLib):
     rn487xBLEInterfaceSourceFile.setSourcePath("driver/templates/rn487x_interface.c.ftl")
     rn487xBLEInterfaceSourceFile.setOutputName("rn487x_interface.c")
     rn487xBLEInterfaceSourceFile.setOverwrite(True)
-    rn487xBLEInterfaceSourceFile.setDestPath("../../rn487x/")
+    rn487xBLEInterfaceSourceFile.setDestPath("rn487x/")
     rn487xBLEInterfaceSourceFile.setProjectPath("rn487x/")
     rn487xBLEInterfaceSourceFile.setType("SOURCE")
     rn487xBLEInterfaceSourceFile.setMarkup(True)
@@ -1395,7 +1427,7 @@ def instantiateComponent(rnHostLib):
     rn487xBLEInterfaceHeaderFile.setSourcePath("driver/templates/rn487x_interface.h.ftl")
     rn487xBLEInterfaceHeaderFile.setOutputName("rn487x_interface.h")
     rn487xBLEInterfaceHeaderFile.setOverwrite(True)
-    rn487xBLEInterfaceHeaderFile.setDestPath("../../rn487x/")
+    rn487xBLEInterfaceHeaderFile.setDestPath("rn487x/")
     rn487xBLEInterfaceHeaderFile.setProjectPath("rn487x/")
     rn487xBLEInterfaceHeaderFile.setType("HEADER")
     rn487xBLEInterfaceHeaderFile.setMarkup(True)
@@ -1407,7 +1439,7 @@ def instantiateComponent(rnHostLib):
     rn487xBLEFeatureSourceFile.setSourcePath("driver/templates/rn487x.c.ftl")
     rn487xBLEFeatureSourceFile.setOutputName("rn487x.c")
     rn487xBLEFeatureSourceFile.setOverwrite(True)
-    rn487xBLEFeatureSourceFile.setDestPath("../../rn487x/")
+    rn487xBLEFeatureSourceFile.setDestPath("rn487x/")
     rn487xBLEFeatureSourceFile.setProjectPath("rn487x/")
     rn487xBLEFeatureSourceFile.setType("SOURCE")
     rn487xBLEFeatureSourceFile.setMarkup(True)
@@ -1419,7 +1451,7 @@ def instantiateComponent(rnHostLib):
     rn487xBLEFeatureHeaderFile.setSourcePath("driver/templates/rn487x.h.ftl")
     rn487xBLEFeatureHeaderFile.setOutputName("rn487x.h")
     rn487xBLEFeatureHeaderFile.setOverwrite(True)
-    rn487xBLEFeatureHeaderFile.setDestPath("../../rn487x/")
+    rn487xBLEFeatureHeaderFile.setDestPath("rn487x/")
     rn487xBLEFeatureHeaderFile.setProjectPath("rn487x/")
     rn487xBLEFeatureHeaderFile.setType("HEADER")
     rn487xBLEFeatureHeaderFile.setMarkup(True)
@@ -1428,12 +1460,13 @@ def instantiateComponent(rnHostLib):
     
     ##
     #Add RNBD_BLE Interface files
+    configName = Variables.get("__CONFIGURATION_NAME")
     rnbdBLEInterfaceSourceFile = rnHostLib.createFileSymbol("RNBD_INTERFACE_C",None)
     rnbdBLEInterfaceSourceFile.setSourcePath("driver/templates/rnbd_interface.c.ftl")
     rnbdBLEInterfaceSourceFile.setOutputName("rnbd_interface.c")
     rnbdBLEInterfaceSourceFile.setOverwrite(True)
-    rnbdBLEInterfaceSourceFile.setDestPath("../../rnbd/")
-    rnbdBLEInterfaceSourceFile.setProjectPath("rnbd/")
+    rnbdBLEInterfaceSourceFile.setDestPath("rnbd/")
+    rnbdBLEInterfaceSourceFile.setProjectPath("config/" + configName + "/rnbd/")
     rnbdBLEInterfaceSourceFile.setType("SOURCE")
     rnbdBLEInterfaceSourceFile.setMarkup(True)
     rnbdBLEInterfaceSourceFile.setEnabled(True)
@@ -1444,8 +1477,8 @@ def instantiateComponent(rnHostLib):
     rnbdBLEInterfaceHeaderFile.setSourcePath("driver/templates/rnbd_interface.h.ftl")
     rnbdBLEInterfaceHeaderFile.setOutputName("rnbd_interface.h")
     rnbdBLEInterfaceHeaderFile.setOverwrite(True)
-    rnbdBLEInterfaceHeaderFile.setDestPath("../../rnbd/")
-    rnbdBLEInterfaceHeaderFile.setProjectPath("rnbd/")
+    rnbdBLEInterfaceHeaderFile.setDestPath("rnbd/")
+    rnbdBLEInterfaceHeaderFile.setProjectPath("config/" + configName + "/rnbd/")
     rnbdBLEInterfaceHeaderFile.setType("HEADER")
     rnbdBLEInterfaceHeaderFile.setMarkup(True)
     rnbdBLEInterfaceHeaderFile.setEnabled(True)

@@ -52,7 +52,7 @@
 
 <#if RNBD_NON_SECURE_ENTRY = true && RNBD_NON_SECURE = false>
 <#if RNBD_MODULE_SELECTION == "RNBD">
-#include "rnbd/rnbd.h"
+#include "../rnbd/rnbd.h"
 <#else>
 #include "examples/rn487x.h"
 </#if>
@@ -68,22 +68,22 @@
 
 uint16_t __attribute__((cmse_nonsecure_entry)) BLE_SERCOM_Read(uint8_t* pRdBuffer, const uint16_t size)
 {
-     return ${SERCOM_INST}_USART_Read(pRdBuffer,size);
+     return ${.vars["${SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_Read(pRdBuffer,size);
 }
 
 uint16_t __attribute__((cmse_nonsecure_entry)) BLE_SERCOM_ReadCountGet(void)
 {
-    return ${SERCOM_INST}_USART_ReadCountGet();
+    return ${.vars["${SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_ReadCountGet();
 }
 
 bool __attribute__((cmse_nonsecure_entry)) BLE_SERCOM_TransmitComplete( void )
 {
-    return ${SERCOM_INST}_USART_WriteCountGet()? false:true;
+    return ${.vars["${SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_WriteCountGet()? false:true;
 }
 
 uint16_t __attribute__((cmse_nonsecure_entry)) BLE_SERCOM_Write(uint8_t pWrBuffer, const uint16_t size )
 {
-   return ${SERCOM_INST}_USART_Write(&pWrBuffer, size);
+   return ${.vars["${SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_Write(&pWrBuffer, size);
 }
 </#if>
 
@@ -96,22 +96,22 @@ uint16_t __attribute__((cmse_nonsecure_entry)) BLE_SERCOM_Write(uint8_t pWrBuffe
 
 uint16_t __attribute__((cmse_nonsecure_entry)) CDC_SERCOM_Read(uint8_t* pRdBuffer, const uint16_t size)
 {
-     return ${CONSOLE_SERCOM_INST}_USART_Read(pRdBuffer,size);
+     return ${.vars["${CONSOLE_SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_Read(pRdBuffer,size);
 }
 
 uint16_t __attribute__((cmse_nonsecure_entry)) CDC_SERCOM_ReadCountGet(void)
 {
-    return ${CONSOLE_SERCOM_INST}_USART_ReadCountGet();
+    return ${.vars["${CONSOLE_SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_ReadCountGet();
 }
 
 bool __attribute__((cmse_nonsecure_entry)) CDC_SERCOM_TransmitComplete( void )
 {
-    return ${CONSOLE_SERCOM_INST}_USART_WriteCountGet()? false:true;
+    return ${.vars["${CONSOLE_SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_WriteCountGet()? false:true;
 }
 
 uint16_t __attribute__((cmse_nonsecure_entry)) CDC_SERCOM_Write(uint8_t pWrBuffer, const uint16_t size )
 {
-   return ${CONSOLE_SERCOM_INST}_USART_Write(&pWrBuffer, size);
+   return ${.vars["${CONSOLE_SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_Write(&pWrBuffer, size);
 }
 </#if>
 

@@ -37,11 +37,11 @@
 #include <stdbool.h>
 <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RN487x">
 #include "rn487x_example.h"
-#include "../rn487x/rn487x_interface.h"
+#include "../config/default/rn487x/rn487x_interface.h"
 #include "../rn487x/rn487x.h"
 <#else>
 #include "rnbd_example.h"
-#include "../rnbd/rnbd_interface.h"
+#include "../config/default/rnbd/rnbd_interface.h"
 #include "../rnbd/rnbd.h"
 </#if>
 #include "definitions.h"                // SYS function prototypes

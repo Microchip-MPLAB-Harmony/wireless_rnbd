@@ -25,7 +25,7 @@
 */
 
 #include "rnbd.h"
-#include "rnbd_interface.h"
+#include "../config/default/rnbd/rnbd_interface.h"
 #include "definitions.h" 
 #include <string.h>
 #include <stddef.h>
@@ -630,7 +630,13 @@ static bool RNBD_FilterData(void)
     }
     else
     {
-        if (readChar == (uint8_t)STATUS_MESSAGE_DELIMITER && (skip_Delimter == false))
+		if((readChar != (uint8_t)STATUS_MESSAGE_DELIMITER ) && ((RNBD_IsOTABegin() == false)))
+        {        
+            asyncBuffering = true;
+            pHead = asyncBuffer;
+            *pHead++ = (char)readChar;
+        }
+        else if ((readChar == (uint8_t)STATUS_MESSAGE_DELIMITER && (skip_Delimter == false)) && (RNBD_IsOTABegin() == false))
         {
             asyncBuffering = true;
             pHead = asyncBuffer;
