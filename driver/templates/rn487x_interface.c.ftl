@@ -570,6 +570,8 @@ static void RN487x_MessageHandler(char* message)
     }
     else if (strstr(message, "OTA_REQ"))
     {
+		OTABegin = true;
+		
         RN487x.Write('O');
         RN487x.Write('T');
         RN487x.Write('A');
@@ -622,6 +624,8 @@ static void RN487x_MessageHandler(char* message)
     }
     else if (strstr(message, "OTA_REQ")!= NULL)
     {
+		OTABegin = true;
+		
         RN487x.Write('O');
         RN487x.Write('T');
         RN487x.Write('A');

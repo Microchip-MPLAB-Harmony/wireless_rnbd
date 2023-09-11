@@ -152,16 +152,16 @@ static bool RNBD_Example_TransparentUart(void)
 static bool RN487x_Example_TransparentUart(void)
 </#if>
 {
-    bool isConnected,isOTAComplete;
+    bool isConnected,isOTABegin;
     <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
    isConnected = RNBD_IsConnected();
-   isOTAComplete = RNBD_IsOTAComplete();
+   isOTABegin = RNBD_IsOTABegin();
    <#else>
    isConnected = RN487x_IsConnected();
-   isOTAComplete = RN487x_IsOTAComplete();
+   isOTABegin = RN487x_IsOTABegin();
    </#if>
 
-   if (true == isConnected && false == isOTAComplete)
+   if (true == isConnected && false == isOTABegin)
    {
     <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
        while (RNBD_DataReady())

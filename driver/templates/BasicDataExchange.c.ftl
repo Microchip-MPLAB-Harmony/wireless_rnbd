@@ -150,17 +150,17 @@ static bool RN487x_Example_BasicDataExchange(void)
 </#if>
 {
    static uint16_t periodicCounter = 0;
-   bool isConnected,isOTAComplete;
+   bool isConnected,isOTABegin;
    readData = 0;
    <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
    isConnected = RNBD_IsConnected();
-   isOTAComplete = RNBD_IsOTAComplete();
+   isOTABegin = RNBD_IsOTABegin();
    <#else>
    isConnected = RN487x_IsConnected();
-   isOTAComplete = RN487x_IsOTAComplete();
+   isOTABegin = RN487x_IsOTABegin();
    </#if>
 
-   if (true == isConnected && false == isOTAComplete)
+   if (true == isConnected && false == isOTABegin)
    {
    <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
        while (RNBD_DataReady())

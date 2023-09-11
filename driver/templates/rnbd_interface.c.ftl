@@ -631,6 +631,8 @@ static void RNBD_MessageHandler(char* message)
     }
     else if (strstr(message, "OTA_REQ")!= NULL)
     {
+		OTABegin = true;
+		
         RNBD.Write('O');
         RNBD.Write('T');
         RNBD.Write('A');
