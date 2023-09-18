@@ -31,6 +31,8 @@
 #include <stdint.h>
 #include <stddef.h>
 
+#define NUM_OF_DATA_BUFFER ${RNBD_Dependency_0.NUM_OF_DATA_BUFFER}
+
 /**
  * \ingroup RNBD_INTERFACE
  * Enum of the RNBD System Configuration Modes
@@ -65,6 +67,16 @@ typedef struct
 }iRNBD_FunctionPtrs_t;
 
 extern const iRNBD_FunctionPtrs_t RNBD;
+
+struct OTA_REQ_PARAMETER{
+    unsigned long total_image_size;
+    unsigned long image_ID;
+    unsigned long image_version;
+    unsigned int connection_handle;
+    unsigned int fwimage_checksum;
+    unsigned int fwimage_crc16;
+};
+
 
 /**
  * \ingroup RNBD_INTERFACE

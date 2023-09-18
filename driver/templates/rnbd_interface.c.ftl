@@ -44,6 +44,39 @@ static size_t dummyread=0;
 static uint8_t cdcreadbuffer[1];
 </#if>
 
+unsigned char ReadData[100];
+int i = 0,temp, decimalnumber=NUM_OF_DATA_BUFFER + 19; /* 19 represents default header size of RNBD*/
+unsigned char hexa_Number[4]={'0','0','0','0'};
+unsigned long num = 0;
+
+struct OTA_REQ_PARAMETER RNBD_OTA_Parameter;
+    
+/**
+ * \ingroup RNBD_INTERFACE
+ * \brief Converting the RNBD DATA Buffer Interger Value in to Hex Value of RNBD
+ * 
+ * This API is used to Convert RNBD Data Buffer Integer Value to Hexadecimal value to the RNBD.
+ *
+ * 
+ * \param value Nothing
+ * \return Nothing
+ */
+static void RNBD_Covert_DataBufferValue_Integer_to_Hexadecimal(void);
+
+/**
+ * \ingroup RNBD_INTERFACE
+ * \brief Converting the RNBD DATA Buffer Interger Value in to Hex Value of RNBD
+ * 
+ * This API is used to Convert RNBD Data Buffer Integer Value to Hexadecimal value to the RNBD.
+ *
+ * 
+ * \param1 Buffer received from RNBD message handler
+ * \param2 Setting up the start point of Buffer
+ * \param3 Number of bytes to read
+ * \return long value
+ */
+static unsigned long RNBD_Split_OTA_REQ_Parameter(uint8_t buffer[],unsigned int arrayindex, unsigned int length);
+
 /**
  * \ingroup RNBD_INTERFACE
  * \brief Initiate Hardware Reset of RNBD
@@ -252,6 +285,34 @@ const iRNBD_FunctionPtrs_t RNBD = {
 /*****************************************************
 *   Driver Public API
 ******************************************************/  
+
+void RNBD_Covert_DataBufferValue_Integer_to_Hexadecimal()
+{
+	while (decimalnumber != 0) {
+        temp = decimalnumber / 16;
+		unsigned int r = temp * 16;
+        temp = decimalnumber - r;
+        
+        // converting decimal number in to a hexa decimal number
+        if (temp < 10)
+            temp = temp + 48;
+        else
+            temp = temp + 55;
+        hexa_Number[i++] = temp;
+        decimalnumber = decimalnumber / 16;
+    }
+}
+
+unsigned long RNBD_Split_OTA_REQ_Parameter(uint8_t buffer[],unsigned int arrayindex, unsigned int length)
+{
+    unsigned int j=0;
+    for (int i=arrayindex; j<length; i++) {
+        num <<=8;  // shift by a complete byte, equal to num *= 256
+        num |= buffer[i];  // write the respective byte
+        j++;
+    }
+	return num;
+}
 
 bool RNBD_IsConnected(void)
 {
@@ -547,6 +608,8 @@ static inline void RNBD_PrintMessage(char* passedMessage)
 
 static void RNBD_MessageHandler(char* message)
 {
+	RNBD_Covert_DataBufferValue_Integer_to_Hexadecimal();
+	
 <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
     RNBD_MESSAGE_TYPE messageType = GENERAL_MSG;
     RNBD_PrintMessageStart();
@@ -574,26 +637,56 @@ static void RNBD_MessageHandler(char* message)
     }
     else if (strstr(message, "OTA_REQ"))
     {
-        OTABegin = true;        
+        OTABegin = true;
+		
+		for(int i=0;i<49;i++)
+        {
+            ReadData[i]=*message;
+            message++;
+        }
+		
+		RNBD_OTA_Parameter.connection_handle = RNBD_Split_OTA_REQ_Parameter(ReadData,8,4);
+        RNBD_OTA_Parameter.total_image_size = RNBD_Split_OTA_REQ_Parameter(ReadData,13,8);
+        RNBD_OTA_Parameter.image_ID = RNBD_Split_OTA_REQ_Parameter(ReadData,22,8);
+        RNBD_OTA_Parameter.image_version = (unsigned int)RNBD_Split_OTA_REQ_Parameter(ReadData,31,8);
+        RNBD_OTA_Parameter.fwimage_checksum = (unsigned int)RNBD_Split_OTA_REQ_Parameter(ReadData,40,4);
+        RNBD_OTA_Parameter.fwimage_crc16 = (unsigned int)RNBD_Split_OTA_REQ_Parameter(ReadData,45,4);
+		
 
-        RNBD.Write('O');
-        RNBD.Write('T');
-        RNBD.Write('A');
-        RNBD.Write('A');
-        RNBD.Write(',');
-        RNBD.Write('0');
-        RNBD.Write('1');
-        RNBD.Write(',');
-        RNBD.Write('0');
-        RNBD.Write('2');
-        RNBD.Write('1');
-        RNBD.Write('3');
-        RNBD.Write('\r');
-        RNBD.Write('\n');  
+        if(NUM_OF_DATA_BUFFER == 256)
+		{
+			RNBD.Write('O');
+			RNBD.Write('T');
+			RNBD.Write('A');
+			RNBD.Write('A');
+			RNBD.Write(',');
+			RNBD.Write('0');
+			RNBD.Write('1');
+		}
+		else{
+			RNBD.Write('O');
+			RNBD.Write('T');
+			RNBD.Write('A');
+			RNBD.Write('A');
+			RNBD.Write(',');
+			RNBD.Write('0');
+			RNBD.Write('1');
+			RNBD.Write(',');
+			RNBD.Write('0');
+			RNBD.Write(hexa_Number[2]);
+			RNBD.Write(hexa_Number[1]);
+			RNBD.Write(hexa_Number[0]);
+			RNBD.Write('\r');
+			RNBD.Write('\n');  
+		} 
     }
 	else if (strstr(message, "OTA_START")!= NULL)
     {
         OTABegin = true;
+    }
+	else if (strstr(message, "CONNECT")!= NULL)
+    {
+        connected = false;
     }
     else
     {
@@ -633,24 +726,55 @@ static void RNBD_MessageHandler(char* message)
     {
 		OTABegin = true;
 		
-        RNBD.Write('O');
-        RNBD.Write('T');
-        RNBD.Write('A');
-        RNBD.Write('A');
-        RNBD.Write(',');
-        RNBD.Write('0');
-        RNBD.Write('1');
-        RNBD.Write(',');
-        RNBD.Write('0');
-        RNBD.Write('2');
-        RNBD.Write('1');
-        RNBD.Write('3');
-        RNBD.Write('\r');
-        RNBD.Write('\n');    
+		for(int i=0;i<49;i++)
+        {
+            ReadData[i]=*message;
+            message++;
+        }
+		
+		RNBD_OTA_Parameter.connection_handle = RNBD_Split_OTA_REQ_Parameter(ReadData,8,4);
+        RNBD_OTA_Parameter.total_image_size = RNBD_Split_OTA_REQ_Parameter(ReadData,13,8);
+        RNBD_OTA_Parameter.image_ID = RNBD_Split_OTA_REQ_Parameter(ReadData,22,8);
+        RNBD_OTA_Parameter.image_version = (unsigned int)RNBD_Split_OTA_REQ_Parameter(ReadData,31,8);
+        RNBD_OTA_Parameter.fwimage_checksum = (unsigned int)RNBD_Split_OTA_REQ_Parameter(ReadData,40,4);
+        RNBD_OTA_Parameter.fwimage_crc16 = (unsigned int)RNBD_Split_OTA_REQ_Parameter(ReadData,45,4);
+		
+		if(NUM_OF_DATA_BUFFER == 256)
+		{
+			RNBD.Write('O');
+			RNBD.Write('T');
+			RNBD.Write('A');
+			RNBD.Write('A');
+			RNBD.Write(',');
+			RNBD.Write('0');
+			RNBD.Write('1');
+		}
+		else{
+			RNBD.Write('O');
+			RNBD.Write('T');
+			RNBD.Write('A');
+			RNBD.Write('A');
+			RNBD.Write(',');
+			RNBD.Write('0');
+			RNBD.Write('1');
+			RNBD.Write(',');
+			RNBD.Write('0');
+			RNBD.Write(hexa_Number[2]);
+			RNBD.Write(hexa_Number[1]);
+			RNBD.Write(hexa_Number[0]);
+			RNBD.Write('\r');
+			RNBD.Write('\n');  
+		}
+		
+          
     }
 	else if (strstr(message, "OTA_START")!= NULL)
     {
         OTABegin = true;
+    }
+	else if (strstr(message, "CONNECT")!= NULL)
+    {
+        connected = false;
     }
     else
     {

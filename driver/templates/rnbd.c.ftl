@@ -123,7 +123,7 @@ bool RNBD_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen)
 {
 	unsigned int ResponseRead=0,ResponseTime=0,ResponseCheck=0;
 	//Wait for the response time
-    while(!RNBD.DataReady() && ResponseTime<=RESPONSE_TIMEOUT)
+    while(!RNBD.DataReady() || ResponseTime<=RESPONSE_TIMEOUT)
     {
         RNBD.DelayMs(1);
         ResponseTime++;
@@ -160,7 +160,7 @@ bool RNBD_ReadDefaultResponse(void)
     char DefaultResponse[30];
     bool status = false;
     unsigned int ResponseWait=0,DataReadcount=0;
-    while(!RNBD.DataReady() && ResponseWait<=RESPONSE_TIMEOUT)
+    while(!RNBD.DataReady() || ResponseWait<=RESPONSE_TIMEOUT)
     {
         RNBD.DelayMs(1);
         ResponseWait++;
@@ -214,7 +214,7 @@ bool RNBD_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, con
     //Sending Command to UART
     RNBD_SendCmd(cmdMsg, cmdLen);
     //Wait for the response time
-    while(!RNBD.DataReady() && ResponseTime<=RESPONSE_TIMEOUT)
+    while(!RNBD.DataReady() || ResponseTime<=RESPONSE_TIMEOUT)
     {
         RNBD.DelayMs(1);
         ResponseTime++;
@@ -489,7 +489,7 @@ uint8_t * RNBD_GetRSSIValue(void)
     RNBD_SendCmd(cmdBuf, 3);
 
 	//Wait for the response time
-    while(!RNBD.DataReady() && ResponseTime<=RESPONSE_TIMEOUT)
+    while(!RNBD.DataReady() || ResponseTime<=RESPONSE_TIMEOUT)
     {
         RNBD.DelayMs(1);
         ResponseTime++;
