@@ -159,11 +159,12 @@ def instantiateComponent(rnHostLib,index):
     if InstIndex == 0:
         rnHostUartInstFuncUse.setDefaultValue("BLE USART INTERFACE")
 
-    rnHostUartInstDataBufferSize = rnHostLib.createIntegerSymbol("NUM_OF_DATA_BUFFER", None)
-    rnHostUartInstDataBufferSize.setLabel("Data Buffer Size (Bytes)")
-    rnHostUartInstDataBufferSize.setDefaultValue(256)
+    rnHostUartInstDataBufferSize = rnHostLib.createIntegerSymbol("RN_PAYLOAD_SIZE", None)
+    rnHostUartInstDataBufferSize.setLabel("Payload Size (Bytes)")
+    rnHostUartInstDataBufferSize.setDescription("RNBD Packet size = Payload Size + Header Size(19U). Header will be appended automatically to the packet")
+    rnHostUartInstDataBufferSize.setDefaultValue(237)
     rnHostUartInstDataBufferSize.setMin(1)
-    rnHostUartInstDataBufferSize.setMax(1024)
+    rnHostUartInstDataBufferSize.setMax(1005)
 
 
 

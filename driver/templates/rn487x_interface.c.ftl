@@ -569,9 +569,7 @@ static void RN487x_MessageHandler(char* message)
         connected = true;
     }
     else if (strstr(message, "OTA_REQ"))
-    {
-		OTABegin = true;
-		
+    {		
         RN487x.Write('O');
         RN487x.Write('T');
         RN487x.Write('A');
@@ -579,11 +577,6 @@ static void RN487x_MessageHandler(char* message)
         RN487x.Write(',');
         RN487x.Write('0');
         RN487x.Write('1');
-        RN487x.Write(',');
-        RN487x.Write('0');
-        RN487x.Write('2');
-        RN487x.Write('1');
-        RN487x.Write('3');
         RN487x.Write('\r');
         RN487x.Write('\n');  
     }
@@ -624,7 +617,6 @@ static void RN487x_MessageHandler(char* message)
     }
     else if (strstr(message, "OTA_REQ")!= NULL)
     {
-		OTABegin = true;
 		
         RN487x.Write('O');
         RN487x.Write('T');
@@ -633,11 +625,6 @@ static void RN487x_MessageHandler(char* message)
         RN487x.Write(',');
         RN487x.Write('0');
         RN487x.Write('1');
-        RN487x.Write(',');
-        RN487x.Write('0');
-        RN487x.Write('2');
-        RN487x.Write('1');
-        RN487x.Write('3');
         RN487x.Write('\r');
         RN487x.Write('\n');  
     }

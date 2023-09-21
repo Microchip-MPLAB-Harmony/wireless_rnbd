@@ -25,7 +25,7 @@
 */
 
 #include "rn487x.h"
-#include "../config/default/rn487x/rn487x_interface.h"
+#include "rn487x/rn487x_interface.h"
 #include "definitions.h" 
 #include <string.h>
 #include <stddef.h>

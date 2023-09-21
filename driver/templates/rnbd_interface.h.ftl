@@ -31,7 +31,8 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#define NUM_OF_DATA_BUFFER ${RNBD_Dependency_0.NUM_OF_DATA_BUFFER}
+/* RNBD Packet Size = RN_PAYLOAD_SIZE + 19U (Header Size) */
+#define RN_PAYLOAD_SIZE ${RNBD_Dependency_0.RN_PAYLOAD_SIZE} 
 
 /**
  * \ingroup RNBD_INTERFACE

@@ -20,7 +20,7 @@
     * MPLAB® Code Configurator (MCC)
       * MCC Plugin v5.2.2
 
-## RNBD/RN487x v1.1.0 Release
+## RNBD/RN487x v2.0.0 Release
 ### NEW FEATURES SUPPORTED
  - Added the Wireless Capability Support for RNBD to support HOST MCU OTA
 
@@ -28,12 +28,14 @@
  - Added the New function which is used for sending the commands and getting back response from RNBD
  - All other Api's has been updated with the newly added send command receive response function
  - Fixed the BT_RST Pin related issue
+ - Added the RNBD Set Capability Support for HOST OTA DFU
+ - Added the features for HOST OTA DFU related functionalities
 
 ### KNOWN ISSUES
 
 ### DEVELOPMENT TOOLS 
-* [MPLAB® X IDE v6.10](https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide)
-* [MPLAB® XC32 C/C++ Compiler v4.20](https://www.microchip.com/mplab/compilers)
+* [MPLAB® X IDE v6.15](https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide)
+* [MPLAB® XC32 C/C++ Compiler v4.21](https://www.microchip.com/mplab/compilers)
 * MPLAB® XIDE plug-ins: 
     * MPLAB® Code Configurator (MCC)
       * MCC Plugin v5.3.7

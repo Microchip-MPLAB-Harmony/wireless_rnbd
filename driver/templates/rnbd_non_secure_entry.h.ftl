@@ -150,21 +150,21 @@ typedef union
 /* Non-secure RNBD callable functions */
 extern bool  ${RNBD_MODULE_SELECTION}_Module_Init(void);
 
-extern void  ${RNBD_MODULE_SELECTION}_Module_SendCmd(const uint8_t *cmd, uint8_t cmdLen);
+extern void  ${RNBD_MODULE_SELECTION}_Module_SendCmd(const char *cmd, uint8_t cmdLen);
 
-extern uint8_t  ${RNBD_MODULE_SELECTION}_Module_GetCmd(const uint8_t *getCmd, uint8_t getCmdLen);
+extern uint8_t  ${RNBD_MODULE_SELECTION}_Module_GetCmd(const char *getCmd, uint8_t getCmdLen);
 
-extern bool  ${RNBD_MODULE_SELECTION}_Module_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen);
+extern bool  ${RNBD_MODULE_SELECTION}_Module_ReadMsg(const char *expectedMsg, uint8_t msgLen);
  
 extern bool ${RNBD_MODULE_SELECTION}_Module_ReadDefaultResponse(void);
 
-extern bool  ${RNBD_MODULE_SELECTION}_Module_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, const uint8_t *responsemsg, uint8_t responseLen);
+extern bool  ${RNBD_MODULE_SELECTION}_Module_SendCommand_ReceiveResponse(const char *cmdMsg, uint8_t cmdLen, const char *responsemsg, uint8_t responseLen);
 
 extern bool  ${RNBD_MODULE_SELECTION}_Module_EnterCmdMode(void);
+
 extern bool  ${RNBD_MODULE_SELECTION}_Module_EnterDataMode(void);
 
-
-extern bool  ${RNBD_MODULE_SELECTION}_Module_SetName(const uint8_t *name, uint8_t nameLen);
+extern bool  ${RNBD_MODULE_SELECTION}_Module_SetName(const char *name, uint8_t nameLen);
 
 extern bool  ${RNBD_MODULE_SELECTION}_Module_SetBaudRate(uint8_t baudRate);
 
@@ -184,7 +184,6 @@ extern ${RNBD_MODULE_SELECTION}_gpio_stateBitMap_t  ${RNBD_MODULE_SELECTION}_Mod
  
 extern uint8_t *  ${RNBD_MODULE_SELECTION}_Module_GetRSSIValue(void);
 
-
 extern bool  ${RNBD_MODULE_SELECTION}_Module_RebootCmd(void);
 
 extern bool  ${RNBD_MODULE_SELECTION}_Module_FactoryReset(${RNBD_MODULE_SELECTION}_FACTORY_RESET_MODE_t resetMode);
@@ -195,10 +194,14 @@ extern bool  ${RNBD_MODULE_SELECTION}_Module_SetAsyncMessageHandler(char* pBuffe
  
 extern bool  ${RNBD_MODULE_SELECTION}_Module_DataReady(void);
 
-extern uint8_t  ${RNBD_MODULE_SELECTION}_Module_Read(void);void RNBD_set_StatusDelimter(char Delimter_Character)
-extern void  ${RNBD_MODULE_SELECTION}_set_StatusDelimter(char Delimter_Character);
+extern uint8_t  ${RNBD_MODULE_SELECTION}_Module_Read(void);
+
+extern void  ${RNBD_MODULE_SELECTION}_Module_set_StatusDelimter(char Delimter_Character);
+
 extern char  ${RNBD_MODULE_SELECTION}_Module_get_StatusDelimter(void);
-extern void  ${RNBD_MODULE_SELECTION}_set_NoDelimter(bool value);
+
+extern void  ${RNBD_MODULE_SELECTION}_Module_set_NoDelimter(bool value);
+
 extern bool  ${RNBD_MODULE_SELECTION}_Module_get_NoDelimter(void);
 </#if>
 

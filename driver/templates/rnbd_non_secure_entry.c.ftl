@@ -123,18 +123,18 @@ bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_Init(
     return ${RNBD_MODULE_SELECTION}_Init();
 }
 
-void __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SendCmd(const uint8_t *cmd, uint8_t cmdLen)
+void __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SendCmd(const char *cmd, uint8_t cmdLen)
 {
     ${RNBD_MODULE_SELECTION}_SendCmd(cmd,cmdLen);
 }
 
-uint8_t __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_GetCmd(const uint8_t *getCmd, uint8_t getCmdLen)
+uint8_t __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_GetCmd(const char *getCmd, uint8_t getCmdLen)
 {
     return ${RNBD_MODULE_SELECTION}_GetCmd(getCmd,getCmdLen);
 
 }
 
-bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen)
+bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_ReadMsg(const char *expectedMsg, uint8_t msgLen)
 {
     return ${RNBD_MODULE_SELECTION}_ReadMsg(expectedMsg, msgLen);
 }
@@ -145,7 +145,7 @@ bool __attribute__((cmse_nonsecure_entry))${RNBD_MODULE_SELECTION}_Module_ReadDe
 }
 
 
-bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, const uint8_t *responsemsg, uint8_t responseLen)
+bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SendCommand_ReceiveResponse(const char *cmdMsg, uint8_t cmdLen, const char *responsemsg, uint8_t responseLen)
 {
 	return ${RNBD_MODULE_SELECTION}_SendCommand_ReceiveResponse(cmdMsg, cmdLen, responsemsg, responseLen);
 }
@@ -158,8 +158,7 @@ bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_Enter
 	return ${RNBD_MODULE_SELECTION}_EnterDataMode();
 }
 
-/*
-bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SetName(const uint8_t *name, uint8_t nameLen)
+bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_SetName(const char *name, uint8_t nameLen)
 {
     return ${RNBD_MODULE_SELECTION}_SetName(name, nameLen);
 }
@@ -208,7 +207,6 @@ uint8_t * __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_
 {
     return ${RNBD_MODULE_SELECTION}_GetRSSIValue();
 }
-*/
 
 bool __attribute__((cmse_nonsecure_entry)) ${RNBD_MODULE_SELECTION}_Module_RebootCmd(void)
 {
