@@ -47,7 +47,7 @@
 /** MACRO used to configure the application used buffer sizes.
  *  This is used by the application for communication buffers.
  */
-#define MAX_BUFFER_SIZE                 (80)
+#define MAX_BUFFER_SIZE                 (80U)
 
 /**< Status Buffer instance passed to RN487X drive used for Asynchronous Message Handling (see *asyncBuffer in rn487x.c) */
 static char statusBuffer[MAX_BUFFER_SIZE];    
@@ -150,17 +150,17 @@ static bool RN487x_Example_BasicDataExchange(void)
 </#if>
 {
    static uint16_t periodicCounter = 0;
-   bool isConnected,isOTABegin;
+   bool isStreamOpen,isOTABegin;
    readData = 0;
    <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
-   isConnected = RNBD_IsConnected();
+   isStreamOpen = RNBD_IsStreamopen();
    isOTABegin = RNBD_IsOTABegin();
    <#else>
-   isConnected = RN487x_IsConnected();
+   isStreamOpen = RN487x_IsStreamopen();
    isOTABegin = RN487x_IsOTABegin();
    </#if>
 
-   if (true == isConnected && false == isOTABegin)
+   if (true == isStreamOpen && false == isOTABegin)
    {
    <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
        while (RNBD_DataReady())
@@ -211,5 +211,5 @@ static bool RN487x_Example_BasicDataExchange(void)
         }
     }
 
-    return isConnected;
+    return isStreamOpen;
 }

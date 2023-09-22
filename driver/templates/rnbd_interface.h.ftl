@@ -32,7 +32,7 @@
 #include <stddef.h>
 
 /* RNBD Packet Size = RN_PAYLOAD_SIZE + 19U (Header Size) */
-#define RN_PAYLOAD_SIZE ${RNBD_Dependency_0.RN_PAYLOAD_SIZE} 
+#define RN_PAYLOAD_SIZE (${RNBD_Dependency_0.RN_PAYLOAD_SIZE}U)
 
 /**
  * \ingroup RNBD_INTERFACE
@@ -97,5 +97,6 @@ void UART_BLE_write(uint8_t buffer);
 size_t UART_BLE_DataReady(void);
 bool UART_BLE_TransmitDone(void);
 bool RNBD_IsOTABegin(void);
+bool RNBD_IsStreamopen(void);
 
 #endif	/* RNBD_INTERFACE_H */

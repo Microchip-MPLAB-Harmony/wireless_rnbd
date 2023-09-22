@@ -164,7 +164,7 @@ def instantiateComponent(rnHostLib,index):
     rnHostUartInstDataBufferSize.setDescription("RNBD Packet size = Payload Size + Header Size(19U). Header will be appended automatically to the packet")
     rnHostUartInstDataBufferSize.setDefaultValue(237)
     rnHostUartInstDataBufferSize.setMin(1)
-    rnHostUartInstDataBufferSize.setMax(1005)
+    rnHostUartInstDataBufferSize.setMax(1024)
 
 
 

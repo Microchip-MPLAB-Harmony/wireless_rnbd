@@ -36,7 +36,7 @@
 </#if>
 </#if>
 
-static bool connected = false,OTABegin = false; //**< RNBD connection state */
+static bool connected = false,OTABegin = false, stream_open = false;//**< RNBD connection state */
 static uint32_t delay_ms_cycles = CPU_CLOCK_FREQUENCY/1000; 
 static uint8_t readbuffer[1];
 static size_t dummyread=0;
@@ -51,7 +51,7 @@ static unsigned int decimalnumber=RN_PAYLOAD_SIZE + 19U;
 static unsigned int temp;
 static char hexa_Number[4]={'0','0','0','0'};
 static unsigned long num = 0;
-
+static unsigned int RN_Payload_Size=RN_PAYLOAD_SIZE;
 static struct OTA_REQ_PARAMETER RNBD_OTA_Parameter;
     
 /**
@@ -314,13 +314,14 @@ static void RNBD_Convert_DataBufferValue_Integer_to_Hexadecimal(void)
 static unsigned long RNBD_Split_OTA_REQ_Parameter(char buffer[],unsigned int arrayindex, unsigned int length)
 {
     unsigned int j=0,ota_req_incr=0;
-    for (int ota_req_incr=arrayindex; j<length; ota_req_incr++) {
-        num <<=8U;  // shift by a complete byte, equal to num *= 256
-        num |= (unsigned char)buffer[ota_req_incr];  // write the respective byte
+    ota_req_incr=arrayindex;
+	
+    while(j<length)
+    {
+         num <<=8U;  // shift by a complete byte, equal to num *= 256
+        num |= (unsigned char)buffer[ota_req_incr++];  // write the respective byte
         j++;
     }
-	ota_req_incr = ota_req_incr <<8U;
-    ota_req_incr=0U;
 	return num;
 }
 
@@ -332,6 +333,11 @@ bool RNBD_IsConnected(void)
 bool RNBD_IsOTABegin(void)
 {
     return OTABegin;
+}
+
+bool RNBD_IsStreamopen(void)
+{
+    return stream_open;
 }
 
 /*****************************************************
@@ -356,7 +362,7 @@ static inline bool RNBD_is_tx_done(void)
 
 static inline bool RNBD_is_rx_ready(void)
 {
-    return UART_BLE_DataReady();
+    return UART_BLE_DataReady()!=0U;
 }
 
 
@@ -481,12 +487,12 @@ bool UART_BLE_TransmitDone(void)
     </#if>
     <#if (SERCOM_INTERFACE_NON_SECURE?? && SERCOM_INST??)>
     <#if (SERCOM_INTERFACE_NON_SECURE = false && RNBD_NON_SECURE = false)|| (SERCOM_INTERFACE_NON_SECURE = true && RNBD_NON_SECURE = true)>
-    return ${.vars["${SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_WriteCountGet()? false:true;
+    return ${.vars["${SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_WriteCountGet()!=0U? false:true;
     </#if>
     </#if>
     <#else>
     <#if SERCOM_INST??>
-    return ${.vars["${SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_WriteCountGet()? false:true;
+    return ${.vars["${SERCOM_INST?lower_case}"].USART_PLIB_API_PREFIX}_WriteCountGet()!=0U? false:true;
     </#if>
     </#if>
 }
@@ -496,8 +502,9 @@ static inline void RNBD_Delay(uint32_t delayCount)
     if(delayCount > 0U)
     {
         delayCount *= delay_ms_cycles;
-        while(delayCount--)
+        while(delayCount > 0U)
         {
+			delayCount--;
 			<#if core.CoreArchitecture == "CORTEX-M0PLUS">
             __NOP();
 			</#if>
@@ -637,16 +644,18 @@ static void RNBD_MessageHandler(char* message)
     </#if>
         connected = false;
         OTABegin = false;
+        stream_open = false;
     }
     else if (BT_Status_Ind1 && BT_Status_Ind2)
     {
     <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
         messageType = STREAM_OPEN_MSG;
     </#if>
-        connected = true;
+        stream_open = true;
     }
     else if (strstr(message, "OTA_REQ"))
     {		
+		stream_open = false;
 		for(uint8_t read_data_incr=0;read_data_incr<49U;read_data_incr++)
         {
             ReadData[read_data_incr]=*message;
@@ -661,7 +670,7 @@ static void RNBD_MessageHandler(char* message)
         RNBD_OTA_Parameter.fwimage_crc16 = (unsigned int)RNBD_Split_OTA_REQ_Parameter(ReadData,45,4);
 		
 
-        if(RN_PAYLOAD_SIZE == 237)
+        if(RN_Payload_Size == 237U)
 		{
 			RNBD.Write('O');
 			RNBD.Write('T');
@@ -693,10 +702,11 @@ static void RNBD_MessageHandler(char* message)
 	else if (strstr(message, "OTA_START")!= NULL)
     {
         OTABegin = true;
+		stream_open = false;
     }
 	else if (strstr(message, "CONNECT")!= NULL)
     {
-        connected = false;
+        connected = true;
     }
     else
     {
@@ -724,16 +734,18 @@ static void RNBD_MessageHandler(char* message)
     </#if>
         connected = false;
         OTABegin = false;
+        stream_open = false;
     }
     else if (strstr(message, "STREAM_OPEN")!= NULL)
     {
     <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
         messageType = STREAM_OPEN_MSG;
     </#if>
-        connected = true;
+        stream_open = true;
     }
     else if (strstr(message, "OTA_REQ")!= NULL)
     {		
+		stream_open = false;
 		for(uint8_t read_data_incr=0;read_data_incr<49U;read_data_incr++)
         {
             ReadData[read_data_incr]=*message;
@@ -747,7 +759,7 @@ static void RNBD_MessageHandler(char* message)
         RNBD_OTA_Parameter.fwimage_checksum = (unsigned int)RNBD_Split_OTA_REQ_Parameter(ReadData,40,4);
         RNBD_OTA_Parameter.fwimage_crc16 = (unsigned int)RNBD_Split_OTA_REQ_Parameter(ReadData,45,4);
 		
-		if(RN_PAYLOAD_SIZE == 237)
+		if(RN_Payload_Size == 237U)
 		{
 			RNBD.Write('O');
 			RNBD.Write('T');
@@ -781,10 +793,11 @@ static void RNBD_MessageHandler(char* message)
 	else if (strstr(message, "OTA_START")!= NULL)
     {
         OTABegin = true;
+		stream_open = false;
     }
 	else if (strstr(message, "CONNECT")!= NULL)
     {
-        connected = false;
+        connected = true;
     }
     else
     {

@@ -36,7 +36,7 @@
 </#if>
 </#if>
 
-static bool connected = false,OTABegin = false; //**< RN487x connection state */
+static bool connected = false,OTABegin = false, stream_open = false; //**< RN487x connection state */
 static uint32_t delay_ms_cycles = CPU_CLOCK_FREQUENCY/1000;
 static uint8_t readbuffer[1];
 static size_t dummyread=0;
@@ -260,6 +260,11 @@ bool RN487x_IsConnected(void)
 bool RN487x_IsOTABegin(void)
 {
     return OTABegin;
+}
+
+bool RN487x_IsStreamopen(void)
+{
+    return stream_open;
 }
 
 /*****************************************************
@@ -559,17 +564,20 @@ static void RN487x_MessageHandler(char* message)
         messageType = DISCONNECT_MSG;
     </#if>
         connected = false;
-     OTABegin = false;
+        OTABegin = false;
+        stream_open = false;
     }
     else if (BT_Status_Ind1 && BT_Status_Ind2)
     {
     <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
         messageType = STREAM_OPEN_MSG;
     </#if>
-        connected = true;
+        stream_open = true;
     }
     else if (strstr(message, "OTA_REQ"))
     {		
+		stream_open = false;
+		OTABegin = true;
         RN487x.Write('O');
         RN487x.Write('T');
         RN487x.Write('A');
@@ -583,6 +591,10 @@ static void RN487x_MessageHandler(char* message)
 	else if (strstr(message, "OTA_START")!= NULL)
     {
         OTABegin = true;
+    }
+	else if (strstr(message, "CONNECT")!= NULL)
+    {
+        connected = true;
     }
     else
     {
@@ -607,17 +619,19 @@ static void RN487x_MessageHandler(char* message)
     </#if>
         connected = false;
         OTABegin = false;
+        stream_open = false;
     }
     else if (strstr(message, "STREAM_OPEN")!= NULL)
     {
     <#if RN_HOST_EXAMPLE_APPLICATION_CHOICE == "TRANSPARENT UART">
         messageType = STREAM_OPEN_MSG;
     </#if>
-        connected = true;
+        stream_open = true;
     }
     else if (strstr(message, "OTA_REQ")!= NULL)
     {
-		
+		stream_open = false;
+		OTABegin = true;
         RN487x.Write('O');
         RN487x.Write('T');
         RN487x.Write('A');
@@ -631,6 +645,10 @@ static void RN487x_MessageHandler(char* message)
 	else if (strstr(message, "OTA_START")!= NULL)
     {
         OTABegin = true;
+    }
+	else if (strstr(message, "CONNECT")!= NULL)
+    {
+        connected = true;
     }
     else
     {

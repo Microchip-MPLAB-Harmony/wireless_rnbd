@@ -83,6 +83,7 @@ uint8_t UART_BLE_Read(void);
 void UART_BLE_write(uint8_t buffer);
 size_t UART_BLE_DataReady(void);
 bool UART_BLE_TransmitDone(void);
-bool RN487x_IsOTAComplete(void);
+bool RN487x_IsOTABegin(void);
+bool RN487x_IsStreamopen(void);
 
 #endif	/* RN487X_INTERFACE_H */

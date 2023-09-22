@@ -43,7 +43,7 @@
 #define RN487x_STARTUP_DELAY            (200)
 
 //Convert nibble to ASCII
-#define NIBBLE2ASCII(nibble) (((nibble < 0x0A) ? (nibble + '0') : (nibble + 0x57)))
+#define NIBBLE2ASCII(nibble) ((((nibble) < (uint8_t)0x0A) ? ((nibble) + (uint8_t)'0') : ((nibble) + (uint8_t)0x57)))
 
 /**
   Section: Data Type Definitions
@@ -181,7 +181,7 @@ bool RN487x_Init(void);
   * \param cmdLen RN487x command length
   * \return Nothing
   */
-void RN487x_SendCmd(const uint8_t *cmd, uint8_t cmdLen);
+void RN487x_SendCmd(const char *cmd, uint8_t cmdLen);
 
 /**
  * \ingroup RN487x
@@ -196,7 +196,7 @@ void RN487x_SendCmd(const uint8_t *cmd, uint8_t cmdLen);
  * \return Length of get command response.
  * \retval index - tracked command response length.
  */
-uint8_t RN487x_GetCmd(const uint8_t *getCmd, uint8_t getCmdLen);
+uint8_t RN487x_GetCmd(const char *getCmd, uint8_t getCmdLen);
 
  /**
   * \ingroup RN487x
@@ -212,7 +212,7 @@ uint8_t RN487x_GetCmd(const uint8_t *getCmd, uint8_t getCmdLen);
   * \retval true - Expected Message Received
   * \retval false - Otherwise
   */
-bool RN487x_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen);
+bool RN487x_ReadMsg(const char *expectedMsg, uint8_t msgLen);
 
  /**
   * \ingroup RN487x
@@ -239,7 +239,7 @@ bool RN487x_ReadDefaultResponse(void);
   * Parameter 3 - Expected Response message
   * Parameter 4 - Expected Response length 
   */
-bool RN487x_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, const uint8_t *responsemsg, uint8_t responseLen);
+bool RN487x_SendCommand_ReceiveResponse(const char *cmdMsg, uint8_t cmdLen, const char *responsemsg, uint8_t responseLen);
 
  /**
   * \ingroup RN487x
@@ -279,7 +279,7 @@ bool RN487x_EnterDataMode(void);
   * \retval true - Sets device name
   * \retval false - Failure
   */
-bool RN487x_SetName(const uint8_t *name, uint8_t nameLen);
+bool RN487x_SetName(const char *name, uint8_t nameLen);
 
 
  /**
@@ -494,7 +494,7 @@ RN487x_gpio_stateBitMap_t RN487x_GetInputsValues(RN487x_gpio_ioBitMap_t getGPIOs
   * \retval <RSSI>
   * \retval ERR - Not Connected to RN487x
   */
-uint8_t * RN487x_GetRSSIValue(void);
+char * RN487x_GetRSSIValue(void);
 /**
   * \ingroup RN487x
   * \brief Sets StatusDelimter value.

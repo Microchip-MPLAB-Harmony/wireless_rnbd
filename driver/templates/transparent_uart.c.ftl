@@ -38,7 +38,7 @@
 <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RN487x">
 #include "rn487x_example.h"
 #include "rn487x/rn487x_interface.h"
-#include "../rn487x/rn487x.h"
+#include "rn487x/rn487x.h"
 <#else>
 #include "rnbd_example.h"
 #include "rnbd/rnbd_interface.h"
@@ -152,16 +152,16 @@ static bool RNBD_Example_TransparentUart(void)
 static bool RN487x_Example_TransparentUart(void)
 </#if>
 {
-    bool isConnected,isOTABegin;
+    bool isStreamOpen,isOTABegin;
     <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
-   isConnected = RNBD_IsConnected();
+   isStreamOpen = RNBD_IsConnected();
    isOTABegin = RNBD_IsOTABegin();
    <#else>
-   isConnected = RN487x_IsConnected();
+   isStreamOpen = RN487x_IsStreamopen();
    isOTABegin = RN487x_IsOTABegin();
    </#if>
 
-   if (true == isConnected && false == isOTABegin)
+   if (true == isStreamOpen && false == isOTABegin)
    {
     <#if RN_HOST_SELECT_BLE_MODULE_TYPE_CHOICE == "RNBD">
        while (RNBD_DataReady())
@@ -215,7 +215,7 @@ static bool RN487x_Example_TransparentUart(void)
  
     }
 
-    return isConnected;
+    return isStreamOpen;
 }
 
 

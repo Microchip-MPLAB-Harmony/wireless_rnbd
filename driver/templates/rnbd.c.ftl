@@ -91,7 +91,7 @@ void RNBD_SendCmd(const char *cmd, uint8_t cmdLen)
         }
     }
     while(index < cmdLen);
-    while(!RNBD.TransmitDone());
+    while(!RNBD.TransmitDone()){}
 }
 
 uint8_t RNBD_GetCmd(const char *getCmd, uint8_t getCmdLen)
@@ -195,7 +195,7 @@ bool RNBD_ReadDefaultResponse(void)
         }
         default:
         {
-            return status;
+            break;
         }
     }
 
@@ -209,7 +209,7 @@ bool RNBD_SendCommand_ReceiveResponse(const char *cmdMsg, uint8_t cmdLen, const 
     //Flush out any unread data
     while (RNBD.DataReady())
     {
-        RNBD.Read();
+        (void)RNBD.Read();
     }
     //Sending Command to UART
     RNBD_SendCmd(cmdMsg, cmdLen);
@@ -281,7 +281,7 @@ bool RNBD_SetName(const char *name, uint8_t nameLen)
     index = index + 3U;
 
     cmdBuf[index++] = '\r';
-    cmdBuf[index++] = '\n';
+    cmdBuf[index] = '\n';
 
     return RNBD_SendCommand_ReceiveResponse(cmdBuf, nameLen + 5U, cmdPrompt, 10U);
 
@@ -294,9 +294,11 @@ bool RNBD_SetBaudRate(uint8_t baudRate)
     cmdBuf[0] = 'S';
     cmdBuf[1] = 'B';
     cmdBuf[2] = ',';
-    cmdBuf[3] = NIBBLE2ASCII(temp);
+	temp=NIBBLE2ASCII(temp);
+    cmdBuf[3] = (char)temp;
 	temp = (baudRate & (uint8_t)0x0F);
-    cmdBuf[4] = NIBBLE2ASCII(temp);
+    temp=NIBBLE2ASCII(temp);
+    cmdBuf[4] = (char)temp;
     cmdBuf[5] = '\r';
     cmdBuf[6] = '\n';
 
@@ -312,9 +314,11 @@ bool RNBD_SetServiceBitmap(uint8_t serviceBitmap)
     cmdBuf[0] = 'S';
     cmdBuf[1] = 'S';
     cmdBuf[2] = ',';
-    cmdBuf[3] = (char)(NIBBLE2ASCII(temp));
+	temp=(NIBBLE2ASCII(temp));
+    cmdBuf[3] = (char)temp;
     temp = (serviceBitmap & (uint8_t)0x0F);
-    cmdBuf[4] = (char)(NIBBLE2ASCII(temp));
+    temp=(NIBBLE2ASCII(temp));
+    cmdBuf[4] = (char)temp;
     cmdBuf[5] = '\r';
     cmdBuf[6] = '\n';
 
@@ -331,16 +335,20 @@ bool RNBD_SetFeaturesBitmap(uint16_t featuresBitmap)
     cmdBuf[1] = 'R';
     cmdBuf[2] = ',';
     temp = temp & (uint8_t)0x0F;
-    cmdBuf[3] = (char)(NIBBLE2ASCII(temp));
+    temp=(NIBBLE2ASCII(temp));
+    cmdBuf[3] = (char)temp;
     temp = (uint8_t) (featuresBitmap >> 8U);
     temp = temp & (uint8_t)0x0F;
-    cmdBuf[4] = (char)(NIBBLE2ASCII(temp));
+    temp=(NIBBLE2ASCII(temp));
+    cmdBuf[4] = (char)temp;
     temp = (uint8_t) (featuresBitmap >> 4U);
     temp = temp & (uint8_t)0x0F;
-    cmdBuf[5] = (char)(NIBBLE2ASCII(temp));
+    temp=(NIBBLE2ASCII(temp));
+    cmdBuf[5] = (char)temp;
     temp = (uint8_t) featuresBitmap;
     temp = temp & (uint8_t)0x0F;
-    cmdBuf[6] = (char)(NIBBLE2ASCII(temp));
+    temp=(NIBBLE2ASCII(temp));
+    cmdBuf[6] = (char)temp;
     cmdBuf[7] = '\r';
     cmdBuf[8] = '\n';
 
@@ -350,11 +358,13 @@ bool RNBD_SetFeaturesBitmap(uint16_t featuresBitmap)
 
 bool RNBD_SetIOCapability(uint8_t ioCapability)
 {
+	uint8_t temp=0;
 	const char cmdPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
     cmdBuf[0] = 'S';
     cmdBuf[1] = 'A';
     cmdBuf[2] = ',';
-    cmdBuf[3] = (char)(NIBBLE2ASCII(ioCapability));
+    temp=(NIBBLE2ASCII(ioCapability));
+    cmdBuf[3] = (char)temp;
     cmdBuf[4] = '\r';
     cmdBuf[5] = '\n';
 
@@ -410,7 +420,7 @@ bool RNBD_SetOutputs(RNBD_gpio_bitmap_t bitMap)
     char stateLowNibble = '0';
     
     // Output pins configurations
-    if (bitMap.ioBitMap.p1_3)
+    if (bitMap.ioBitMap.p1_3!=0U)
     {
         ioHighNibble = '1';
     }
@@ -421,7 +431,7 @@ bool RNBD_SetOutputs(RNBD_gpio_bitmap_t bitMap)
     ioLowNibble = ( ((uint8_t)0x0F & bitMap.ioBitMap.gpioBitMap) + '0');
     
     // High/Low Output settings
-    if (bitMap.ioStateBitMap.p1_3_state)
+    if (bitMap.ioStateBitMap.p1_3_state!=0U)
     {
         stateHighNibble = '1';
     }
@@ -447,6 +457,7 @@ bool RNBD_SetOutputs(RNBD_gpio_bitmap_t bitMap)
 
 RNBD_gpio_stateBitMap_t RNBD_GetInputsValues(RNBD_gpio_ioBitMap_t getGPIOs)
 {
+	uint8_t temp=0;
     char ioHighNibble = '0';
     char ioLowNibble = '0';
     char ioValue[] = {'0', '0'};
@@ -454,7 +465,7 @@ RNBD_gpio_stateBitMap_t RNBD_GetInputsValues(RNBD_gpio_ioBitMap_t getGPIOs)
     ioBitMapValue.gpioStateBitMap = 0x00;
     
     // Output pins configurations
-    if (getGPIOs.p1_3)
+    if (getGPIOs.p1_3!=0U)
     {
         ioHighNibble = '1';
     }
@@ -462,7 +473,8 @@ RNBD_gpio_stateBitMap_t RNBD_GetInputsValues(RNBD_gpio_ioBitMap_t getGPIOs)
     {
         ioHighNibble = '0';
     }
-    ioLowNibble = (char)(((uint8_t)0x0F & getGPIOs.gpioBitMap) + (uint8_t)'0');
+    temp=(((uint8_t)0x0F & getGPIOs.gpioBitMap) + (uint8_t)'0');
+    ioLowNibble = (char)temp;
 
     cmdBuf[0] = '|';    // I/O
     cmdBuf[1] = 'I';    // Output
@@ -472,7 +484,7 @@ RNBD_gpio_stateBitMap_t RNBD_GetInputsValues(RNBD_gpio_ioBitMap_t getGPIOs)
     cmdBuf[5] = '\r';
     cmdBuf[6] = '\n';
 
-	RNBD_SendCommand_ReceiveResponse(cmdBuf, 7U, ioValue, sizeof (ioValue));
+	(void)RNBD_SendCommand_ReceiveResponse(cmdBuf, 7U, ioValue, (uint8_t)sizeof(ioValue));
     ioBitMapValue.gpioStateBitMap = ( ((((uint8_t)ioValue[0] - (uint8_t)'0') & (uint8_t)0x0F) << 4U) | (((uint8_t)ioValue[1] - (uint8_t)'0') & (uint8_t)0x0F) );
     return ioBitMapValue;
 }
@@ -630,7 +642,7 @@ static bool RNBD_FilterData(void)
     }
     else
     {
-		if((readChar != (uint8_t)STATUS_MESSAGE_DELIMITER ) && ((RNBD_IsOTABegin() == false)))
+		if((readChar != (uint8_t)STATUS_MESSAGE_DELIMITER ) && ((RNBD_IsOTABegin() == false)) && ((RNBD_IsStreamopen() == false)))
         {        
             asyncBuffering = true;
             pHead = asyncBuffer;
