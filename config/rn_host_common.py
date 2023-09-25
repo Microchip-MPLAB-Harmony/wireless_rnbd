@@ -1,6 +1,6 @@
 # coding: utf-8
 ##############################################################################
-# Copyright (C) 2019-2023 Microchip Technology Inc. and its subsidiaries.
+# Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries.
 #
 # Subject to your compliance with these terms, you may use Microchip software
 # and any derivatives exclusively with Microchip products. It is your
@@ -1128,8 +1128,16 @@ def onAttachmentConnected(source, target):
     #print("remoteId:",remoteID)
     if(source["id"] == "RNBD_USART_Dependency"):
         rnHostLibobjects.update({"SercomComponent":remoteComponent})
-        symbolID = remoteComponent.getSymbolByID("USART_OPERATING_MODE")
-        usart_Operating_mode = symbolID.getSelectedKey()       
+        if ("USART" in remoteID.upper()) or ("SERCOM" in remoteID.upper()):
+            usart_mode = "USART_OPERATING_MODE"
+        elif "UART" in remoteID.upper():
+            usart_mode = "UART_OPERATING_MODE"
+        elif "FLEXCOM" in remoteID.upper():
+            usart_mode = "FLEXCOM_USART_OPERATING_MODE"
+        elif "DBGU" in remoteID.upper():
+            usart_mode = "DBGU_OPERATING_MODE"
+        symbolID = remoteComponent.getSymbolByID(usart_mode)
+        usart_mode = symbolID.getSelectedKey()       
         #if usart_Operating_mode != 'RING_BUFFER':
         #    symbolID.setSelectedKey("RING_BUFFER")
         #symbolID.setReadOnly(True)

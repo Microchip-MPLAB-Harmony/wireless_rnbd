@@ -23,13 +23,13 @@
 ## RNBD/RN487x v2.0.0 Release
 ### NEW FEATURES SUPPORTED
  - Added the Wireless Capability Support for RNBD to support HOST MCU OTA
+ - Added the features for HOST OTA DFU related functionalities
+ - RNBD Folder Structure change
 
 ### BUG FIXES
  - Added the New function which is used for sending the commands and getting back response from RNBD
  - All other Api's has been updated with the newly added send command receive response function
  - Fixed the BT_RST Pin related issue
- - Added the RNBD Set Capability Support for HOST OTA DFU
- - Added the features for HOST OTA DFU related functionalities
 
 ### KNOWN ISSUES
 

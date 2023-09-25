@@ -1,6 +1,6 @@
 # coding: utf-8
 ##############################################################################
-# Copyright (C) 2019-2023 Microchip Technology Inc. and its subsidiaries.
+# Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries.
 #
 # Subject to your compliance with these terms, you may use Microchip software
 # and any derivatives exclusively with Microchip products. It is your
@@ -93,9 +93,17 @@ def onAttachmentConnected(source, target):
         elif Database.getSymbolValue("RNBD_Dependency_1","RN_HOST_UART_INST_FUNCTIONAL_USE") == "TRANSPARENT UART EXAMPLE" and localComponent.getID() == 'RNBD_Dependency_1':
             args.update({"eventID":"TRANSPARENT_UART_INTERFACE","sercomInstID":str(remoteID),"Connected": True})
             Database.sendMessage("RNBD_Dependency","SERCOM_INST_UPDATE",args)
-        symbolID_oper = remoteComponent.getSymbolByID("USART_OPERATING_MODE")
-        usart_Operating_mode = symbolID_oper.getSelectedKey()
-        if usart_Operating_mode != 'RING_BUFFER':
+        if ("USART" in remoteID.upper()) or ("SERCOM" in remoteID.upper()):
+            usart_mode = "USART_OPERATING_MODE"
+        elif "UART" in remoteID.upper():
+            usart_mode = "UART_OPERATING_MODE"
+        elif "FLEXCOM" in remoteID.upper():
+            usart_mode = "FLEXCOM_USART_OPERATING_MODE"
+        elif "DBGU" in remoteID.upper():
+            usart_mode = "DBGU_OPERATING_MODE"
+        symbolID_oper = remoteComponent.getSymbolByID(usart_mode)
+        usart_mode = symbolID_oper.getSelectedKey()
+        if usart_mode != 'RING_BUFFER':
             symbolID_oper.setSelectedKey("RING_BUFFER")
         symbolID_oper.setReadOnly(True)
 

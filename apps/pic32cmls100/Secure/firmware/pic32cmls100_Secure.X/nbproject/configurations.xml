@@ -32,6 +32,9 @@
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
+          <logicalFolder name="rnbd" displayName="rnbd" projectFiles="true">
+            <itemPath>../src/config/default/rnbd/rnbd_interface.h</itemPath>
+          </logicalFolder>
           <itemPath>../src/config/default/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/default/definitions.h</itemPath>
           <itemPath>../src/config/default/device_cache.h</itemPath>
@@ -151,7 +154,6 @@
       </logicalFolder>
       <logicalFolder name="rnbd" displayName="rnbd" projectFiles="true">
         <itemPath>../src/rnbd/rnbd.h</itemPath>
-        <itemPath>../src/rnbd/rnbd_interface.h</itemPath>
       </logicalFolder>
       <itemPath>../src/config/default/device.h</itemPath>
     </logicalFolder>
@@ -194,6 +196,9 @@
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
+          <logicalFolder name="rnbd" displayName="rnbd" projectFiles="true">
+            <itemPath>../src/config/default/rnbd/rnbd_interface.c</itemPath>
+          </logicalFolder>
           <logicalFolder name="stdio" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/default/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
@@ -209,7 +214,6 @@
       </logicalFolder>
       <logicalFolder name="rnbd" displayName="rnbd" projectFiles="true">
         <itemPath>../src/rnbd/rnbd.c</itemPath>
-        <itemPath>../src/rnbd/rnbd_interface.c</itemPath>
       </logicalFolder>
       <logicalFolder name="trustZone" displayName="trustZone" projectFiles="true">
         <logicalFolder name="rnbd" displayName="rnbd" projectFiles="true">

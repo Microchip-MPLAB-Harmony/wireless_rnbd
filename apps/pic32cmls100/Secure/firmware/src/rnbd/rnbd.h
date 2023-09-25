@@ -1,3 +1,26 @@
+/*******************************************************************************
+* Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+*******************************************************************************/
+
 /**
  * \file rnbd.h
  * \brief This file contains APIs to access features support by RNBD series devices.
@@ -44,7 +67,7 @@
 #define RNBD_STARTUP_DELAY            (200)
 
 //Convert nibble to ASCII
-#define NIBBLE2ASCII(nibble) (((nibble < 0x0A) ? (nibble + '0') : (nibble + 0x57)))
+#define NIBBLE2ASCII(nibble) ((((nibble) < (uint8_t)0x0A) ? ((nibble) + (uint8_t)'0') : ((nibble) + (uint8_t)0x57)))
 
 /**
   Section: Data Type Definitions
@@ -182,7 +205,7 @@ bool RNBD_Init(void);
   * \param cmdLen RNBD command length
   * \return Nothing
   */
-void RNBD_SendCmd(const uint8_t *cmd, uint8_t cmdLen);
+void RNBD_SendCmd(const char *cmd, uint8_t cmdLen);
 
 /**
  * \ingroup RNBD
@@ -198,7 +221,7 @@ void RNBD_SendCmd(const uint8_t *cmd, uint8_t cmdLen);
  * \return Length of get command response.
  * \retval index - tracked command response length.
  */
-uint8_t RNBD_GetCmd(const uint8_t *getCmd, uint8_t getCmdLen);
+uint8_t RNBD_GetCmd(const char *getCmd, uint8_t getCmdLen);
 
  /**
   * \ingroup RNBD
@@ -233,16 +256,17 @@ bool RNBD_ReadDefaultResponse(void);
   * \brief Puts the RNBD in user defined mode (Command Mode/Data Mode/ Set commands etc..).
   * 
   * This API puts the RNBD in user defined mode (Command Mode/Data Mode/ Set commands etc..). 
-  *  
+  * 
   * \return User Defined Mode Status
   * \retval true - Success
   * \retval false - Failure
+
   * Paramater 1 - Command to be sent
   * Parameter 2 - Length of Command to be sent
   * Parameter 3 - Expected Response message 
+  * Parameter 4 - Expected Response length 
   */
-bool RNBD_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, const uint8_t *responsemsg, uint8_t responseLen);
-
+bool RNBD_SendCommand_ReceiveResponse(const char *cmdMsg, uint8_t cmdLen, const char *responsemsg, uint8_t responseLen);
 /**
   * \ingroup RNBD
   * \brief Puts the RNBD in command mode.
@@ -254,7 +278,6 @@ bool RNBD_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, con
   * \retval false - Failure
   */
 bool RNBD_EnterCmdMode(void);
-
  /**
   * \ingroup RNBD
   * \brief Puts the RNBD in data mode.
@@ -344,24 +367,11 @@ uint8_t RNBD_Read(void);
 
 /**
   * \ingroup RNBD
-  * \brief Waits for specific message from RNBD.
-  * 
-  * This API takes input from application on the expected response/status 
-  * message. It waits until it receives expected message from RNBD.
-  * This helps to read the RNBD status messages.
-  * 
-  * \param expectedMsg Expected response/status message from RNBD
-  * \param msgLen Expected response/status message length
-  * \return Nothing
-  */
-//void RNBD_WaitForMsg(const char *expectedMsg, uint8_t msgLen);
 
- /**
-  * \ingroup RNBD
   * \brief Sets device name.
   * 
   * This routine sets the RNBD device name. For more details, refer SN
-  * RNBD should be in command mode.
+  * RNBD should be in command mode. 
   * 
   * \param name - Device name [20 alphanumeric characters max]
   * \param name - nameLen - Device name length
@@ -369,7 +379,7 @@ uint8_t RNBD_Read(void);
   * \retval true - Sets device name
   * \retval false - Failure
   */
-bool RNBD_SetName(const uint8_t *name, uint8_t nameLen);
+bool RNBD_SetName(const char *name, uint8_t nameLen);
 
  /**
   * \ingroup RNBD
@@ -508,8 +518,7 @@ RNBD_gpio_stateBitMap_t RNBD_GetInputsValues(RNBD_gpio_ioBitMap_t getGPIOs);
   * \retval <RSSI>
   * \retval ERR - Not Connected to RNBD
   */
-uint8_t * RNBD_GetRSSIValue(void);
-
+char * RNBD_GetRSSIValue(void);
  /**
   * \ingroup RNBD
   * \brief Sets StatusDelimter value.
@@ -527,7 +536,7 @@ void RNBD_set_StatusDelimter(char Delimter_Character);
   * 
   * \returns the current StatusDelimter value
   */
-char RNBD_get_StatusDelimter();
+char RNBD_get_StatusDelimter(void);
 /**
   * \ingroup RNBD
   * \brief Sets the No Delimter check during HOST OTA Update.
@@ -545,5 +554,5 @@ void RNBD_set_NoDelimter(bool value);
   * 
   * \returns true or false 
   */
-bool RNBD_get_NoDelimter();
+bool RNBD_get_NoDelimter(void);
 #endif	/* RNBD_H */

@@ -1,5 +1,5 @@
 build/default/production/_ext/1018957768/rnbd.o: ../src/rnbd/rnbd.c \
- ../src/rnbd/rnbd.h ../src/rnbd/rnbd_interface.h \
+ ../src/rnbd/rnbd.h ../src/config/default/rnbd/rnbd_interface.h \
  ../src/config/default/definitions.h \
  ../src/config/default/peripheral/sercom/usart/plib_sercom2_usart.h \
  ../src/config/default/peripheral/sercom/usart/plib_sercom_usart_common.h \
@@ -97,7 +97,7 @@ build/default/production/_ext/1018957768/rnbd.o: ../src/rnbd/rnbd.c \
 
 ../src/rnbd/rnbd.h:
 
-../src/rnbd/rnbd_interface.h:
+../src/config/default/rnbd/rnbd_interface.h:
 
 ../src/config/default/definitions.h:
 
