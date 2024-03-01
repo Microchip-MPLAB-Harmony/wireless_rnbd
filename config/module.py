@@ -21,7 +21,7 @@
 # ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 # THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 ##############################################################################
-supportedDevicefamily = ["PIC32MZ","SAMD","SAML","PIC32CM","PIC32CMMC","PIC32MK","PIC32MX","PIC32MM1324","PIC32MZDA","PIC32MZEF","PIC32MZW","SAME","SAMC"]
+supportedDevicefamily = ["PIC32MZ","SAMD","SAML","PIC32CM","PIC32CMMC","PIC32MK","PIC32MX","PIC32MM1324","PIC32MZDA","PIC32MZEF","PIC32MZW","SAME","SAMC","SAM9"]
 
 def loadModule():
     print('Load Module: Harmony Wireless Service for SAMx Family')

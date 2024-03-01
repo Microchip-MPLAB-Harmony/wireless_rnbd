@@ -3,6 +3,10 @@
 
 # Microchip MPLAB® Harmony 3 Release Notes.
 
+## RNBD/RN487x v2.0.1 Release
+### BUG FIXES
+ - Fixed the dependency version in package.yml, corrected the wireless_rnbd release version.
+ - Added support for SAM9x75
 ## RNBD/RN487x v2.0.0 Release
 ### NEW FEATURES SUPPORTED
  - Added the Wireless Capability Support for RNBD to support HOST MCU OTA
