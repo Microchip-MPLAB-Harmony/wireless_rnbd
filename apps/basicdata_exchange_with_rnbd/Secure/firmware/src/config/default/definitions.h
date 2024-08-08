@@ -48,8 +48,8 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "peripheral/sercom/usart/plib_sercom2_usart.h"
 #include "peripheral/nvmctrl/plib_nvmctrl.h"
+#include "peripheral/sercom/usart/plib_sercom2_usart.h"
 #include "peripheral/evsys/plib_evsys.h"
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"
@@ -65,6 +65,12 @@ extern "C" {
 
 /* Non-secure start address */
 #define TZ_START_NS 0x40000
+
+/* Device Information */
+#define DEVICE_NAME			 "PIC32CM5164LS60100"
+#define DEVICE_ARCH			 "CORTEX-M23"
+#define DEVICE_FAMILY		 "PIC32CM"
+#define DEVICE_SERIES		 "PIC32CMLS60"
 
 /* CPU clock frequency */
 #define CPU_CLOCK_FREQUENCY 48000000
