@@ -7,7 +7,7 @@ operating_system: Windows 10
 mcc_mode: IDE
 mcc_mode_version: v6.20
 device_name: PIC32CM5164LS60100
-compiler: XC32 4.21
+compiler: XC32 4.40
 mcc_version: 5.5.1
 mcc_core_version: 5.7.1
 content_manager_version: 5.0.0
