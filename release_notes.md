@@ -11,6 +11,17 @@ Following table provides number of peripheral library examples available for dif
 
 # Microchip MPLAB® Harmony 3 Release Notes.
 
+## RNBD/RN487x v2.0.3 Release
+### NEW FEATURES SUPPORTED
+ - Added PIC32CX device family support
+ 
+### DEVELOPMENT TOOLS 
+* [MPLAB® X IDE v6.20](https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide)
+* [MPLAB® XC32 C/C++ Compiler v4.45](https://www.microchip.com/mplab/compilers)
+* MPLAB® XIDE plug-ins: 
+    * MPLAB® Code Configurator (MCC)
+      * MCC Plugin v5.7.1
+
 ## RNBD/RN487x v2.0.2 Release
 ### BUG FIXES
  - Updated the MPLAB-X IDE Discovery portal release and updated the existing project with latest environment tools.
