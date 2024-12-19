@@ -11,6 +11,10 @@ Following table provides number of peripheral library examples available for dif
 
 # Microchip MPLAB® Harmony 3 Release Notes.
 
+## RNBD/RN487x v2.0.4 Release
+### NEW FEATURES SUPPORTED
+ - Added the Applications for Both Basic Data Exchanges and Transparent UART for the all supported devices.
+
 ## RNBD/RN487x v2.0.3 Release
 ### NEW FEATURES SUPPORTED
  - Added PIC32CX device family support
