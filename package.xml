@@ -2,7 +2,7 @@
 <Package name="wireless_rnbd">
     <Dependencies>
         <Dependency name="crypto" version="v3.8.2"/>
-        <Dependency name="core" version="v3.14.0"/>
+        <Dependency name="core" version="v3.13.5"/>
         <Dependency name="csp" version="v3.20.0"/>
         <Dependency name="bsp" version="v3.21.1"/>
         <Dependency name="net" version="v3.13.0"/>
