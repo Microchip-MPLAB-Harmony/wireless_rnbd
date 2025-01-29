@@ -25,7 +25,8 @@
 "PIC32MZDA",
 "PIC32MZEF",
 "PIC32MZW",
-"PIC32CX"
+"PIC32CX",
+"PIC32CK"
 
 
 # Introduction<a name="introduction"></a>
@@ -200,9 +201,11 @@ This guide will walk you through setting up your development environment with al
       ![](media/GUID-65B59EB7-F897-4632-B540-900B80FA985B-low.png)
 
       RNBD/RN487x Depenedency0 **SERCOM1** Tx/Rx Pad settings
+
       ![](media/Sercom_Dependency0_rx_tx_pad_settings.png)
 
       RNBD/RN487x Depenedency1 **SERCOM4** Tx/Rx Pad settings
+      
       ![](media/GUID-B7BC4E37-70AB-474A-BC7C-63F1BF807757-low.png)
 
 5.  PIN Settings for Example Application:

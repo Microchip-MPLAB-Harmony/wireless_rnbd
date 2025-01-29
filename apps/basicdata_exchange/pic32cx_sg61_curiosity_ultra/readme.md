@@ -25,7 +25,8 @@
 "PIC32MZDA",
 "PIC32MZEF",
 "PIC32MZW",
-"PIC32CX"
+"PIC32CX",
+"PIC32CK"
 
 
 
@@ -94,7 +95,7 @@ This guide will walk you through setting up your development environment with al
 
     <br />
 
-    **1.2** Select the device "PIC32CX1025SG61128" for application project using the PIC32CM<br /> device family
+    **1.2** Select the device "PIC32CX1025SG61128" for application project using the PIC32CX<br /> device family
 
     <br />
 

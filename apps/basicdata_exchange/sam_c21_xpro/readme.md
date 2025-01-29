@@ -25,7 +25,8 @@
 "PIC32MZDA",
 "PIC32MZEF",
 "PIC32MZW",
-"PIC32CX"
+"PIC32CX",
+"PIC32CK"
 
 
 
@@ -55,7 +56,7 @@ This guide will walk you through setting up your development environment with al
 |MPLAB X IDE|v6.20|[MPLAB X IDE Website](https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide#tabs)|
 |XC32 Compiler|v4.45 or above|[Web](https://www.microchip.com/en-us/tools-resources/develop/mplab-xc-compilers)|
 |Microchip Code Configurator\(MCC\)|5.5.1 or above|[MPLAB X IDE \> Tools \>Plugins](https://internal.onlinedocs.microchip.com/pr/GUID-99E91F8E-E9F7-4C2C-B98A-E9662A2ABA50-en-US-1/GUID-A55E9342-CE44-4A91-86BB-FEC6706FCD1C.html)|
-|Device Family Pack \(DFP\) |SAMC21\_DFP \(v3.5.93\)|Device: ATSAMC21J18A|
+|Device Family Pack \(DFP\) |SAMC21\_DFP \(v3.8.119\)|Device: ATSAMC21J18A|
 
 <br />
 
@@ -83,7 +84,7 @@ This guide will walk you through setting up your development environment with al
 
     -   Device: ATSAMC21J18A
     -   XC32 Compiler: v4.45
-    -   DFP: SAMC21\_DFP \(v3.5.93\)
+    -   DFP: SAMC21\_DFP \(v3.8.119\)
     <br />
 
     <br />

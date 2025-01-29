@@ -25,7 +25,8 @@
 "PIC32MZDA",
 "PIC32MZEF",
 "PIC32MZW",
-"PIC32CX"
+"PIC32CX",
+"PIC32CK"
 
 
 
@@ -55,7 +56,7 @@ This guide will walk you through setting up your development environment with al
 |MPLAB X IDE|v6.20|[MPLAB X IDE Website](https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide#tabs)|
 |XC32 Compiler|v4.45 or above|[Web](https://www.microchip.com/en-us/tools-resources/develop/mplab-xc-compilers)|
 |Microchip Code Configurator\(MCC\)|5.5.1 or above|[MPLAB X IDE \> Tools \>Plugins](https://internal.onlinedocs.microchip.com/pr/GUID-99E91F8E-E9F7-4C2C-B98A-E9662A2ABA50-en-US-1/GUID-A55E9342-CE44-4A91-86BB-FEC6706FCD1C.html)|
-|Device Family Pack \(DFP\) |SAM9X\_DFP \(v1.3.149\)|Device: SAM9X75DIG|
+|Device Family Pack \(DFP\) |PIC32MZ\_DFP \(v1.5.231\)|Device: PIC32MZ2064DAR176|
 
 <br />
 
@@ -81,9 +82,9 @@ This guide will walk you through setting up your development environment with al
 
     <br />
 
-    -   Device: SAM9X75DIG
+    -   Device: PIC32MZ2064DAR176
     -   XC32 Compiler: v4.45
-    -   DFP: SAML21\_DFP \(v1.3.149\)
+    -   DFP: PIC32MZ\_DFP \(v1.5.231\)
     <br />
 
     <br />
@@ -94,7 +95,7 @@ This guide will walk you through setting up your development environment with al
 
     <br />
 
-    **1.2** Select the device "SAM9X75DIG" for application project using the SAM9X<br /> device family
+    **1.2** Select the device "PIC32MZ2048EFM144" for application project using the PIC32MZ<br /> device family
 
     <br />
 
