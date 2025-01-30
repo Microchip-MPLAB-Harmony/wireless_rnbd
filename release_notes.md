@@ -15,7 +15,7 @@ Following table provides number of peripheral library examples available for dif
 ### NEW FEATURES SUPPORTED
  - Added support for PIC32CK 
  
- ### BUG FIXES
+### BUG FIXES
  - Added the missed media image folder.
  - Updated the readme for all the supported devices.
 
