@@ -9,7 +9,6 @@
 -   [RN487x Example: Running Transparent UART Example Application](#rn487x-example:-running-transparent-uart-example-application)
 -   [Summary](#summary)
 
-
 **List of supported MCU/MPU Device Family**
 
 "SAMC",
@@ -28,27 +27,23 @@
 "PIC32CX",
 "PIC32CK"
 
-
 # Introduction<a name="introduction"></a>
 
-The MPLAB® Code Configurator [RNBD](http://mchpweb:4576/SpecIndex_FileAttach/TPT_20227216811993/70005514A.pdf)/[RN487x](https://www.microchip.com/en-us/product/RN4870) BLE Modules Library allows quick and easy configuration of the C<br /> code generated software driver based upon the user’s selected API features available<br /> from the MCC Library. Generated Driver code supports use of either BLE Module with use<br /> of a 32 Bit PIC Devices
+The MPLAB® Code Configurator [RNBD](http://mchpweb:4576/SpecIndex_FileAttach/TPT_20227216811993/70005514A.pdf)/[RN487x](https://www.microchip.com/en-us/product/RN4870) BLE Modules Library allows quick and easy configuration of the C code generated software driver based upon the user’s selected API features available from the MCC Library. Generated Driver code supports use of either BLE Module with use of a 32 Bit PIC Devices
 
-The library module uses a Graphic User Interface \(GUI\) presented by MCC within MPLABX<br /> which allows for selection of desired configuration, and custom configurations of the<br /> protocol. Customized C code is generated within the MPLABX project, in a folder named<br /> "MCC Generated Files".
+The library module uses a Graphic User Interface \(GUI\) presented by MCC within MPLABX which allows for selection of desired configuration, and custom configurations of the protocol. Customized C code is generated within the MPLABX project, in a folder named "MCC Generated Files".
 
 This Library uses \(1\) UART, \(1\) GPIO, and DELAY support at minimal.
 
 Refer to the /media folder for source files & max resolution.
 
-
 # Getting Started with Software Development<a name="getting-started-with-software-development"></a>
 
 Steps to install IDE, compiler, tool chain and application examples on your PC
 
-This guide will walk you through setting up your development environment with all<br /> required dependencies versions.If you are already familiar Microchip Tools, then you can<br /> find a table summarizing the dependencies below
+This guide will walk you through setting up your development environment with all required dependencies versions. If you are already familiar Microchip Tools, then you can find a table summarizing the dependencies below
 
 **Tools and Harmony Component Versions**
-
-<br />
 
 |IDE, Compiler and MCC plugin|Version|Location|
 |----------------------------|-------|--------|
@@ -61,8 +56,6 @@ This guide will walk you through setting up your development environment with al
 
 **Harmony Components**:
 
-<br />
-
 |**Harmony components to be cloned with MCC Content Manager**|**Version**|
 |------------------------------------------------------------|-----------|
 |csp|v3.20.0|
@@ -71,20 +64,14 @@ This guide will walk you through setting up your development environment with al
 |CMSIS-FreeRTOS|v10.5.1|
 |wireless_rnbd|v2.0.4 or above|
 
-<br />
-
 # Project Setup<a name="project-setup"></a>s
 <br />
 
-1.  Create MPLAB Harmany Project with below device and DFP version
-
-    <br />
+1.  Create MPLAB Harmony Project with below device and DFP version
 
     -   Device: PIC32CX1025SG61128
     -   XC32 Compiler: v4.45
     -   DFP: PIC32cx_SG\_DFP \(v1.2.124\)
-    <br />
-
     <br />
 
     **1.1** Create new 32-bit MCC Harmony Project as shown below
@@ -93,7 +80,7 @@ This guide will walk you through setting up your development environment with al
 
       <br />
 
-      **1.2** Select the device "PIC32CX1025SG61128" for application project using the PIC32CM<br /> device family
+      **1.2** Select the device "PIC32CX1025SG61128" for application project using the PIC32CM device family
 
       <br />
 
@@ -109,7 +96,7 @@ This guide will walk you through setting up your development environment with al
 
       <br />
 
-      **1.4** Select the project name and  **Framework Path** \(Framework path must match SDK setup<br /> document\) and click Finish
+      **1.4** Select the project name and  **Framework Path** \(Framework path must match SDK setup document\) and click Finish
 
       <br />
 
@@ -117,7 +104,7 @@ This guide will walk you through setting up your development environment with al
 
       <br />
 
-    **1.5** MPLABx Code Configurator will be launched automatically. Then Select<br /> **"MPLAB Harmony"** and Click Next for the Harmony Framework<br /> Path.
+    **1.5** MPLABx Code Configurator will be launched automatically. Then Select **"MPLAB Harmony"** and Click Next for the Harmony Framework Path.
 
     <br />
 
@@ -133,7 +120,7 @@ This guide will walk you through setting up your development environment with al
 
     <br />
 
-    **1.7** Project Graph window of the Configurator may have predefined<br /> components
+    **1.7** Project Graph window of the Configurator may have predefined components
 
     <br />
 
@@ -141,7 +128,7 @@ This guide will walk you through setting up your development environment with al
 
     <br />
 
-    Right click on the project properties and verify the selected<br /> configuration
+    Right click on the project properties and verify the selected configuration
 
     <br />
 
@@ -169,15 +156,15 @@ This guide will walk you through setting up your development environment with al
 
     <br />
 
-    ![](media/GUID-F82D5FA9-3ECA-4676-9866-B7236D123102-low.png)
+    ![](media/GUID-E98E66A5-023F-4A59-A415-188A9407B727-low.png)
 
     <br />
 
-    User can Select **RNBD or RN487x** under the Select Module Type Drop<br /> Down either of the one as shown below
+    User can Select **RNBD** or **RN487x** under the Select Module Type Drop Down either of the one as shown below
 
     <br />
 
-    ![](media/GUID-20676429-4B4E-45F0-AFB6-2F9F24A05C90-low.png)
+    ![](media/GUID-2B7B2E95-2F31-4C72-BBFB-2ED03594AC60-low.png)
 
     <br />
 
@@ -271,11 +258,9 @@ This guide will walk you through setting up your development environment with al
 
 <br />
 
-<br />
-
 |Transparent Serial:|
 |-------------------|
-|<br /> This example will demostrat data transmitted from a PC serial<br /> terminal is written to a smart phone app and vice versa. The MCU<br /> device will act as a bridge, and pass data between RNBD Module â†?<br /> MCU â†’ Serial Terminal.<br /> This action will occur when STREAM\_OPEN is processed<br /> through the Message Handler. For this example, data typed into<br /> the Serial Terminal will appear on the BLE Phone Application,<br /> and Data sent from the Application will appear on the Serial<br /> Terminal.<br />|
+|This example will demonstrate data transmitted from a PC serial terminal is written to a smart phone app and vice versa. The MCU device will act as a bridge, and pass data between RNBD Module to MCU via Serial Terminal. This action will occur when STREAM\_OPEN is processed through the Message Handler. For this example, data typed into the Serial Terminal will appear on the BLE Phone Application, and Data sent from the Application will appear on the Serial Terminal.|
 
 <br />
 
@@ -284,6 +269,8 @@ This guide will walk you through setting up your development environment with al
 2.  Launch the Phone Application
 
     ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)
+
+    <br />
 
     ![](media/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
 
@@ -309,13 +296,11 @@ This guide will walk you through setting up your development environment with al
 
     <br />
 
-4.  For Transparent Serial only: Open a "Serial Terminal" Program such as Tera Term, Realterm, PuTTY, Serial; or similar. Baud Rate will be configured as: 115200
+4.  For Transparent Serial only: Open a "Serial Terminal" Program such as Tera Term, Real term, PuTTY, Serial; or similar. Baud Rate will be configured as: 115200
 
     <br />
 
     ![](media/GUID-F03D2F6E-4C61-4076-8322-1CD1ACA81EA2-low.png)
-
-    <br />
 
     <br />
 
@@ -363,8 +348,6 @@ This guide will walk you through setting up your development environment with al
 
     <br />
 
-    <br />
-
     ![](media/GUID-34E4CFD6-6857-479E-93B0-4ACE34EDFD59-low.png)
 
     <br />
@@ -377,11 +360,9 @@ This guide will walk you through setting up your development environment with al
 
 <br />
 
-<br />
-
 |Transparent Serial:|
 |-------------------|
-|<br /> This example will demostrat data transmitted from a PC serial<br /> terminal is written to a smart phone app and vice versa. The MCU<br /> device will act as a bridge, and pass data between RNBD Module â†?<br /> MCU â†’ Serial Terminal.<br /> This action will occur when STREAM\_OPEN is processed<br /> through the Message Handler. For this example, data typed into<br /> the Serial Terminal will appear on the BLE Phone Application,<br /> and Data sent from the Application will appear on the Serial<br /> Terminal.<br />|
+|This example will demonstrate data transmitted from a PC serial terminal is written to a smart phone app and vice versa. The MCU device will act as a bridge, and pass data between RN487x Module to MCU via Serial Terminal. This action will occur when STREAM\_OPEN is processed through the Message Handler. For this example, data typed into the Serial Terminal will appear on the BLE Phone Application, and Data sent from the Application will appear on the Serial Terminal.|
 
 <br />
 
@@ -390,6 +371,8 @@ This guide will walk you through setting up your development environment with al
 2.  Launch the Phone Application
 
     ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)
+
+    <br />
 
     ![](media/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
 
@@ -423,7 +406,7 @@ This guide will walk you through setting up your development environment with al
 
     <br />
 
-    The Application scans the area for Bluetooth devices within a range. Look for<br /> "RN487x-xxxx" devices under the scanned list.
+    The Application scans the area for Bluetooth devices within a range. Look for "RN487x-xxxx" devices under the scanned list.
 
     <br />
 
@@ -431,13 +414,11 @@ This guide will walk you through setting up your development environment with al
 
     <br />
 
-4.  For Transparent Serial only: Open a "Serial Terminal" Program such as Tera Term, Realterm, PuTTY, Serial; or similar. Baud Rate will be configured as: 115200
+4.  For Transparent Serial only: Open a "Serial Terminal" Program such as Tera Term, Real term, PuTTY, Serial; or similar. Baud Rate will be configured as: 115200
 
     <br />
 
     ![](media/GUID-B18B65D8-9AA3-478A-A674-DEB871E086CA-low.png)
-
-    <br />
 
     <br />
 
@@ -485,8 +466,6 @@ This guide will walk you through setting up your development environment with al
 
     <br />
 
-    <br />
-
     ![](media/GUID-E985EFE1-6B23-4A76-86DE-E349AF41D0F1-low.png)
 
     <br />
@@ -495,23 +474,16 @@ This guide will walk you through setting up your development environment with al
 
 **Command, Data Communication with Asynchronized Message Processing:**
 
-This driver contains, at its' core, the inherent code capability of distinguishing<br /> between **Message** exchange and **Data** exchange between the connected MCU and<br /> Module devices.
+This driver contains, at its' core, the inherent code capability of distinguishing between **Message** exchange and **Data** exchange between the connected MCU and Module devices.
 
-The library supplies all required Application Programming Interfaces \(APIs\) required to<br /> create functional
+The library supplies all required Application Programming Interfaces \(APIs\) required to create functional implementation of operation a BLE connected end-device. Through the MCC configuration the physical connection of the \(3\) required pins can be selected through the GUI. These are the \(2\) UART pins used for communication, and control of the **RST\_N** connected to the RNBD Module.
 
-implementation of operation a BLE connected end-device.
+Additionally this Library allows for extension of Module pin behaviors through the simple RNBD Module object interface; where any device/project specific instantiations exist **rnbd\_interface.c/h**/**rn487x\_interface.c/h**
 
-Through the MCC configuration the physical connection of the \(3\) required pins can be<br /> selected through the GUI.
-
-These are the \(2\) UART pins used for communication, and control of the **RST\_N**<br /> connected to the RNBD Module.
-
-Additionally; this Library allows for extension of Module pin behaviors through the<br /> simple RNBD Module object
-
-interface; where any device/project specific instantiations exist.<br /> **rnbd\_interface.c/h**/**rn487x\_interface.c/h**
 
 A brief description of the Interface, and object extension is described below:
 
-iRNBD\_FunctionPtrs\_t is a typedef struct which can be found in<br /> **rnbd\_interface.h**/**rn487x\_interface.h** and consist of \(9\) function<br /> pointers. In the **rnbd\_interface.c**/**rn487x\_interface.c**, the concrete<br /> creation of RNBD as an object is instantiated. Within<br /> **rnbd\_interface.c**/**rn487x\_interface.c** are the **private static**<br /> implementations of desired behavior. In some cases, such as DELAY or UART, the<br /> supporting behavior is supplied through another supporting library module. When<br /> applicable ‘inline’ has been used to reduce stack depth overhead.
+iRNBD\_FunctionPtrs\_t is a typedef struct which can be found in **rnbd\_interface.h**/**rn487x\_interface.h** and consist of \(9\) function pointers. In the **rnbd\_interface.c**/**rn487x\_interface.c**, the concrete creation of RNBD as an object is instantiated. Within **rnbd\_interface.c**/**rn487x\_interface.c** are the **private static** implementations of desired behavior. In some cases, such as DELAY or UART, the supporting behavior is supplied through another supporting library module. When applicable ‘inline’ has been used to reduce stack depth overhead.
 
 <br />
 
@@ -519,13 +491,11 @@ iRNBD\_FunctionPtrs\_t is a typedef struct which can be found in<br /> **rnbd\_i
 
 <br />
 
-<br />
-
 ![](media/GUID-08351B32-7A45-4F07-91BF-66534BFE5482-low.png)
 
 <br />
 
-The driver library itself should not require any modifications or injections by the user;<br /> unless to expand upon the supported command implementations **rnbd.c/h**
+The driver library itself should not require any modifications or injections by the user unless to expand upon the supported command implementations **rnbd.c/h**
 
 **Configurable Module Hardware Requirement\(s\):**
 

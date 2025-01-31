@@ -9,7 +9,6 @@
 -   [RN487x Example: Running Basic Data Exchange Example Application](#rn487x-example:-running-basic-data-exchange-example-application)
 -   [Summary](#summary)
 
-
 **List of supported MCU/MPU Device Family**
 
 "SAMC",
@@ -28,7 +27,6 @@
 "PIC32CX"
 "PIC32CK"
 
-
 # Introduction<a name="introduction"></a>
 
 The MPLAB® Code Configurator [RNBD](http://mchpweb:4576/SpecIndex_FileAttach/TPT_20227216811993/70005514A.pdf)/[RN487x](https://www.microchip.com/en-us/product/RN4870) BLE Modules Library allows quick and easy configuration of the C code generated software driver based upon the user’s selected API features available from the MCC Library. Generated Driver code supports use of either BLE Module with use of a 32 Bit PIC Devices
@@ -38,7 +36,6 @@ The library module uses a Graphic User Interface \(GUI\) presented by MCC within
 This Library uses \(1\) UART, \(1\) GPIO, and DELAY support at minimal.
 
 Refer to the /media folder for source files & max resolution.
-
 
 # Getting Started with Software Development<a name="getting-started-with-software-development"></a>
 
@@ -74,8 +71,6 @@ This guide will walk you through setting up your development environment with al
     -   Device: PIC32CK2051GC01144
     -   XC32 Compiler: v4.45
     -   DFP: PIC32CX-SG\_DFP \(v1.1.148\)
-    <br />
-
     <br />
 
 	**1.1** Create new 32-bit MCC Harmony Project as shown below
@@ -160,13 +155,15 @@ This guide will walk you through setting up your development environment with al
 
     <br />
 
-    ![](media/GUID-F82D5FA9-3ECA-4676-9866-B7236D123102-low.png)
+    ![](media/GUID-E98E66A5-023F-4A59-A415-188A9407B727-low.png)
 
     <br />
 
-    User can Select **RNBD or RN487x** under the Select Module Type Drop Down either of the one as shown below
+    User can Select **RNBD** or **RN487x** under the Select Module Type Drop Down either of the one as shown below
 
-    ![](media/GUID-20676429-4B4E-45F0-AFB6-2F9F24A05C90-low.png)
+    <br />
+
+    ![](media/GUID-2B7B2E95-2F31-4C72-BBFB-2ED03594AC60-low.png)
 
     <br />
 
@@ -258,7 +255,7 @@ This guide will walk you through setting up your development environment with al
 
 **Basic Data Exchange:**
 
-|This example shows how an MCU can be programmed to transmit data to a smart phone over BLE. Here the MCU device will send Periodic Transmission of a single character when **STREAM\_OPEN** is processed through the Message Handler. This indicates to the MCU & RNBD Module that the application is in a DATA STREAMING mode of operation and can expect to hear data over the BLE connection.
+This example shows how an MCU can be programmed to transmit data to a smart phone over BLE. Here the MCU device will send Periodic Transmission of a single character when **STREAM\_OPEN** is processed through the Message Handler. This indicates to the MCU & RNBD Module that the application is in a DATA STREAMING mode of operation and can expect to hear data over the BLE connection.
 
 \#define DEMO\_PERIODIC\_TRANSMIT\_COUNT \(10000\)
 
@@ -272,14 +269,16 @@ Are used in the example can be found \#defined at the top of rnbd\_example.c
 
 <br />
 
-<br />
-
 1.  Download and Install Phone Application for demonstration:
 
     1.1  **Microchip Bluetooth Data**by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 2.  Launch the Phone Application
 
-    ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)![](media/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
+    ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)     
+
+    <br />
+
+    ![](media/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
 
     <br />
 
@@ -336,7 +335,7 @@ Are used in the example can be found \#defined at the top of rnbd\_example.c
 
 **Basic Data Exchange:**
 
-|This example shows how an MCU can be programmed to transmit data to a smart phone over BLE. Here the MCU device will send Periodic Transmission of a single character when **STREAM\_OPEN** is processed through the Message Handler.
+This example shows how an MCU can be programmed to transmit data to a smart phone over BLE. Here the MCU device will send Periodic Transmission of a single character when **STREAM\_OPEN** is processed through the Message Handler.
 
 This indicates to the MCU & RN487x Module that the application is in a DATA STREAMING mode of operation and can expect to hear data over the BLE connection.
 
@@ -344,7 +343,7 @@ This indicates to the MCU & RN487x Module that the application is in a DATA STRE
 <br />
 \#define DEMO\_PERIODIC\_CHARACTER \(‘1’\)
 
-Are used in the example can be found \#defined at the top of rnbd\_example.c.
+Are used in the example can be found \#defined at the top of rn487x\_example.c
 
 <br />
 
@@ -352,13 +351,16 @@ Are used in the example can be found \#defined at the top of rnbd\_example.c.
 
 <br />
 
-<br />
-
 1.  Download and Install Phone Application for demonstration:
+
     1.1  **Microchip Bluetooth Data**by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 2.  Launch the Phone Application
 
-    ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)![](media/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
+    ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)
+
+    <br />
+
+    ![](media/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
 
     <br />
 
@@ -443,8 +445,6 @@ iRNBD\_FunctionPtrs\_t is a typedef struct which can be found in **rnbd\_interfa
 <br />
 
 ![](media/GUID-2B41A010-DEC4-4198-9245-049150500274-low.png)
-
-<br />
 
 <br />
 

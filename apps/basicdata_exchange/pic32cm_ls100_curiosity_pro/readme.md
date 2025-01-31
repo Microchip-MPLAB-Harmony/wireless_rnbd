@@ -57,70 +57,70 @@ This guide will walk you through setting up your development environment with al
     -   Device: PIC32CM5164LS00100
     -   XC32 Compiler: v4.10
     -   DFP: PIC32CM-LS\_DFP \(v1.1.162\)
+    <br />
+**1.1** Create new 32-bit MCC Harmony Project as shown below
 
-        **1.1** Create new 32-bit MCC Harmony Project as<br /> shown below
+  <br />
 
-        <br />
+  ![](media/GUID-1F5749EC-E7B4-4523-897D-672357706EC6-low.png)
 
-        ![](media/GUID-1F5749EC-E7B4-4523-897D-672357706EC6-low.png)
+  <br />
 
-        <br />
+  **1.2** Select the **Framework Path** \(Framework path must match SDK setup document\)and select **Next**
 
-        **1.2** Select the **Framework Path** \(Framework path must<br /> match SDK setup document\)and select **Next**
+  <br />
 
-        <br />
+  ![](media/GUID-3D19DD6B-F7D5-4C0D-BEA5-77D8003FC859-low.png)
 
-        ![](media/GUID-3D19DD6B-F7D5-4C0D-BEA5-77D8003FC859-low.png)
+  <br />
 
-        <br />
+  **1.3** Select Project Folder and select Next
 
-        **1.3** Select Project Folder and select Next
+  <br />
 
-        <br />
+  ![](media/GUID-F1A8A999-FE9E-4D8F-9DE7-1152FB95BB02-low.png)
 
-        ![](media/GUID-F1A8A999-FE9E-4D8F-9DE7-1152FB95BB02-low.png)
+  <br />
 
-        <br />
+  **1.4** Select the device "PIC32CM5164LS00100" for standalone project using the PIC32CM-LS device family in the "Target Device" and click Finish
 
-        **1.4** Select the device "PIC32CM5164LS00100" for standalone<br /> project using the PIC32CM-LS device family in the "Target Device"<br /> and click Finish
+  <br />
 
-        <br />
+  ![](media/GUID-5F1FF3AB-ECC8-4737-A413-94BF029B8BA6-low.png)
 
-        ![](media/GUID-5F1FF3AB-ECC8-4737-A413-94BF029B8BA6-low.png)
+  <br />
 
-        <br />
+  **1.5** MPLABx Code Configurator will be launched automatically. Then Select **"MPLAB Harmony"** and Click Next for the Harmony Framework Path.
 
-        **1.5** MPLABx Code Configurator will be launched<br /> automatically. Then Select **"MPLAB Harmony"** and Click Next for<br /> the Harmony Framework Path.
+  <br />
 
-        <br />
+  ![](media/GUID-294FFF44-97E6-44FA-B024-CF107A950910-low.png)
 
-        ![](media/GUID-294FFF44-97E6-44FA-B024-CF107A950910-low.png)
+  <br />
 
-        <br />
+  **1.6** Select **"Finish"**
 
-        **1.6** Select **"Finish"**
+  <br />
 
-        <br />
+  ![](media/GUID-12B3E149-2BA4-49D7-8518-4E0AF4053503-low.png)
 
-        ![](media/GUID-12B3E149-2BA4-49D7-8518-4E0AF4053503-low.png)
+  <br />
 
-        <br />
+  **1.7** Project Graph window of the Configurator may have predefined components
 
-        **1.7** Project Graph window of the Configurator may have<br /> predefined components
+  <br />
 
-        <br />
+  ![](media/GUID-B7BABF5E-8835-4450-AE8F-4756671D5621-low.png)
 
-        ![](media/GUID-B7BABF5E-8835-4450-AE8F-4756671D5621-low.png)
+  <br />
 
-        <br />
+  Right click on the project properties and verify the selected configuration
 
-        Right click on the project properties and verify the selected<br /> configuration
+  <br />
 
-        <br />
+  ![](media/GUID-854E224C-04F1-4BDA-85F6-9B80E67341E8-low.png)
 
-        ![](media/GUID-854E224C-04F1-4BDA-85F6-9B80E67341E8-low.png)
-
-        <br />
+  <br />
 
 2.  After creating the project as shown in the above step go to device resource and verify RNBD was under Wireless component
 
@@ -146,7 +146,7 @@ This guide will walk you through setting up your development environment with al
 
     <br />
 
-    User can Select **RNBD** or **RN487x** under the Select Module Type<br /> Drop Down either of the one as shown below
+    User can Select **RNBD** or **RN487x** under the Select Module Type Drop Down either of the one as shown below
 
     <br />
 
@@ -177,11 +177,7 @@ This guide will walk you through setting up your development environment with al
 
         <br />
 
-        <br />
-
         ![](media/GUID-237C2D6E-AB20-4D66-9BF5-B4967B189A89-low.png)
-
-        <br />
 
         <br />
 
@@ -223,11 +219,7 @@ This guide will walk you through setting up your development environment with al
 
     <br />
 
-    <br />
-
     **Note:** If RNBD Secure \(Check Box in the UI\) is marked to secure then BT\_RST pin settings should be Secured and if RNBD Secure \(Check Box in the UI\) is marked to Non-secure then BT\_RST pin settings should be Non-Secure
-
-    <br />
 
     <br />
 
@@ -299,8 +291,6 @@ This guide will walk you through setting up your development environment with al
             <br />
 
             ![](media/GUID-C132E098-4CB8-4CE8-8E88-4B6DEBE1532F-low.png)
-
-            <br />
 
             <br />
 
@@ -473,7 +463,7 @@ This guide will walk you through setting up your development environment with al
 
                 <br />
 
-                -   Goto –\> Project Graph –\> expand the<br /> plugins drop down –\> and select Arm TRUSTZONE<br /> for Armv8-M
+                -   Goto –\> Project Graph –\> expand the plugins drop down –\> and select Arm TRUSTZONE for Armv8-M
 
                     ![](media/GUID-66D4E1DA-5032-4A14-8035-EE95C5F3C769-low.png)
 
@@ -518,8 +508,6 @@ This guide will walk you through setting up your development environment with al
                 <br />
 
                 ![](media/GUID-C132E098-4CB8-4CE8-8E88-4B6DEBE1532F-low.png)
-
-                <br />
 
                 <br />
 
@@ -570,8 +558,6 @@ This guide will walk you through setting up your development environment with al
             -   **RNBD Secure \(Check Box in the UI\) –\> Enable Check \(Secure\)**
 
                 **Note:** **Generate RNBD Non Secure Entry** check box Enabled \(checked\) as shown below
-
-                <br />
 
                 <br />
 
@@ -681,7 +667,13 @@ This guide will walk you through setting up your development environment with al
 
 **Basic Data Exchange:**
 
-|This example shows how an MCU can be programmed to transmit data<br /> to a smart phone over BLE. Here the MCU device will send Periodic<br /> Transmission of a single character when **STREAM\_OPEN** is<br /> processed through the Message Handler. This indicates to the MCU<br /> & RNBD Module that the application is in a DATA STREAMING mode<br /> of operation; and can expect to hear data over the BLE<br /> connection.\#define DEMO\_PERIODIC\_TRANSMIT\_COUNT<br /> \(10000\)\#define DEMO\_PERIODIC\_CHARACTER \(‘1’\)Are<br /> used in the example can be found \#defined at the top of<br /> rnbd\_example.c.|
+This example shows how an MCU can be programmed to transmit data to a smart phone over BLE. Here the MCU device will send Periodic Transmission of a single character when **STREAM\_OPEN** is processed through the Message Handler. This indicates to the MCU & RNBD Module that the application is in a DATA STREAMING mode of operation and can expect to hear data over the BLE connection.
+
+\#define DEMO\_PERIODIC\_TRANSMIT\_COUNT \(10000\)
+
+\#define DEMO\_PERIODIC\_CHARACTER \(‘1’\)
+
+Are used in the example can be found \#defined at the top of rnbd\_example.c
 
 <br />
 
@@ -689,13 +681,16 @@ This guide will walk you through setting up your development environment with al
 
 <br />
 
-<br />
-
 1.  Download and Install Phone Application for demonstration:
-    1.  **Microchip Bluetooth Data**by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
+
+  1.1 **Microchip Bluetooth Data**by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 2.  Launch the Phone Application
 
-    ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)![](media/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
+    ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)
+
+    <br />
+
+    ![](media/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
 
     <br />
 
@@ -732,17 +727,17 @@ This guide will walk you through setting up your development environment with al
     ![](media/GUID-65CA4B07-2C54-4799-A9AE-826FD83B676D-low.png)
 
 7.  Select **Listen for notifications** on the application.
-    -   It may be required to "enable notification" access to the app on the<br /> phone.
+    -   It may be required to "enable notification" access to the app on the phone.
 
         Data will begin to Send at a Periodic Rate to the device.
 
-        Data will become visible beneath the **Notify/Listen Toggle**<br /> Option.
+        Data will become visible beneath the **Notify/Listen Toggle** Option.
 
         -   **Before Enabling** the **Notify/Indicate Toggle** Button:
 
             ![](media/GUID-C5223277-D33D-4366-8CA4-124D340F0554-low.png)
 
-            **After Enabling** the<br /> **Notify/Indicate Toggle** Button Mobile App can read<br /> the data **31\(Hex Value\)** which was sent from RNBD<br /> Module.
+            **After Enabling** the **Notify/Indicate Toggle** Button Mobile App can read the data **31\(Hex Value\)** which was sent from RNBD Module.
 
             ![](media/GUID-83D3CD62-CA8C-4C6C-88AF-CA15728E6392-low.png)
 
@@ -753,7 +748,15 @@ This guide will walk you through setting up your development environment with al
 
 **Basic Data Exchange:**
 
-|This example shows how an MCU can be programmed to transmit data<br /> to a smart phone over BLE. Here the MCU device will send Periodic<br /> Transmission of a single character when **STREAM\_OPEN** is<br /> processed through the Message Handler. This indicates to the MCU<br /> & RN487x Module that the application is in a DATA STREAMING mode<br /> of operation; and can expect to hear data over the BLE<br /> connection.\#define DEMO\_PERIODIC\_TRANSMIT\_COUNT<br /> \(10000\)\#define DEMO\_PERIODIC\_CHARACTER \(‘1’\)Are<br /> used in the example can be found \#defined at the top of<br /> rnbd\_example.c.|
+This example shows how an MCU can be programmed to transmit data to a smart phone over BLE. Here the MCU device will send Periodic Transmission of a single character when **STREAM\_OPEN** is processed through the Message Handler.
+
+This indicates to the MCU & RN487x Module that the application is in a DATA STREAMING mode of operation and can expect to hear data over the BLE connection.
+
+\#define DEMO\_PERIODIC\_TRANSMIT\_COUNT\(10000\)
+<br />
+\#define DEMO\_PERIODIC\_CHARACTER \(‘1’\)
+
+Are used in the example can be found \#defined at the top of rn487x\_example.c
 
 <br />
 
@@ -761,13 +764,16 @@ This guide will walk you through setting up your development environment with al
 
 <br />
 
-<br />
-
 1.  Download and Install Phone Application for demonstration:
-    1.  **Microchip Bluetooth Data**by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
+
+    1.1  **Microchip Bluetooth Data**by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 2.  Launch the Phone Application
 
-    ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)![](media/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
+    ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)
+
+    <br />
+
+    ![](media/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
 
     <br />
 
@@ -812,11 +818,11 @@ This guide will walk you through setting up your development environment with al
     <br />
 
 7.  Select **Listen for notifications** on the application.
-    -   It may be required to "enable notification" access to the app on the<br /> phone.
+    -   It may be required to "enable notification" access to the app on the phone.
 
         Data will begin to Send at a Periodic Rate to the device.
 
-        Data will become visible beneath the **Notify/Listen Toggle**<br /> Option.
+        Data will become visible beneath the **Notify/Listen Toggle** Option.
 
         -   **Before Enabling** the**Notify/Indicate Toggle** Button:
 
@@ -826,7 +832,7 @@ This guide will walk you through setting up your development environment with al
 
             <br />
 
-            **After Enabling** the **Notify/Indicate Toggle Button** Mobile App can read the data **31\(Hex Value\)** which was sent from RN487x<br /> Module.
+            **After Enabling** the **Notify/Indicate Toggle Button** Mobile App can read the data **31\(Hex Value\)** which was sent from RN487x Module.
 
             ![](media/GUID-9A94A4DF-BEB9-48A5-B958-CDDC2C296ED7-low.png)
 
@@ -837,23 +843,16 @@ This guide will walk you through setting up your development environment with al
 
 **Command, Data Communication with Asynchronized Message Processing:**
 
-This driver contains, at its' core, the inherent code capability of distinguishing<br /> between **Message** exchange and **Data** exchange between the connected MCU and<br /> Module devices.
+This driver contains, at its' core, the inherent code capability of distinguishing between **Message** exchange and **Data** exchange between the connected MCU and Module devices.
 
-The library supplies all required Application Programming Interfaces \(APIs\) required to<br /> create functional
+The library supplies all required Application Programming Interfaces \(APIs\) required to create functional implementation of operation a BLE connected end-device. Through the MCC configuration the physical connection of the \(3\) required pins can be selected through the GUI. These are the \(2\) UART pins used for communication, and control of the **RST\_N** connected to the RNBD Module.
 
-implementation of operation a BLE connected end-device.
+Additionally this Library allows for extension of Module pin behaviors through the simple RNBD Module object interface; where any device/project specific instantiations exist **rnbd\_interface.c/h**/**rn487x\_interface.c/h**
 
-Through the MCC configuration the physical connection of the \(3\) required pins can be<br /> selected through the GUI.
-
-These are the \(2\) UART pins used for communication, and control of the **RST\_N**<br /> connected to the RNBD Module.
-
-Additionally; this Library allows for extension of Module pin behaviors through the<br /> simple RNBD Module object
-
-interface; where any device/project specific instantiations exist.<br /> **rnbd\_interface.c/h**/**rn487x\_interface.c/h**
 
 A brief description of the Interface, and object extension is described below:
 
-iRNBD\_FunctionPtrs\_t is a typedef struct which can be found in<br /> **rnbd\_interface.h**/**rn487x\_interface.h** and consist of \(9\) function<br /> pointers. In the **rnbd\_interface.c**/**rn487x\_interface.c**, the concrete<br /> creation of RNBD as an object is instantiated. Within<br /> **rnbd\_interface.c**/**rn487x\_interface.c** are the **private static**<br /> implementations of desired behavior. In some cases, such as DELAY or UART, the<br /> supporting behavior is supplied through another supporting library module. When<br /> applicable ‘inline’ has been used to reduce stack depth overhead.
+iRNBD\_FunctionPtrs\_t is a typedef struct which can be found in **rnbd\_interface.h**/**rn487x\_interface.h** and consist of \(9\) function pointers. In the **rnbd\_interface.c**/**rn487x\_interface.c**, the concrete creation of RNBD as an object is instantiated. Within **rnbd\_interface.c**/**rn487x\_interface.c** are the **private static** implementations of desired behavior. In some cases, such as DELAY or UART, the supporting behavior is supplied through another supporting library module. When applicable ‘inline’ has been used to reduce stack depth overhead.
 
 <br />
 
@@ -861,13 +860,11 @@ iRNBD\_FunctionPtrs\_t is a typedef struct which can be found in<br /> **rnbd\_i
 
 <br />
 
-<br />
-
 ![](media/GUID-08351B32-7A45-4F07-91BF-66534BFE5482-low.png)
 
 <br />
 
-The driver library itself should not require any modifications or injections by the user;<br /> unless to expand upon the supported command implementations **rnbd.c/h**
+The driver library itself should not require any modifications or injections by the user unless to expand upon the supported command implementations **rnbd.c/h**
 
 **Configurable Module Hardware Requirement\(s\):**
 
