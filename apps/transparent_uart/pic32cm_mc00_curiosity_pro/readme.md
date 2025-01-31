@@ -271,6 +271,8 @@ This guide will walk you through setting up your development environment with al
     -   **Microchip Bluetooth Data** by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 2.  Launch the Phone Application
 
+    <br />
+
     ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)
 
     <br />
@@ -374,6 +376,8 @@ This guide will walk you through setting up your development environment with al
 1.  Download and Install Phone Application for demonstration:
     -   **Microchip Bluetooth Data** by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 2.  Launch the Phone Application
+
+    <br />
 
     ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)
 

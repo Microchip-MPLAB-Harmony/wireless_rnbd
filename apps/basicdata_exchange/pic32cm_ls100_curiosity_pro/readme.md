@@ -19,7 +19,6 @@ This Library uses \(1\) UART, \(1\) GPIO, and DELAY support at minimal.
 
 Refer to the /media folder for source files & max resolution.
 
-
 # Getting Started with Software Development<a name="getting-started-with-software-development"></a>
 
 Steps to install IDE, compiler, tool chain and application examples on your PC
@@ -686,6 +685,8 @@ Are used in the example can be found \#defined at the top of rnbd\_example.c
   1.1 **Microchip Bluetooth Data**by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 2.  Launch the Phone Application
 
+    <br />
+
     ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)
 
     <br />
@@ -768,6 +769,8 @@ Are used in the example can be found \#defined at the top of rn487x\_example.c
 
     1.1  **Microchip Bluetooth Data**by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 2.  Launch the Phone Application
+
+    <br />
 
     ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)
 

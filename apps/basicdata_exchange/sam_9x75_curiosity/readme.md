@@ -168,7 +168,7 @@ This guide will walk you through setting up your development environment with al
     ![](media/GUID-2B7B2E95-2F31-4C72-BBFB-2ED03594AC60-low.png)
 
     <br />
-    
+
 4.  Selecting Example Application
 
     <br />
@@ -284,6 +284,8 @@ Are used in the example can be found \#defined at the top of rnbd\_example.c
     1.1  **Microchip Bluetooth Data**by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 2.  Launch the Phone Application
 
+    <br />
+
     ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)
 
     <br />
@@ -366,6 +368,8 @@ Are used in the example can be found \#defined at the top of rn487x\_example.c
 
     1.1  **Microchip Bluetooth Data**by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 2.  Launch the Phone Application
+
+    <br />
 
     ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)
 

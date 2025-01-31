@@ -283,9 +283,12 @@ Are used in the example can be found \#defined at the top of rnbd\_example.c
     1.1  **Microchip Bluetooth Data**by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 
 2.  Launch the Phone Application
+
     <br />
 
     ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)
+
+    <br />
 
     ![](media/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
 
@@ -365,6 +368,8 @@ Are used in the example can be found \#defined at the top of rn487x\_example.c.
 
     1.1  **Microchip Bluetooth Data**by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 2.  Launch the Phone Application
+
+    <br />
 
     ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)![](media/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
 

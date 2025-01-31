@@ -29,7 +29,6 @@
 "PIC32CK"
 
 
-
 # Introduction<a name="introduction"></a>
 
 The MPLAB® Code Configurator [RNBD](http://mchpweb:4576/SpecIndex_FileAttach/TPT_20227216811993/70005514A.pdf)/[RN487x](https://www.microchip.com/en-us/product/RN4870) BLE Modules Library allows quick and easy configuration of the C code generated software driver based upon the user’s selected API features available from the MCC Library. Generated Driver code supports use of either BLE Module with use of a 32 Bit PIC Devices
@@ -39,7 +38,6 @@ The library module uses a Graphic User Interface \(GUI\) presented by MCC within
 This Library uses \(1\) UART, \(1\) GPIO, and DELAY support at minimal.
 
 Refer to the /media folder for source files & max resolution.
-
 
 # Getting Started with Software Development<a name="getting-started-with-software-development"></a>
 
@@ -287,6 +285,8 @@ Are used in the example can be found \#defined at the top of rnbd\_example.c
     1.1  **Microchip Bluetooth Data**by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 2.  Launch the Phone Application
 
+    <br />
+
     ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)
 
     <br />
@@ -349,7 +349,7 @@ Are used in the example can be found \#defined at the top of rnbd\_example.c
 
 **Basic Data Exchange:**
 
-This example shows how an MCU can be programmed to transmit data to a smart phone over BLE. Here the MCU device will send Periodic Transmission of a single character when **STREAM\_OPEN** is processed through the Message Handler. This indicates to the MCU & RNBD Module that the application is in a DATA STREAMING mode of operation and can expect to hear data over the BLE connection.
+This example shows how an MCU can be programmed to transmit data to a smart phone over BLE. Here the MCU device will send Periodic Transmission of a single character when **STREAM\_OPEN** is processed through the Message Handler. This indicates to the MCU & RN487x Module that the application is in a DATA STREAMING mode of operation and can expect to hear data over the BLE connection.
 
 \#define DEMO\_PERIODIC\_TRANSMIT\_COUNT \(10000\)
 
@@ -367,6 +367,8 @@ Are used in the example can be found \#defined at the top of rn487x\_example.c
 
     1.1  **Microchip Bluetooth Data**by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 2.  Launch the Phone Application
+
+    <br />
 
     ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)
 
