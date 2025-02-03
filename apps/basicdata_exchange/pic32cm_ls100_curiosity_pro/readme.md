@@ -9,11 +9,29 @@
 -   [RN487x Example: Running Basic Data Exchange Example Application](#rn487x-example:-running-basic-data-exchange-example-application)
 -   [Summary](#summary)
 
+**List of supported MCU/MPU Device Family**
+
+"SAMC",
+"SAMD",
+"SAME",
+"SAML",
+"SAM9x",
+"PIC32MK",
+"PIC32MX",
+"PIC32CM",
+"PIC32CMMC",
+"PIC32MM1324",
+"PIC32MZDA",
+"PIC32MZEF",
+"PIC32MZW",
+"PIC32CX",
+"PIC32CK"
+
 # Introduction<a name="introduction"></a>
 
-The MPLAB® Code Configurator [RNBD](http://mchpweb:4576/SpecIndex_FileAttach/TPT_20227216811993/70005514A.pdf)/[RN487x](https://www.microchip.com/en-us/product/RN4870) BLE Modules Library allows quick and easy configuration of the C<br /> code generated software driver based upon the user’s selected API features available<br /> from the MCC Library. Generated Driver code supports use of either BLE Module with use<br /> of a 32 Bit PIC Devices
+The MPLAB® Code Configurator [RNBD](http://mchpweb:4576/SpecIndex_FileAttach/TPT_20227216811993/70005514A.pdf)/[RN487x](https://www.microchip.com/en-us/product/RN4870) BLE Modules Library allows quick and easy configuration of the C code generated software driver based upon the user’s selected API features available from the MCC Library. Generated Driver code supports use of either BLE Module with use of a 32 Bit PIC Devices
 
-The library module uses a Graphic User Interface \(GUI\) presented by MCC within MPLABX<br /> which allows for selection of desired configuration, and custom configurations of the<br /> protocol. Customized C code is generated within the MPLABX project, in a folder named<br /> "MCC Generated Files".
+The library module uses a Graphic User Interface \(GUI\) presented by MCC within MPLABX which allows for selection of desired configuration, and custom configurations of the protocol. Customized C code is generated within the MPLABX project, in a folder named "MCC Generated Files".
 
 This Library uses \(1\) UART, \(1\) GPIO, and DELAY support at minimal.
 
@@ -23,7 +41,7 @@ Refer to the /media folder for source files & max resolution.
 
 Steps to install IDE, compiler, tool chain and application examples on your PC
 
-This guide will walk you through setting up your development environment with all<br /> required dependencies versions. If you are already familiar Microchip Tools, then you can<br /> find a table summarizing the dependencies below
+This guide will walk you through setting up your development environment with all required dependencies versions. If you are already familiar Microchip Tools, then you can find a table summarizing the dependencies below
 
 **Tools and Harmony Component Versions**
 
@@ -45,8 +63,6 @@ This guide will walk you through setting up your development environment with al
 |bsp|v3.21.1|
 |CMSIS-FreeRTOS|v10.5.1|
 |wireless_rnbd|v2.0.4 or above|
-
-<br />
 
 # Trust Zone Project Setup<a name="trust-zone-project-setup"></a>
 
@@ -682,20 +698,19 @@ Are used in the example can be found \#defined at the top of rnbd\_example.c
 
 1.  Download and Install Phone Application for demonstration:
 
-  1.1 **Microchip Bluetooth Data**by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
-2.  Launch the Phone Application
-
-    <br />
-
-    ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)
-
-    <br />
-
-    ![](media/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
+  1.1 Search **Microchip Bluetooth Data** by **Microchip Technology Inc** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 
     <br />
 
     ![](media/GUID-8A9EE9CE-AA92-4648-8364-09987F2E0526-low.png)
+
+    <br />
+
+2.  Launch the Phone Application
+
+    <br />
+
+    ![](media/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
 
     <br />
 
@@ -767,20 +782,19 @@ Are used in the example can be found \#defined at the top of rn487x\_example.c
 
 1.  Download and Install Phone Application for demonstration:
 
-    1.1  **Microchip Bluetooth Data**by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
-2.  Launch the Phone Application
-
-    <br />
-
-    ![](media/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)
-
-    <br />
-
-    ![](media/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
+    1.1  Search **Microchip Bluetooth Data** by **Microchip Technology Inc** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 
     <br />
 
     ![](media/GUID-8A9EE9CE-AA92-4648-8364-09987F2E0526-low.png)
+
+    <br />
+
+2.  Launch the Phone Application
+
+    <br />
+
+    ![](media/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
 
     <br />
 
