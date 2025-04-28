@@ -7,9 +7,13 @@ Following table provides number of peripheral library examples available for dif
 
 | Development Kits  | MPLAB X applications |
 |:-----------------:|:-------------------:|
-| [PIC32CM LS00 Curiosity Pro Evaluation Kit](https://www.microchip.com/en-us/development-tool/ev12u44a)  | 1 |
+| [PIC32CXMTG Evaluation Kit](https://www.microchip.com/en-us/development-tool/ev11k09a)  | 1 |
 
 # Microchip MPLAB® Harmony 3 Release Notes.
+
+## RNBD/RN487x v2.0.6 Release
+### NEW FEATURES SUPPORTED
+ - Added support for PIC32CXMT Device Family 
 
 ## RNBD/RN487x v2.0.5 Release
 ### NEW FEATURES SUPPORTED
