@@ -521,6 +521,11 @@ bool UART_BLE_TransmitDone(void)
     </#if>
 }
 
+static inline void RNBD_Nop(void)
+{
+    __asm volatile ("NOP");
+}
+
 static inline void RNBD_Delay(uint32_t delayCount)
 {
     if(delayCount > 0U)
@@ -542,7 +547,7 @@ static inline void RNBD_Delay(uint32_t delayCount)
             __NOP();
 			</#if>
 			<#if core.CoreArchitecture == "MIPS">
-            asm("NOP");
+            RNBD_Nop();
 			</#if>
         }
     }

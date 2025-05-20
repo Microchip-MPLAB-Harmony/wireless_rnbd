@@ -25,7 +25,10 @@
 deviceNode = ATDF.getNode("/avr-tools-device-file/devices")
 deviceChild = deviceNode.getChildren()
 deviceName = deviceChild[0].getAttribute("family")
+deviceSeries = deviceChild[0].getAttribute("series")
 deviceArchitecture = deviceChild[0].getAttribute("architecture")
+
+TrustZoneDevice = ["PIC32CMSG00","PIC32CMLE00"]
 
 Application_Menu_options = ["TRANSPARENT UART","BASIC DATA EXCHANGE","NONE"]
 Module_Type_options      = ["RNBD","RN487x"]
@@ -67,6 +70,7 @@ ModuleType = "RNBD"
 
 global RNBD_IS_NON_SECURE
 RNBD_IS_NON_SECURE = True
+global rnbdTrustZoneFiles
 
 RNBD_TrustZone_Variables = { 'RNBD_NON_SECURE' : True,
                         'BLE_SERCOM_NON_SECURE' : False,
@@ -134,7 +138,8 @@ def handleMessage(messageID, args):
                     RNBD_TrustZone_Variables.update({"BLE_SERCOM_NON_SECURE" : Database.getSymbolValue("core", ConnectedInst['InterfaceSercomInst'].upper() + "_IS_NON_SECURE")})
                     updateInterfaceSercomMarkupVariable()
                 updateSercomInstMarkupVaribles("SERCOM_INST",str(args["sercomInstID"]).upper())
-                non_secure_entry_File_check()
+                if (deviceSeries in TrustZoneDevice):
+                    non_secure_entry_File_check()
 
             elif args["Connected"] == False:
                 ConnectedInst.update({'InterfaceSercomInst':''})
