@@ -27,6 +27,7 @@
 "PIC32CX",
 "PIC32CK",
 "PIC32CXMT".
+"PIC32C".
 
 # Introduction<a name="introduction"></a>
 
