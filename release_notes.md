@@ -13,7 +13,7 @@ Following table provides number of peripheral library examples available for dif
 
 ## RNBD/RN487x v2.0.6 Release
 ### NEW FEATURES SUPPORTED
- - Added support for PIC32CXMT Device Family 
+ - Added support for PIC32CXMT and PIC32C Device Family 
 
 ## RNBD/RN487x v2.0.5 Release
 ### NEW FEATURES SUPPORTED
